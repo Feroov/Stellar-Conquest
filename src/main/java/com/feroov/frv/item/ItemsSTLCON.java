@@ -27,8 +27,8 @@ public class ItemsSTLCON
         public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)
         {
             super.appendHoverText(stack, worldIn, tooltip, flagIn);
-            tooltip.add(Component.translatable("Banish everything off the screen\n").withStyle(ChatFormatting.RED));
-//            tooltip.add(Component.translatable(" "));
+            tooltip.add(Component.translatable("Banish everything off the screen").withStyle(ChatFormatting.RED));
+            tooltip.add(Component.translatable(" "));
             tooltip.add(Component.translatable("Creative Mode Exclusive!").withStyle(ChatFormatting.UNDERLINE));
         }
     });
