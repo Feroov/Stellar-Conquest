@@ -1,6 +1,7 @@
 package com.feroov.frv.item;
 
 import com.feroov.frv.STLCON;
+import com.feroov.frv.item.custom.CosmicRayGun;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -32,6 +33,8 @@ public class ItemsSTLCON
             tooltip.add(Component.translatable("Creative Mode Exclusive!").withStyle(ChatFormatting.UNDERLINE));
         }
     });
+
+    public static final RegistryObject<CosmicRayGun> COSMIC_RAY_GUN = ITEMS.register("raygun", CosmicRayGun::new);
 
     public static void register(IEventBus eventBus)
     {
