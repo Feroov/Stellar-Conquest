@@ -18,7 +18,7 @@ public class TabsSTLCON
     @SubscribeEvent
     public static void registerCreativeModeTabs(CreativeModeTabEvent.Register event) {
         STLCON_TAB = event.registerCreativeModeTab(new ResourceLocation(STLCON.MOD_ID, "stlcon_tab"),
-                builder -> builder.icon(() -> new ItemStack(Items.DIAMOND))
+                builder -> builder.icon(() -> new ItemStack(ItemsSTLCON.COSMIC_RAY_GUN.get()))
                         .title(Component.translatable("creativemodetab.stlcon_tab")));
     }
 }
