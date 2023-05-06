@@ -4,7 +4,7 @@ package com.feroov.frv;
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.item.ItemsSTLCON;
 import com.feroov.frv.item.TabsSTLCON;
-import com.feroov.frv.item.custom.RangedItems;
+import com.feroov.frv.item.RangedItems;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.CreativeModeTabEvent;
@@ -44,6 +44,7 @@ public class STLCON
         {
             event.accept(ItemsSTLCON.ADMIN_SWORD);
             event.accept(ItemsSTLCON.COSMIC_RAY_GUN);
+            event.accept(ItemsSTLCON.CELESTROID_SPAWN_EGG);
         }
     }
 }
