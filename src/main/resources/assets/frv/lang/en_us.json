@@ -3,5 +3,9 @@
 
 
   "item.frv.admin_sword": "\u00A74\u00A7lBan Hammer",
-  "item.frv.raygun": "\u00A7bCosmic Ray Gun"
+  "item.frv.raygun": "\u00A7bCosmic Ray Gun",
+
+
+
+  "item.frv.celestroid_spawn_egg": "Celestroid Spawn Egg", "entity.frv.celestroid": "Celestroid"
 }
