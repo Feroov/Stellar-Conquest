@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
@@ -33,4 +34,7 @@ public class RaygunBeamRenderer extends GeoEntityRenderer<RaygunBeam>
                 red, green, blue, alpha);
         poseStack.scale(0.8F, 0.8F, 0.8F);
     }
+
+    @Override
+    protected int getBlockLightLevel(RaygunBeam entity, BlockPos blockPos) { return 15; }
 }
