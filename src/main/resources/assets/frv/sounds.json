@@ -1,3 +1,4 @@
 {
-  "raygun_shoot": {"sounds": [{"name": "frv:raygun_shoot"}], "subtitle": "frv.raygun_shoot"}
+  "raygun_shoot": {"sounds": [{"name": "frv:raygun_shoot"}], "subtitle": "frv.raygun_shoot"},
+  "celestroid_ambient": {"sounds": [{"name": "frv:celestroid_ambient"}], "subtitle": "frv.celestroid_ambient"}
 }
