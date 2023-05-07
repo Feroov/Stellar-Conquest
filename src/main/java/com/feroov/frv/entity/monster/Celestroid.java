@@ -1,7 +1,7 @@
 package com.feroov.frv.entity.monster;
 
-import com.feroov.frv.entity.projectile.RaygunBeam;
-import com.feroov.frv.sound.SoundEventsSTLCON;
+import com.feroov.frv.entity.ai.CelestroidAttackGoal;
+import com.feroov.frv.entity.projectile.CelestroidBeam;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -10,15 +10,14 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.FlyingMob;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -29,15 +28,19 @@ import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
 import java.util.EnumSet;
 
-public class Celestroid extends FlyingMob implements Enemy, GeoEntity
+public class Celestroid extends Ghast implements Enemy, GeoEntity
 {
 
     public static final EntityDataAccessor<Integer> DATA_ATTACK_CHARGE_ID = SynchedEntityData.defineId(Celestroid.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_IS_CHARGING = SynchedEntityData.defineId(Ghast.class, EntityDataSerializers.BOOLEAN);
+
+    private CelestroidAttackGoal attackAI;
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public Celestroid(EntityType<? extends Celestroid> type, Level level)
@@ -50,38 +53,38 @@ public class Celestroid extends FlyingMob implements Enemy, GeoEntity
     @Override
     protected void registerGoals()
     {
-        this.goalSelector.addGoal(5, new Celestroid.RandomFlyGoal(this));
-        this.goalSelector.addGoal(7, new Celestroid.LookAroundGoal(this));
-        this.goalSelector.addGoal(5, new RaybeamAttackGoal(this));
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
+        this.goalSelector.addGoal(2, attackAI = new CelestroidAttackGoal(this));
+        this.goalSelector.addGoal(6, new Celestroid.LookAroundGoal(this));
+        this.goalSelector.addGoal(8, new Celestroid.RandomFlyGoal(this));
     }
 
     public static AttributeSupplier setAttributes()
     {
         return Monster.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 75.0D)
-                .add(Attributes.FOLLOW_RANGE, 50.0D).build();
+                .add(Attributes.MAX_HEALTH, 45.0D)
+                .add(Attributes.FOLLOW_RANGE, 75.0D).build();
     }
 
 
     @Override
     protected SoundEvent getAmbientSound()
     {
-        this.playSound(SoundEvents.SHULKER_AMBIENT, 1.0F, 2.5F);
+        this.playSound(SoundEvents.SHULKER_AMBIENT, 4.0F, 2.5F);
         return null;
     }
 
     @Override
     protected SoundEvent getHurtSound(@Nonnull DamageSource damageSourceIn)
     {
-        this.playSound(SoundEvents.IRON_GOLEM_REPAIR, 1.0F, 0.2F);
+        this.playSound(SoundEvents.IRON_GOLEM_REPAIR, 4.0F, 0.2F);
         return null;
     }
 
     @Override
     protected SoundEvent getDeathSound()
     {
-        this.playSound(SoundEvents.SHULKER_DEATH, 1.0F, 2.5F);
+        this.playSound(SoundEvents.SHULKER_DEATH, 4.0F, 2.5F);
         return null;
     }
 
@@ -96,11 +99,6 @@ public class Celestroid extends FlyingMob implements Enemy, GeoEntity
         if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying()))
         {
             animationState.getController().setAnimation(RawAnimation.begin().then("death", Animation.LoopType.PLAY_ONCE));
-            return PlayState.CONTINUE;
-        }
-        if (isAggressive())
-        {
-            animationState.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
@@ -131,75 +129,35 @@ public class Celestroid extends FlyingMob implements Enemy, GeoEntity
         this.entityData.define(DATA_ATTACK_CHARGE_ID, 0);
     }
 
-    public void setAttackCharge(int attackTimer)
-    {
-        this.entityData.set(DATA_ATTACK_CHARGE_ID, Math.max(attackTimer, 0));
+
+    public void setCharging(boolean pCharging) {
+        this.entityData.set(DATA_IS_CHARGING, pCharging);
     }
 
-    static class RaybeamAttackGoal extends Goal
+    public void shootRayBeam()
     {
-        private final Celestroid parentEntity;
-        public int attackTimer;
+        Vec3 vec3d = this.getViewVector(1.0F);
+        double d2 = this.getTarget().getX() - (this.getX() + vec3d.x() * 4.0D);
+        double d3 = this.getTarget().getBoundingBox().minY + this.getTarget().getBbHeight() / 2.0F - (0.5D + this.getY() + this.getBbHeight() / 2.0F);
+        double d4 = this.getTarget().getZ() - (this.getZ() + vec3d.z() * 4.0D);
 
-        public RaybeamAttackGoal(Celestroid zephyr) {
-            this.parentEntity = zephyr;
-        }
+        CelestroidBeam raygunBeam = new CelestroidBeam(this.level, this, d2, d3, d4);
+        raygunBeam.setPos(this.getX() + vec3d.x() * 4.0D, this.getY() + this.getBbHeight() / 2.0F + 0.5D, this.getZ() + vec3d.z() * 4.0D);
+        this.getLevel().addFreshEntity(raygunBeam);
 
-        /**
-         * Returns whether execution should begin. You can also read and cache
-         * any state necessary for execution in this method as well.
-         */
-        @Override
-        public boolean canUse() {
-            return parentEntity.getTarget() != null;
-        }
-
-        /**
-         * Execute a one shot task or start executing a continuous task
-         */
-        @Override
-        public void start() {
-            this.attackTimer = 0;
-        }
-
-        /**
-         * Reset the task's internal state. Called when this task is interrupted
-         * by another one
-         */
-        @Override
-        public void stop() {
-            this.parentEntity.setAttackCharge(0);
-        }
-
-        /**
-         * Keep ticking a continuous task that has already been started
-         */
-        @Override
-        public void tick() {
-            LivingEntity target = this.parentEntity.getTarget();
-            if (target.distanceToSqr(this.parentEntity) < 40 * 40 && this.parentEntity.hasLineOfSight(target)) {
-                Level level = this.parentEntity.level;
-                ++this.attackTimer;
-                if (this.attackTimer == 10) {
-                    this.parentEntity.playSound(this.parentEntity.getAmbientSound(), 3.0F, (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.0F);
-                } else if (this.attackTimer == 20) {
-                    Vec3 look = this.parentEntity.getViewVector(1.0F);
-                    double accelX = target.getX() - (this.parentEntity.getX() + look.x * 4.0);
-                    double accelY = target.getY(0.5) - (0.5 + this.parentEntity.getY(0.5));
-                    double accelZ = target.getZ() - (this.parentEntity.getZ() + look.z * 4.0);
-                    this.parentEntity.playSound(AetherSoundEvents.ENTITY_ZEPHYR_SHOOT.get(), 3.0F, (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.0F);
-                    ZephyrSnowball snowball = new ZephyrSnowball(level, this.parentEntity, accelX, accelY, accelZ);
-
-                    snowball.setPos(this.parentEntity.getX() + look.x * 4.0, this.parentEntity.getY(0.5) + 0.5, this.parentEntity.getZ() + look.z * 4.0);
-                    level.addFreshEntity(snowball);
-                    this.attackTimer = -40;
-                }
-            } else if (this.attackTimer > 0) {
-                this.attackTimer--;
-            }
-            this.parentEntity.setAttackCharge(this.attackTimer);
+        // when we attack, there is a 1-in-6 chance we decide to stop attacking
+        if (this.getRandom().nextInt(6) == 0) {
+            this.setTarget(null);
         }
     }
+
+    public boolean shouldAttack(LivingEntity living) {
+        return true;
+    }
+
+    @Override
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 1.65F; }
+
 
     static class RandomFlyGoal extends Goal
     {
