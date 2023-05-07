@@ -33,7 +33,7 @@ public class CelestroidModel extends GeoModel<Celestroid>
     @Override
     public void setCustomAnimations(Celestroid animatable, long instanceId, AnimationState<Celestroid> animationState)
     {
-        CoreGeoBone head = getAnimationProcessor().getBone("head");
+        CoreGeoBone head = getAnimationProcessor().getBone("celestroid");
 
         if (head != null) {
             EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
