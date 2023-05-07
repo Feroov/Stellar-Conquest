@@ -12,7 +12,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -42,6 +41,7 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public static final EntityDataAccessor<Integer> PARTICLE = SynchedEntityData.defineId(RaygunBeam.class, EntityDataSerializers.INT);
 
+
     public RaygunBeam(EntityType<? extends RaygunBeam> entityType, Level world)
     {
         super(entityType, world);
@@ -52,6 +52,7 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
     {
         super(EntitiesSTLCON.RAYGUN_BEAM.get(), owner, world);
     }
+
 
     /******************************************** Methods of Interest ************************************************************/
     @Override
@@ -73,7 +74,7 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
         }
 
 
-        float projectiledamage = 17.0F;
+        float projectiledamage = 20.0F;
         if (entity.hurt(damagesource, projectiledamage))
         {
             if (entity instanceof LivingEntity)
@@ -114,12 +115,11 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
         ++this.ticksInAir;
         if (this.ticksInAir >= 80) { this.remove(RemovalReason.DISCARDED); }
 
+
         if (this.level.isClientSide())
         {
-            double x = this.getX() + (this.random.nextDouble()) * (double) this.getBbWidth() * 1.5D;
-            double z = this.getZ() + (this.random.nextDouble()) * (double) this.getBbWidth() * 0.5D;
-            this.level.addParticle(ParticleTypes.SONIC_BOOM, true, x, this.getY(), z, 0, 0, 0);
-            this.level.addParticle(ParticleTypes.SCULK_CHARGE_POP, true, x, this.getY(), z, 0, 0, 0);
+            this.level.addParticle(ParticleTypes.SONIC_BOOM, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            this.level.addParticle(ParticleTypes.SCULK_CHARGE_POP, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
         }
     }
     /***************************************************************************************************************************/
