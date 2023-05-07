@@ -1,7 +1,7 @@
-package com.feroov.frv.item.custom;
+package com.feroov.frv.item;
 
 
-import com.feroov.frv.item.ItemsSTLCON;
+
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
