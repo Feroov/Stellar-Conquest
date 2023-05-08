@@ -2,6 +2,7 @@ package com.feroov.frv.entity.monster;
 
 import com.feroov.frv.entity.ai.CelestroidAttackGoal;
 import com.feroov.frv.entity.projectile.CelestroidBeam;
+import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -9,6 +10,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -70,22 +72,31 @@ public class Celestroid extends Ghast implements Enemy, GeoEntity
     @Override
     protected SoundEvent getAmbientSound()
     {
-        this.playSound(SoundEvents.SHULKER_AMBIENT, 4.0F, 2.5F);
+        this.playSound(SoundEventsSTLCON.CELESTROID_AMBIENT.get(), 1.5F, 1.0F);
         return null;
     }
 
     @Override
     protected SoundEvent getHurtSound(@Nonnull DamageSource damageSourceIn)
     {
-        this.playSound(SoundEvents.IRON_GOLEM_REPAIR, 4.0F, 0.2F);
+        this.playSound(SoundEvents.IRON_GOLEM_REPAIR, 1.5F, 0.2F);
         return null;
     }
 
     @Override
     protected SoundEvent getDeathSound()
     {
-        this.playSound(SoundEvents.SHULKER_DEATH, 4.0F, 2.5F);
+        this.playSound(SoundEvents.IRON_GOLEM_HURT, 4.0F, 0.2F);
         return null;
+    }
+
+    @Override
+    public void checkDespawn(){
+        if (this.getLevel().getDifficulty() == Difficulty.PEACEFUL) {
+            this.discard();
+        } else {
+            super.checkDespawn();
+        }
     }
 
     @Override
@@ -96,11 +107,6 @@ public class Celestroid extends Ghast implements Enemy, GeoEntity
 
     private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> animationState)
     {
-        if ((this.dead || this.getHealth() < 0.01 || this.isDeadOrDying()))
-        {
-            animationState.getController().setAnimation(RawAnimation.begin().then("death", Animation.LoopType.PLAY_ONCE));
-            return PlayState.CONTINUE;
-        }
         animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
@@ -112,15 +118,12 @@ public class Celestroid extends Ghast implements Enemy, GeoEntity
     protected void tickDeath()
     {
         ++this.deathTime;
-        if (this.deathTime == 70 && !this.level.isClientSide())
+        if (this.deathTime == 60 && !this.level.isClientSide())
         {
-            this.level.broadcastEntityEvent(this, (byte)70);
+            this.level.broadcastEntityEvent(this, (byte)60);
             this.remove(RemovalReason.KILLED);
         }
     }
-
-    @Override
-    protected boolean shouldDespawnInPeaceful() { return true; }
 
     @Override
     protected void defineSynchedData()
@@ -145,7 +148,6 @@ public class Celestroid extends Ghast implements Enemy, GeoEntity
         raygunBeam.setPos(this.getX() + vec3d.x() * 4.0D, this.getY() + this.getBbHeight() / 2.0F + 0.5D, this.getZ() + vec3d.z() * 4.0D);
         this.getLevel().addFreshEntity(raygunBeam);
 
-        // when we attack, there is a 1-in-6 chance we decide to stop attacking
         if (this.getRandom().nextInt(6) == 0) {
             this.setTarget(null);
         }
