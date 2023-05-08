@@ -33,7 +33,7 @@ public class MothershipModel extends GeoModel<Mothership>
     @Override
     public void setCustomAnimations(Mothership animatable, long instanceId, AnimationState<Mothership> animationState)
     {
-        CoreGeoBone head = getAnimationProcessor().getBone("celestroid");
+        CoreGeoBone head = getAnimationProcessor().getBone("mothership");
 
         if (head != null) {
             EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
