@@ -1,7 +1,8 @@
 package com.feroov.frv.entity.monster;
 
-import com.feroov.frv.entity.ai.CelestroidAttackGoal;
-import com.feroov.frv.entity.projectile.CelestroidBeam;
+
+import com.feroov.frv.entity.ai.MothershipAttackGoal;
+import com.feroov.frv.entity.projectile.MothershipBeam;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -44,7 +45,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
     public static final EntityDataAccessor<Integer> DATA_ATTACK_CHARGE_ID = SynchedEntityData.defineId(Mothership.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_IS_CHARGING = SynchedEntityData.defineId(Ghast.class, EntityDataSerializers.BOOLEAN);
 
-    private CelestroidAttackGoal attackAI;
+    private MothershipAttackGoal attackAI;
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public Mothership(EntityType<? extends Mothership> type, Level level)
@@ -58,7 +59,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
     protected void registerGoals()
     {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
-        this.goalSelector.addGoal(2, attackAI = new CelestroidAttackGoal(this));
+        this.goalSelector.addGoal(2, attackAI = new MothershipAttackGoal(this));
         this.goalSelector.addGoal(6, new Mothership.LookAroundGoal(this));
         this.goalSelector.addGoal(8, new Mothership.RandomFlyGoal(this));
     }
@@ -146,9 +147,9 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
         double d3 = this.getTarget().getBoundingBox().minY + this.getTarget().getBbHeight() / 2.0F - (0.5D + this.getY() + this.getBbHeight() / 2.0F);
         double d4 = this.getTarget().getZ() - (this.getZ() + vec3d.z() * 4.0D);
 
-        CelestroidBeam raygunBeam = new CelestroidBeam(this.level, this, d2, d3, d4);
-        raygunBeam.setPos(this.getX() + vec3d.x() * 4.0D, this.getY() + this.getBbHeight() / 2.0F + 0.5D, this.getZ() + vec3d.z() * 4.0D);
-        this.getLevel().addFreshEntity(raygunBeam);
+        MothershipBeam mothershipBeam = new MothershipBeam(this.level, this, d2, d3, d4);
+        mothershipBeam.setPos(this.getX() + vec3d.x() * 4.0D, this.getY() + this.getBbHeight() / 2.0F + 0.5D, this.getZ() + vec3d.z() * 4.0D);
+        this.getLevel().addFreshEntity(mothershipBeam);
 
         if (this.getRandom().nextInt(6) == 0) {
             this.setTarget(null);
