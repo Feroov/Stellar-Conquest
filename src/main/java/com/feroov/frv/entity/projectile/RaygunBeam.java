@@ -77,6 +77,9 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
         float projectiledamage = 20.0F;
         if (entity.hurt(damagesource, projectiledamage))
         {
+            this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            this.level.addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+
             if (entity instanceof LivingEntity)
             {
                 LivingEntity livingentity = (LivingEntity) entity;
@@ -93,7 +96,11 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
                     ((ServerPlayer) entity1).connection
                             .send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 14.0F));
                 }
+                this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+                this.level.addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
             }
+
+
         } else { if (!this.level.isClientSide) { this.remove(RemovalReason.KILLED); } }
     }
 
@@ -103,9 +110,12 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
     protected void onHitBlock(BlockHitResult blockHitResult)
     {
         super.onHitBlock(blockHitResult);
+        this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.0F, 1.0F);
+        this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+        this.level.addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+
         if (!this.level.isClientSide())
             this.remove(RemovalReason.DISCARDED);
-        this.setSoundEvent(SoundEvents.BEACON_POWER_SELECT);
     }
 
     @Override
@@ -122,6 +132,7 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
             this.level.addParticle(ParticleTypes.SCULK_CHARGE_POP, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
         }
     }
+
     /***************************************************************************************************************************/
 
 
