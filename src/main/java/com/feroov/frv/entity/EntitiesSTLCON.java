@@ -4,6 +4,7 @@ import com.feroov.frv.STLCON;
 import com.feroov.frv.entity.monster.Celestroid;
 import com.feroov.frv.entity.monster.Mothership;
 import com.feroov.frv.entity.projectile.CelestroidBeam;
+import com.feroov.frv.entity.projectile.MothershipBeam;
 import com.feroov.frv.entity.projectile.RaygunBeam;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
@@ -42,6 +43,11 @@ public class EntitiesSTLCON
             () -> EntityType.Builder.<CelestroidBeam>of(CelestroidBeam::new, MobCategory.MISC).sized(1.0F, 1.0F)
                     .updateInterval(10)
                     .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "celestroid_beam").toString()));
+
+    public static final RegistryObject<EntityType<MothershipBeam>> MOTHERSHIP_BEAM = ENTITY_TYPES.register("mothership_beam",
+            () -> EntityType.Builder.<MothershipBeam>of(MothershipBeam::new, MobCategory.MISC).sized(1.0F, 1.0F)
+                    .updateInterval(10)
+                    .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "mothership_beam").toString()));
 
 
     public static void register(IEventBus eventBus) { ENTITY_TYPES.register(eventBus); }
