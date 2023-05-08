@@ -32,13 +32,6 @@ public class CelestroidRenderer extends GeoEntityRenderer<Celestroid>
     }
 
     @Override
-    protected float getDeathMaxRotation(Celestroid entityLivingBaseIn)
-    {
-        return 0;
-    }
-
-
-    @Override
     protected int getBlockLightLevel(@NotNull Celestroid entity, @NotNull BlockPos blockPos) {
         return 15;
     }
