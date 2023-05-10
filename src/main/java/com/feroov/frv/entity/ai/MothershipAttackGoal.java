@@ -33,7 +33,7 @@ public class MothershipAttackGoal extends Goal {
     public void tick() {
         LivingEntity target = this.mothership.getTarget();
 
-        if (target.distanceToSqr(this.mothership) < 4096.0D && this.mothership.getSensing().hasLineOfSight(target)) {
+        if (target.distanceToSqr(this.mothership) < 6096.0D && this.mothership.getSensing().hasLineOfSight(target)) {
             this.prevAttackTimer = attackTimer;
             ++this.attackTimer;
 
@@ -46,7 +46,7 @@ public class MothershipAttackGoal extends Goal {
 
             if (this.attackTimer == 20) {
                 if (this.mothership.shouldAttack(target)) {
-                    this.mothership.playSound(SoundEventsSTLCON.RAYGUN_SHOOT.get(), 7.0F, 1.0F);
+                    this.mothership.playSound(SoundEventsSTLCON.RAYGUN_SHOOT.get(), 7.0F, 0.5F);
                     this.mothership.shootRayBeam();
                     this.prevAttackTimer = attackTimer;
                 }
