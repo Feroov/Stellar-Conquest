@@ -84,8 +84,6 @@ public class CelestroidBeam extends AbstractHurtingProjectile implements GeoEnti
     protected void onHitBlock(BlockHitResult blockHitResult)
     {
         super.onHitBlock(blockHitResult);
-        this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.0F, 1.0F);
-
         this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
         this.level.addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 
