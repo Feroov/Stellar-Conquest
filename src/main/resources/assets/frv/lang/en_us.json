@@ -1,5 +1,6 @@
 {
-  "creativemodetab.stlcon_tab": "Stellar Conquest",
+  "creativemodetab.stlcon_items": "Stellar Conquest - Items",
+  "creativemodetab.stlcon_blocks": "Stellar Conquest - Blocks",
 
 
   "item.frv.admin_sword": "\u00A74\u00A7lBan Hammer",
@@ -8,5 +9,5 @@
 
 
   "item.frv.celestroid_spawn_egg": "Celestroid Spawn Egg", "entity.frv.celestroid": "Celestroid",
-  "item.frv.mothership_spawn_egg": "Mothership Spawn Egg", "entity.frv.mothership": "Mothership"
+  "item.frv.mothership_spawn_egg": "\u00A74\u00A7cCelestroid Mothership\u00A7c Spawn Egg", "entity.frv.mothership": "\u00A74\u00A7cCelestroid Mothership\u00A7c"
 }
