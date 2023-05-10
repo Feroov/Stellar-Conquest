@@ -1,0 +1,16 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "minecraft:jungle",
+    "minecraft:desert",
+    "minecraft:forest",
+    "minecraft:taiga",
+    "minecraft:swamp"
+  ],
+  "spawners": {
+    "type": "frv:mothership",
+    "weight": 2,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}
