@@ -13,22 +13,35 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = STLCON.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TabsSTLCON
 {
-    public static CreativeModeTab STLCON_TAB;
+    public static CreativeModeTab STLCON_ITEMS;
+    public static CreativeModeTab STLCON_BLOCKS;
 
     @SubscribeEvent
     public static void registerCreativeModeTabs(CreativeModeTabEvent.Register event) {
-        STLCON_TAB = event.registerCreativeModeTab(new ResourceLocation(STLCON.MOD_ID, "stlcon_tab"),
+        STLCON_ITEMS = event.registerCreativeModeTab(new ResourceLocation(STLCON.MOD_ID, "stlcon_items"),
                 builder -> builder.icon(() -> new ItemStack(ItemsSTLCON.COSMIC_RAY_GUN.get()))
-                        .title(Component.translatable("creativemodetab.stlcon_tab")));
+                        .title(Component.translatable("creativemodetab.stlcon_items")));
+
+        STLCON_BLOCKS = event.registerCreativeModeTab(new ResourceLocation(STLCON.MOD_ID, "stlcon_blocks"),
+                builder -> builder.icon(() -> new ItemStack(ItemsSTLCON.COSMIC_RAY_GUN.get()))
+                        .title(Component.translatable("creativemodetab.stlcon_blocks")));
     }
 
     @SubscribeEvent
     public static void registerCreativeModeTabs(CreativeModeTabEvent.BuildContents event) {
-        if(event.getTab() == TabsSTLCON.STLCON_TAB)
+        if(event.getTab() == TabsSTLCON.STLCON_BLOCKS)
+        {
+//            event.accept(ItemsSTLCON.ADMIN_SWORD);
+//            event.accept(ItemsSTLCON.COSMIC_RAY_GUN);
+//            event.accept(ItemsSTLCON.CELESTROID_SPAWN_EGG);
+        }
+
+        if(event.getTab() == TabsSTLCON.STLCON_ITEMS)
         {
             event.accept(ItemsSTLCON.ADMIN_SWORD);
             event.accept(ItemsSTLCON.COSMIC_RAY_GUN);
             event.accept(ItemsSTLCON.CELESTROID_SPAWN_EGG);
+            event.accept(ItemsSTLCON.MOTHERSHIP_SPAWN_EGG);
         }
     }
 }
