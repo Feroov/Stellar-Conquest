@@ -1,7 +1,6 @@
 package com.feroov.frv.entity.projectile;
 
 import com.feroov.frv.entity.EntitiesSTLCON;
-import com.feroov.frv.entity.monster.Celestroid;
 import com.feroov.frv.entity.monster.Mothership;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -13,6 +12,7 @@ import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraftforge.event.ForgeEventFactory;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -24,16 +24,18 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
 {
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final int power = 2;
 
     public MothershipBeam(EntityType<? extends AbstractHurtingProjectile> entityType, Level level)
     {
         super(entityType, level);
     }
 
-    public MothershipBeam(Level level, Mothership celestroid, double d2, double d3, double d4)
+    public MothershipBeam(Level level, Mothership celestroid, double d2, double d3, double d4, int power)
     {
         super(EntitiesSTLCON.MOTHERSHIP_BEAM.get(), celestroid, d2, d3, d4, level);
     }
+
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers)
@@ -63,7 +65,7 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
             if (entity1 instanceof LivingEntity)
             {
                 LivingEntity livingentity = (LivingEntity)entity1;
-                flag = entity.hurt(this.damageSources().thrown(this, livingentity), 8.0F);
+                flag = entity.hurt(this.damageSources().thrown(this, livingentity), 15.0F);
                 if (flag)
                 {
                     if (entity.isAlive())
@@ -77,21 +79,22 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
 
         }
 
-        if (!this.level.isClientSide())
-            this.remove(RemovalReason.DISCARDED);
+        boolean flag = ForgeEventFactory.getMobGriefingEvent(this.getLevel(), this.getOwner());
+        this.getLevel().explode(null, this.getX(), this.getY(), this.getZ(), this.power, flag, Level.ExplosionInteraction.NONE);
+        this.discard();
     }
 
     @Override
     protected void onHitBlock(BlockHitResult blockHitResult)
     {
         super.onHitBlock(blockHitResult);
-        this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.0F, 1.0F);
 
         this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
         this.level.addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 
-        if (!this.level.isClientSide())
-            this.remove(RemovalReason.DISCARDED);
+        boolean flag = ForgeEventFactory.getMobGriefingEvent(this.getLevel(), this.getOwner());
+        this.getLevel().explode(null, this.getX(), this.getY(), this.getZ(), (float) this.power, flag, Level.ExplosionInteraction.NONE);
+        this.discard();
     }
 
 
