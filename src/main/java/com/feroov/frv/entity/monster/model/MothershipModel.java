@@ -27,13 +27,13 @@ public class MothershipModel extends GeoModel<Mothership>
     @Override
     public ResourceLocation getAnimationResource(Mothership animatable)
     {
-        return new ResourceLocation(STLCON.MOD_ID, "animations/mothership.json");
+        return new ResourceLocation(STLCON.MOD_ID, "animations/celestroid.json");
     }
 
     @Override
     public void setCustomAnimations(Mothership animatable, long instanceId, AnimationState<Mothership> animationState)
     {
-        CoreGeoBone head = getAnimationProcessor().getBone("mothership");
+        CoreGeoBone head = getAnimationProcessor().getBone("celestroid");
 
         if (head != null) {
             EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
