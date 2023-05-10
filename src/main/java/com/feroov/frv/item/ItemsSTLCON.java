@@ -40,10 +40,10 @@ public class ItemsSTLCON
 
 
     public static final RegistryObject<Item> CELESTROID_SPAWN_EGG = ITEMS.register("celestroid_spawn_egg",
-            () -> new ForgeSpawnEggItem(EntitiesSTLCON.CELESTROID, 0x5E5C5D, 0x029AF7, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.CELESTROID, 0x029AF7, 0x5E5C5D, new Item.Properties()));
 
     public static final RegistryObject<Item> MOTHERSHIP_SPAWN_EGG = ITEMS.register("mothership_spawn_egg",
-            () -> new ForgeSpawnEggItem(EntitiesSTLCON.MOTHERSHIP, 0x5E5C5D, 0x029AF7, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.MOTHERSHIP,  0x5E5C5D, 0x029AF7, new Item.Properties()));
 
 
     public static void register(IEventBus eventBus)
