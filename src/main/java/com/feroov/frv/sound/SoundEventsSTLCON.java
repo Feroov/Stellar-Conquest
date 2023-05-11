@@ -15,5 +15,9 @@ public class SoundEventsSTLCON
     public static final RegistryObject<SoundEvent> RAYGUN_SHOOT = SOUND_EVENTS.register("raygun_shoot", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "raygun_shoot")));
     public static final RegistryObject<SoundEvent> CELESTROID_AMBIENT = SOUND_EVENTS.register("celestroid_ambient", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "celestroid_ambient")));
 
+
+    public static final RegistryObject<SoundEvent> XENOSPHERE_AMBIENCE = SOUND_EVENTS.register("xenosphere_ambience", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "xenosphere_ambience")));
+
+
     public static void register(IEventBus eventBus) { SOUND_EVENTS.register(eventBus); }
 }
