@@ -1,0 +1,58 @@
+{
+  "carvers": {
+    "air": []
+  },
+  "downfall": 0,
+  "effects": {
+    "fog_color": 0,
+    "foliage_color": 0,
+    "grass_color": 0,
+    "sky_color": 0,
+    "water_color": 0,
+    "water_fog_color": 0,
+    "ambient_sound": "frv:xenosphere_ambience",
+    "mood_sound": {
+      "sound": "minecraft:ambient.warped_forest.mood",
+      "tick_delay": 6000,
+      "block_search_extent": 8,
+      "offset": 2
+    },
+    "additions_sound": {
+      "sound": "minecraft:ambient.warped_forest.additions",
+      "tick_chance": 0.0111
+    },
+    "music": {
+      "sound": "minecraft:music.nether.basalt_deltas",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": false
+    }
+  },
+  "has_precipitation": false,
+  "precipitation": "none",
+  "temperature": 0.8,
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": []
+  },
+  "spawn_costs": {},
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ]
+}
+
