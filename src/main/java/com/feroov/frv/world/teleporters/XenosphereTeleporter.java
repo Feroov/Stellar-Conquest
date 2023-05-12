@@ -75,20 +75,6 @@ public class XenosphereTeleporter implements ITeleporter
     @Override
     public boolean playTeleportSound(ServerPlayer player, ServerLevel sourceWorld, ServerLevel destWorld)
     {
-        if (sourceWorld != null && destWorld != null) {
-            // Play your custom sound effect here
-            SoundEvent teleportSound = SoundEvents.ENDERMITE_DEATH; // Replace with your custom sound event
-
-            // Adjust the coordinates as per your requirement
-            double x = player.getX();
-            double y = player.getY();
-            double z = player.getZ();
-
-            // Play the sound to the player in the destination world
-            destWorld.playSound(null, x, y, z, teleportSound, SoundSource.PLAYERS, 1.0f, 0.1f);
-
-            return true;
-        }
-        return false;
+        return true;
     }
 }
