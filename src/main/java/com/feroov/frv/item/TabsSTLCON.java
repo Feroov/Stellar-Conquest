@@ -1,6 +1,7 @@
 package com.feroov.frv.item;
 
 import com.feroov.frv.STLCON;
+import com.feroov.frv.block.BlocksSTLCON;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
@@ -23,7 +24,7 @@ public class TabsSTLCON
                         .title(Component.translatable("creativemodetab.stlcon_items")));
 
         STLCON_BLOCKS = event.registerCreativeModeTab(new ResourceLocation(STLCON.MOD_ID, "stlcon_blocks"),
-                builder -> builder.icon(() -> new ItemStack(ItemsSTLCON.COSMIC_RAY_GUN.get()))
+                builder -> builder.icon(() -> new ItemStack(BlocksSTLCON.XENOSPHERE_PORTAL.get()))
                         .title(Component.translatable("creativemodetab.stlcon_blocks")));
     }
 
@@ -31,9 +32,7 @@ public class TabsSTLCON
     public static void registerCreativeModeTabs(CreativeModeTabEvent.BuildContents event) {
         if(event.getTab() == TabsSTLCON.STLCON_BLOCKS)
         {
-//            event.accept(ItemsSTLCON.ADMIN_SWORD);
-//            event.accept(ItemsSTLCON.COSMIC_RAY_GUN);
-//            event.accept(ItemsSTLCON.CELESTROID_SPAWN_EGG);
+            event.accept(BlocksSTLCON.XENOSPHERE_PORTAL);
         }
 
         if(event.getTab() == TabsSTLCON.STLCON_ITEMS)
