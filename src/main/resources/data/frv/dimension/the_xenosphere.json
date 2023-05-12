@@ -4,21 +4,8 @@
     "type": "minecraft:noise",
     "settings": "frv:xenosphere",
     "biome_source": {
-      "type": "minecraft:multi_noise",
-      "biomes": [
-        {
-          "biome": "frv:the_xenosphere",
-          "parameters": {
-            "continentalness": 0,
-            "depth": 0,
-            "erosion": 0,
-            "humidity": 0,
-            "offset": 0,
-            "temperature": 0,
-            "weirdness": 1
-          }
-        }
-      ]
+      "type": "minecraft:fixed",
+      "biome": "frv:the_xenosphere"
     }
   }
 }
