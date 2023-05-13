@@ -41,12 +41,6 @@ public class StarrySky extends DimensionSpecialEffects {
     public boolean isFoggyAt(int i, int ii) {return false;}
 
 
-    public static boolean doesMobEffectBlockSky(Camera camera) {
-        Entity entity = camera.getEntity();
-        if(!(entity instanceof LivingEntity livingentity)) return false;
-        return livingentity.hasEffect(MobEffects.BLINDNESS) || livingentity.hasEffect(MobEffects.DARKNESS);
-    }
-
     public static BufferBuilder.RenderedBuffer drawStars(BufferBuilder builder) {
         RandomSource random = RandomSource.create(10842L);
         builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
