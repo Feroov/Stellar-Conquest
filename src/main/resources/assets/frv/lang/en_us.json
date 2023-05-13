@@ -8,6 +8,11 @@
 
 
 
+  "block.frv.xenosgrass_block": "Xenosgrass Block",
+  "block.frv.xenosphere_portal": "§b§kco§r§bXenosphere Teleporter§b§kco",
+
+
+
   "item.frv.celestroid_spawn_egg": "Celestroid Spawn Egg", "entity.frv.celestroid": "Celestroid",
   "item.frv.mothership_spawn_egg": "\u00A74\u00A7cCelestroid Mothership\u00A7c Spawn Egg", "entity.frv.mothership": "\u00A74\u00A7cCelestroid Mothership\u00A7c"
 }
