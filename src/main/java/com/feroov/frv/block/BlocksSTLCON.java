@@ -7,6 +7,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.GrassBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.util.ForgeSoundType;
@@ -32,6 +34,9 @@ public class BlocksSTLCON
                     () -> SoundEvents.SCULK_BLOCK_FALL) //fall
             ).strength(15.0F, 15.0F).lightLevel((light) -> {return 15;}))
     );
+
+    public static final RegistryObject<Block> XENOSGRASS_BLOCK = registerBlock("xenosgrass_block",
+            () -> new GrassBlock(BlockBehaviour.Properties.of(Material.GRASS).strength(0.6F).sound(SoundType.GRASS)));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block)
