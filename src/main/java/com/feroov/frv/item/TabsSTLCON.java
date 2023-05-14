@@ -34,6 +34,7 @@ public class TabsSTLCON
         {
             event.accept(BlocksSTLCON.XENOSPHERE_PORTAL);
             event.accept(BlocksSTLCON.XENOSGRASS_BLOCK);
+            event.accept(BlocksSTLCON.XENOSGRASS);
         }
 
         if(event.getTab() == TabsSTLCON.STLCON_ITEMS)

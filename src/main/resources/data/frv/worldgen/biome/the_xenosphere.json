@@ -29,16 +29,7 @@
   },
   "has_precipitation": false,
   "creature_spawn_probability": 0.2,
-  "spawners": {
-    "monster": [
-      {
-        "type": "frv:celestroid",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      }
-    ]
-  },
+  "spawners": {},
   "spawn_costs": {},
   "carvers": {
     "air": [

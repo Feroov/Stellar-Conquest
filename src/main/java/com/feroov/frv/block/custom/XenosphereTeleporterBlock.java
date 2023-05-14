@@ -13,10 +13,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class XenosphereBlock extends Block
+public class XenosphereTeleporterBlock extends Block
 {
 
-    public XenosphereBlock(Properties p_49795_) { super(p_49795_); }
+    public XenosphereTeleporterBlock(Properties p_49795_) { super(p_49795_); }
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit)

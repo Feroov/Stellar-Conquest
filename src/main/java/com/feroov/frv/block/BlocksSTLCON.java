@@ -1,14 +1,14 @@
 package com.feroov.frv.block;
 
 import com.feroov.frv.STLCON;
-import com.feroov.frv.block.custom.XenosphereBlock;
+import com.feroov.frv.block.custom.Xenosgrass;
+import com.feroov.frv.block.custom.XenosgrassBlock;
+import com.feroov.frv.block.custom.XenosphereTeleporterBlock;
 import com.feroov.frv.item.ItemsSTLCON;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.GrassBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.util.ForgeSoundType;
@@ -25,7 +25,7 @@ public class BlocksSTLCON
             DeferredRegister.create(ForgeRegistries.BLOCKS, STLCON.MOD_ID);
 
     public static final RegistryObject<Block> XENOSPHERE_PORTAL = registerBlock("xenosphere_portal",
-            () -> new XenosphereBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().sound(new
+            () -> new XenosphereTeleporterBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().sound(new
                     ForgeSoundType(1f,1f,
                     () -> SoundEvents.SCULK_CATALYST_BLOOM,
                     () -> SoundEvents.SCULK_BLOCK_STEP, //step
@@ -36,7 +36,11 @@ public class BlocksSTLCON
     );
 
     public static final RegistryObject<Block> XENOSGRASS_BLOCK = registerBlock("xenosgrass_block",
-            () -> new GrassBlock(BlockBehaviour.Properties.of(Material.GRASS).strength(0.6F).sound(SoundType.GRASS)));
+            () -> new XenosgrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).strength(0.6F).sound(SoundType.GRASS)));
+
+    public static final RegistryObject<Block> XENOSGRASS = registerBlock("xenosgrass",
+            () -> new Xenosgrass(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT)
+                    .instabreak().sound(SoundType.GRASS).noCollission().noOcclusion()));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block)
