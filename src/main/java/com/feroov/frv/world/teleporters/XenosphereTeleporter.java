@@ -1,13 +1,10 @@
 package com.feroov.frv.world.teleporters;
 
 import com.feroov.frv.block.BlocksSTLCON;
-import com.feroov.frv.block.custom.XenosphereBlock;
+import com.feroov.frv.block.custom.XenosphereTeleporterBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.Material;
@@ -57,7 +54,7 @@ public class XenosphereTeleporter implements ITeleporter
             boolean doSetBlock = true;
             for (BlockPos checkPos : BlockPos.betweenClosed(destinationPos.below(10).west(10).south(10), destinationPos.above(10).east(10).north(10)))
             {
-                if (destinationWorld.getBlockState(checkPos).getBlock() instanceof XenosphereBlock)
+                if (destinationWorld.getBlockState(checkPos).getBlock() instanceof XenosphereTeleporterBlock)
                 {
                     doSetBlock = false;
                     break;
