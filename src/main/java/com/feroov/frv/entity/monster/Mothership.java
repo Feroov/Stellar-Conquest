@@ -67,7 +67,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
     {
         super(type, level);
         this.moveControl = new Mothership.MoveHelperController(this);
-        this.xpReward = 15;
+        this.xpReward = 100;
     }
 
     @Override
@@ -133,17 +133,6 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
-
-    @Override
-    protected void tickDeath()
-    {
-        ++this.deathTime;
-        if (this.deathTime == 60 && !this.level.isClientSide())
-        {
-            this.level.broadcastEntityEvent(this, (byte)60);
-            this.remove(RemovalReason.KILLED);
-        }
-    }
 
     @Override
     protected void defineSynchedData()
