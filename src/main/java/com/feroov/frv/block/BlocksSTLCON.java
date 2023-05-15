@@ -11,6 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -38,9 +39,21 @@ public class BlocksSTLCON
     public static final RegistryObject<Block> XENOSGRASS_BLOCK = registerBlock("xenosgrass_block",
             () -> new XenosgrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).strength(0.6F).sound(SoundType.GRASS)));
 
+    public static final RegistryObject<Block> XENOSDIRT = registerBlock("xenosdirt",
+            () -> new     Block(BlockBehaviour.Properties.of(Material.DIRT, MaterialColor.DIRT).strength(0.5F).sound(SoundType.GRAVEL)));
+
     public static final RegistryObject<Block> XENOSGRASS = registerBlock("xenosgrass",
             () -> new Xenosgrass(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT)
                     .instabreak().sound(SoundType.GRASS).noCollission().noOcclusion()));
+
+    public static final RegistryObject<Block> XENOSTONE = registerBlock("xenostone",
+            () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).
+                    requiresCorrectToolForDrops().strength(2.5F, 7.0F)));
+
+    public static final RegistryObject<Block> XENOCOBBLESTONE = registerBlock("xenocobblestone",
+            () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).
+                    requiresCorrectToolForDrops().strength(3.1F, 7.0F)));
+
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block)
