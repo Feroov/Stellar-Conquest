@@ -5,21 +5,9 @@
       "type": "minecraft:weighted_state_provider",
       "entries": [
         {
-          "weight": 3,
-          "data": {
-            "Name": "frv:xenosgrass"
-          }
-        },
-        {
-          "weight": 2,
-          "data": {
-            "Name": "minecraft:cornflower"
-          }
-        },
-        {
           "weight": 1,
           "data": {
-            "Name": "minecraft:blue_orchid"
+            "Name": "frv:xenosgrass"
           }
         }
       ]

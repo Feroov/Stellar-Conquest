@@ -3,10 +3,10 @@ loaderVersion="[45,)" #mandatory
 license="All rights reserved"
 [[mods]] #mandatory
 modId="frv" #mandatory
-version="1.0-1.19.4" #mandatory
+version="1.19.4-1.1.0" #mandatory
 displayName="Stellar Conquest" #mandatory
-displayURL="https://www.curseforge.com/minecraft/mc-mods/stellar-conquest" #optional
-#logoFile="rotmlogo.png" #optional
+displayURL="https://legacy.curseforge.com/minecraft/mc-mods/the-stellar-conquest" #optional
+logoFile="stlconlogo.png" #optional
 authors="Feroov" #optional
 # (#mandatory)
 description='''

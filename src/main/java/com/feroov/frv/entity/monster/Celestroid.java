@@ -115,17 +115,6 @@ public class Celestroid extends Ghast implements Enemy, GeoEntity
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
     @Override
-    protected void tickDeath()
-    {
-        ++this.deathTime;
-        if (this.deathTime == 60 && !this.level.isClientSide())
-        {
-            this.level.broadcastEntityEvent(this, (byte)60);
-            this.remove(RemovalReason.KILLED);
-        }
-    }
-
-    @Override
     protected void defineSynchedData()
     {
         super.defineSynchedData();
