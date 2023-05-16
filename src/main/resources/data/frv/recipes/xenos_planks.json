@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "   ",
+    " # ",
+    "   "
+  ],
+  "key": {
+    "#": {
+      "item": "frv:xenos_log"
+    }
+  },
+  "result": {
+    "item": "frv:xenos_planks",
+    "count": 4
+  }
+}

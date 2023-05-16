@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "frv:block/stripped_xenos_log",
+    "side": "frv:block/stripped_xenos_log"
+  }
+}

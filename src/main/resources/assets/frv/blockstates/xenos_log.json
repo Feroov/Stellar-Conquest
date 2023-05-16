@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "frv:block/xenos_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "frv:block/xenos_log"
+    },
+    "axis=z": {
+      "model": "frv:block/xenos_log_horizontal",
+      "x": 90
+    }
+  }
+}

@@ -1,15 +1,21 @@
 package com.feroov.frv.block;
 
 import com.feroov.frv.STLCON;
+import com.feroov.frv.block.custom.XenosWoodType;
 import com.feroov.frv.block.custom.Xenosgrass;
 import com.feroov.frv.block.custom.XenosgrassBlock;
 import com.feroov.frv.block.custom.XenosphereTeleporterBlock;
 import com.feroov.frv.item.ItemsSTLCON;
+import com.feroov.frv.world.tree.XenosTreeGrower;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.common.util.ForgeSoundType;
@@ -53,6 +59,41 @@ public class BlocksSTLCON
     public static final RegistryObject<Block> XENOCOBBLESTONE = registerBlock("xenocobblestone",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).
                     requiresCorrectToolForDrops().strength(3.1F, 7.0F)));
+
+    public static final RegistryObject<Block> XENOS_LOG = registerBlock("xenos_log",
+            () -> new XenosWoodType(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)
+                    .strength(3f)));
+
+    public static final RegistryObject<Block> XENOS_WOOD = registerBlock("xenos_wood",
+            () -> new XenosWoodType(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)
+                    .strength(3f)));
+
+    public static final RegistryObject<Block> STRIPPED_XENOS_LOG = registerBlock("stripped_xenos_log",
+            () -> new XenosWoodType(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)
+                    .strength(3f)));
+
+    public static final RegistryObject<Block> STRIPPED_XENOS_WOOD = registerBlock("stripped_xenos_wood",
+            () -> new XenosWoodType(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)
+                    .strength(3f)));
+
+    public static final RegistryObject<Block> XENOS_PLANKS = registerBlock("xenos_planks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)
+                    .strength(3f)) {
+                @Override
+                public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+                    return false;
+                }
+            });
+    public static final RegistryObject<Block> XENOS_LEAVES = registerBlock("xenos_leaves",
+            () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)) {
+                @Override
+                public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+                    return false;
+                }
+            });
+
+    public static final RegistryObject<SaplingBlock> XENOS_SAPLING = registerBlock("xenos_sapling",
+            () -> new SaplingBlock(new XenosTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
 
 
 

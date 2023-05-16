@@ -40,12 +40,8 @@
   },
   "features": [
     [
-      "frv:xenosphere_plants"
-    ],
-    [
-      "minecraft:large_dripstone",
-      "minecraft:dripstone_cluster",
-      "minecraft:pointed_dripstone"
+      "frv:xenosphere_plants",
+      "frv:xenos_placed"
     ]
   ]
 }
