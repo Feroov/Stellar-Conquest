@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "frv:xenos_log",
+    "frv:xenos_wood",
+    "frv:stripped_xenos_log",
+    "frv:stripped_xenos_wood"
+  ]
+}

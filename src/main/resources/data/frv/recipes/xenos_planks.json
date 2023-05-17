@@ -1,17 +1,14 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "   ",
-    " # ",
-    "   "
-  ],
-  "key": {
-    "#": {
-      "item": "frv:xenos_log"
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "minecraft:logs"
     }
-  },
+  ],
   "result": {
-    "item": "frv:xenos_planks",
-    "count": 4
+    "count": 4,
+    "item": "frv:xenos_planks"
   }
 }
