@@ -2,7 +2,8 @@ package com.feroov.frv.block;
 
 import com.feroov.frv.STLCON;
 import com.feroov.frv.block.custom.XenosWoodType;
-import com.feroov.frv.block.custom.Xenosgrass;
+import com.feroov.frv.block.custom.vegetation.Blushthorn;
+import com.feroov.frv.block.custom.vegetation.Xenosgrass;
 import com.feroov.frv.block.custom.XenosgrassBlock;
 import com.feroov.frv.block.custom.XenosphereTeleporterBlock;
 import com.feroov.frv.item.ItemsSTLCON;
@@ -28,9 +29,9 @@ import java.util.function.Supplier;
 
 public class BlocksSTLCON
 {
-    public static final DeferredRegister<Block> BLOCKS =
-            DeferredRegister.create(ForgeRegistries.BLOCKS, STLCON.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, STLCON.MOD_ID);
 
+    // ------------------------------------------ Teleporter Blocks ------------------------------------------
     public static final RegistryObject<Block> XENOSPHERE_PORTAL = registerBlock("xenosphere_portal",
             () -> new XenosphereTeleporterBlock(BlockBehaviour.Properties.of(Material.METAL).requiresCorrectToolForDrops().sound(new
                     ForgeSoundType(1f,1f,
@@ -41,7 +42,10 @@ public class BlocksSTLCON
                     () -> SoundEvents.SCULK_BLOCK_FALL) //fall
             ).strength(15.0F, 15.0F).lightLevel((light) -> {return 15;}))
     );
+    // ---------------------------------------------------------------------------------------------------
 
+
+    // ------------------------------------------ General Blocks ------------------------------------------
     public static final RegistryObject<Block> XENOSGRASS_BLOCK = registerBlock("xenosgrass_block",
             () -> new XenosgrassBlock(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK).strength(0.6F).sound(SoundType.GRASS)));
 
@@ -60,6 +64,13 @@ public class BlocksSTLCON
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).
                     requiresCorrectToolForDrops().strength(3.1F, 7.0F)));
 
+    public static final RegistryObject<Block> BLUSHTHORN = registerBlock("blushthorn",
+            () -> new Blushthorn(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT)
+                    .instabreak().sound(SoundType.GRASS).noCollission().noOcclusion().lightLevel((light) -> 10)));
+    // ---------------------------------------------------------------------------------------------------
+
+
+    // ------------------------------------------ Wood Types ------------------------------------------
     public static final RegistryObject<Block> XENOS_LOG = registerBlock("xenos_log",
             () -> new XenosWoodType(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)
                     .strength(3f)));
@@ -94,21 +105,18 @@ public class BlocksSTLCON
 
     public static final RegistryObject<SaplingBlock> XENOS_SAPLING = registerBlock("xenos_sapling",
             () -> new SaplingBlock(new XenosTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    // ---------------------------------------------------------------------------------------------------
+
+
+    // ------------------------------------------ Potted Blocks ------------------------------------------
+    public static final RegistryObject<Block> POTTED_XENOS_SAPLING = BLOCKS.register("potted_xenos",
+            () -> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), BlocksSTLCON.XENOS_SAPLING,
+                    BlockBehaviour.Properties.copy(Blocks.POTTED_ORANGE_TULIP)));
+    // ---------------------------------------------------------------------------------------------------
 
 
 
-    private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block)
-    {
-        RegistryObject<T> toReturn = BLOCKS.register(name, block);
-        registerBlockItem(name, toReturn);
-        return toReturn;
-    }
-
-    private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block)
-    {
-        return ItemsSTLCON.ITEMS.register(name, () -> new BlockItem(block.get(),
-                new Item.Properties()));
-    }
-
+    private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) { RegistryObject<T> toReturn = BLOCKS.register(name, block); registerBlockItem(name, toReturn); return toReturn; }
+    private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block)  { return ItemsSTLCON.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties())); }
     public static void register(IEventBus eventBus) { BLOCKS.register(eventBus); }
 }
