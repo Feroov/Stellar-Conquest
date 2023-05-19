@@ -1,13 +1,11 @@
 package com.feroov.frv.block.custom;
 
-import com.feroov.frv.block.BlocksSTLCON;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -42,7 +40,7 @@ public class XenosgrassBlock extends Block implements BonemealableBlock {
         if (direction != Direction.UP)
             return false;
         PlantType plantType = plantable.getPlantType(getter, pos.relative(direction));
-        return plantType == PlantType.CROP || plantType == PlantType.PLAINS || plantType == PlantType.CAVE;
+        return plantType == PlantType.PLAINS || plantType == PlantType.CAVE;
     }
 
     @Override

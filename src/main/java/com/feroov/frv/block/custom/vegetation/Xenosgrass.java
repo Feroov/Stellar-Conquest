@@ -1,4 +1,4 @@
-package com.feroov.frv.block.custom;
+package com.feroov.frv.block.custom.vegetation;
 
 import com.feroov.frv.block.PlantBlocksSTLCON;
 import net.minecraft.core.BlockPos;

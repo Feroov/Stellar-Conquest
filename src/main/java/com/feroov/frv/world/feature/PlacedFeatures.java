@@ -1,6 +1,5 @@
 package com.feroov.frv.world.feature;
 
-
 import com.feroov.frv.STLCON;
 import com.feroov.frv.block.BlocksSTLCON;
 import net.minecraft.core.Holder;
@@ -25,7 +24,7 @@ public class PlacedFeatures
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
         register(context, XENOS_PLACED_KEY, configuredFeatures.getOrThrow(ConfiguredFeaturesSTLCON.XENOS_KEY),
-                VegetationPlacements.treePlacement(PlacementUtils.countExtra(1, 0.5f, 1), BlocksSTLCON.XENOS_SAPLING.get()));
+                VegetationPlacements.treePlacement(PlacementUtils.countExtra(55, 0.1f, 55), BlocksSTLCON.XENOS_SAPLING.get()));
     }
 
 

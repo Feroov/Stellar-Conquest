@@ -299,7 +299,7 @@
           "if_true": {
             "type": "minecraft:biome",
             "biome_is": [
-              "frv:the_xenosphere"
+              "frv:xenosphere_forest"
             ]
           },
           "then_run": {
@@ -330,7 +330,7 @@
           "if_true": {
             "type": "minecraft:biome",
             "biome_is": [
-              "frv:the_xenosphere"
+              "frv:xenosphere_forest"
             ]
           },
           "then_run": {
@@ -345,7 +345,7 @@
             "then_run": {
               "type": "minecraft:block",
               "result_state": {
-                "Name": "frv:xenostone"
+                "Name": "frv:xenosdirt"
               }
             }
           }
@@ -356,7 +356,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:vertical_gradient",
-          "random_name": "frv:xenosdirt",
+          "random_name": "frv:xenostone",
           "true_at_and_below": {
             "absolute": 0
           },
@@ -367,7 +367,7 @@
         "then_run": {
           "type": "minecraft:block",
           "result_state": {
-            "Name": "frv:xenosdirt",
+            "Name": "frv:xenostone",
             "Properties": {
               "axis": "y"
             }

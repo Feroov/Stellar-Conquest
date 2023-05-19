@@ -33,6 +33,7 @@ public class TabsSTLCON
         if(event.getTab() == TabsSTLCON.STLCON_BLOCKS)
         {
             event.accept(BlocksSTLCON.XENOSPHERE_PORTAL);
+            event.accept(BlocksSTLCON.BLUSHTHORN);
             event.accept(BlocksSTLCON.XENOSGRASS);
             event.accept(BlocksSTLCON.XENOSGRASS_BLOCK);
             event.accept(BlocksSTLCON.XENOSDIRT);
@@ -51,6 +52,7 @@ public class TabsSTLCON
         {
             event.accept(ItemsSTLCON.ADMIN_SWORD);
             event.accept(ItemsSTLCON.COSMIC_RAY_GUN);
+            event.accept(ItemsSTLCON.BLUSHTHORN_NECTAR_BOTTLE);
             event.accept(ItemsSTLCON.CELESTROID_SPAWN_EGG);
             event.accept(ItemsSTLCON.MOTHERSHIP_SPAWN_EGG);
         }

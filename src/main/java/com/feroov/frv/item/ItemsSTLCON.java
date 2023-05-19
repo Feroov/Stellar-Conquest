@@ -3,8 +3,11 @@ package com.feroov.frv.item;
 import com.feroov.frv.STLCON;
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.item.custom.CosmicRayGun;
+import com.feroov.frv.item.custom.consumeable.BushthornNectar;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
@@ -17,6 +20,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
+
+import static net.minecraft.world.item.Items.GLASS_BOTTLE;
 
 public class ItemsSTLCON
 {
@@ -36,14 +41,19 @@ public class ItemsSTLCON
         }
     });
 
-    public static final RegistryObject<CosmicRayGun> COSMIC_RAY_GUN = ITEMS.register("raygun", CosmicRayGun::new);
+    public static final RegistryObject<Item> BLUSHTHORN_NECTAR_BOTTLE = ITEMS.register("blushthorn_nectar",
+            () ->     new BushthornNectar((new Item.Properties()).craftRemainder(GLASS_BOTTLE).food(ConsumablesSTLCON.BLUSHTHORN_NECTAR_BOTTLE).stacksTo(16)));
 
+    public static final RegistryObject<CosmicRayGun> COSMIC_RAY_GUN = ITEMS.register("raygun", CosmicRayGun::new);
 
     public static final RegistryObject<Item> CELESTROID_SPAWN_EGG = ITEMS.register("celestroid_spawn_egg",
             () -> new ForgeSpawnEggItem(EntitiesSTLCON.CELESTROID, 0x029AF7, 0x5E5C5D, new Item.Properties()));
 
     public static final RegistryObject<Item> MOTHERSHIP_SPAWN_EGG = ITEMS.register("mothership_spawn_egg",
             () -> new ForgeSpawnEggItem(EntitiesSTLCON.MOTHERSHIP,  0x5E5C5D, 0x029AF7, new Item.Properties()));
+
+
+
 
 
     public static void register(IEventBus eventBus)

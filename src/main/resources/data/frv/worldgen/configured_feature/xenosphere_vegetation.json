@@ -5,9 +5,15 @@
       "type": "minecraft:weighted_state_provider",
       "entries": [
         {
-          "weight": 1,
+          "weight": 100,
           "data": {
             "Name": "frv:xenosgrass"
+          }
+        },
+        {
+          "weight": 1,
+          "data": {
+            "Name": "frv:blushthorn"
           }
         }
       ]
