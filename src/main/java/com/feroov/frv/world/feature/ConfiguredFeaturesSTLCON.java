@@ -24,19 +24,13 @@ public class ConfiguredFeaturesSTLCON
 
         register(context, XENOS_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(BlocksSTLCON.XENOS_LOG.get()),
-                new StraightTrunkPlacer(4, 1, 1),
+                new StraightTrunkPlacer(4, 3, 0),
                 BlockStateProvider.simple(BlocksSTLCON.XENOS_LEAVES.get()),
-                new LeafSpheroidFoliagePlacer(1.5f, 2.25f, ConstantInt.of(0), 1, 0, 0.5f, 0),
-                new TwoLayersFeatureSize(1, 1, 1)).build());
+                new LeafSpheroidFoliagePlacer(1.5f, 2.25f, ConstantInt.of(0), 1, 1, 0.5f, 0),
+                new TwoLayersFeatureSize(2, 2, 2)).build());
     }
 
 
-    public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(STLCON.MOD_ID, name));
-    }
-
-    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context,
-                                                                                          ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) {
-        context.register(key, new ConfiguredFeature<>(feature, configuration));
-    }
+    public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) { return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(STLCON.MOD_ID, name)); }
+    private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context, ResourceKey<ConfiguredFeature<?, ?>> key, F feature, FC configuration) { context.register(key, new ConfiguredFeature<>(feature, configuration));}
 }
