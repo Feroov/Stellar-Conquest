@@ -3,6 +3,7 @@ package com.feroov.frv.entity;
 import com.feroov.frv.STLCON;
 import com.feroov.frv.entity.monster.Celestroid;
 import com.feroov.frv.entity.monster.Mothership;
+import com.feroov.frv.entity.monster.Xeron;
 import com.feroov.frv.entity.projectile.CelestroidBeam;
 import com.feroov.frv.entity.projectile.MothershipBeam;
 import com.feroov.frv.entity.projectile.RaygunBeam;
@@ -32,6 +33,12 @@ public class EntitiesSTLCON
                     () -> EntityType.Builder.of(Mothership::new, MobCategory.MONSTER)
                             .sized(8.0f, 8.0f).canSpawnFarFromPlayer()
                             .build(new ResourceLocation(STLCON.MOD_ID, "mothership").toString()));
+
+    public static final RegistryObject<EntityType<Xeron>> XERON =
+            ENTITY_TYPES.register("xeron",
+                    () -> EntityType.Builder.of(Xeron::new, MobCategory.MONSTER)
+                            .sized(0.6f, 1.0f).canSpawnFarFromPlayer()
+                            .build(new ResourceLocation(STLCON.MOD_ID, "xeron").toString()));
 
     // Projectiles Entities
     public static final RegistryObject<EntityType<RaygunBeam>> RAYGUN_BEAM = ENTITY_TYPES.register("raygun_beam",
