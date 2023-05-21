@@ -37,7 +37,7 @@ public class EntitiesSTLCON
     public static final RegistryObject<EntityType<Xeron>> XERON =
             ENTITY_TYPES.register("xeron",
                     () -> EntityType.Builder.of(Xeron::new, MobCategory.MONSTER)
-                            .sized(0.6f, 1.0f).canSpawnFarFromPlayer()
+                            .sized(0.5f, 1.2f).canSpawnFarFromPlayer()
                             .build(new ResourceLocation(STLCON.MOD_ID, "xeron").toString()));
 
     // Projectiles Entities
