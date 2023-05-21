@@ -104,7 +104,7 @@ public class XenosphereSky extends DimensionSpecialEffects {
 
 
         float f19 = 50.0F;
-        float x2 = -650.0F;
+        float x2 = -500.0F;
         float y2 = 525.0F;
 
         RenderSystem.setShaderTexture(0, PLANET1);
