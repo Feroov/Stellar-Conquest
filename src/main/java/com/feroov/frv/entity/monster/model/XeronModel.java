@@ -1,7 +1,7 @@
 package com.feroov.frv.entity.monster.model;
 
 import com.feroov.frv.STLCON;
-import com.feroov.frv.entity.monster.Mothership;
+import com.feroov.frv.entity.monster.Xeron;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib.constant.DataTickets;
@@ -10,30 +10,30 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 
-public class MothershipModel extends GeoModel<Mothership>
+public class XeronModel extends GeoModel<Xeron>
 {
     @Override
-    public ResourceLocation getModelResource(Mothership animatable)
+    public ResourceLocation getModelResource(Xeron animatable)
     {
-        return new ResourceLocation(STLCON.MOD_ID, "geo/mothership.json");
+        return new ResourceLocation(STLCON.MOD_ID, "geo/xeron.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(Mothership animatable)
+    public ResourceLocation getTextureResource(Xeron animatable)
     {
-        return new ResourceLocation(STLCON.MOD_ID, "textures/entity/mothership.png");
+        return new ResourceLocation(STLCON.MOD_ID, "textures/entity/xeron.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(Mothership animatable)
+    public ResourceLocation getAnimationResource(Xeron animatable)
     {
-        return new ResourceLocation(STLCON.MOD_ID, "animations/celestroid.json");
+        return new ResourceLocation(STLCON.MOD_ID, "animations/xeron.json");
     }
 
     @Override
-    public void setCustomAnimations(Mothership animatable, long instanceId, AnimationState<Mothership> animationState)
+    public void setCustomAnimations(Xeron animatable, long instanceId, AnimationState<Xeron> animationState)
     {
-        CoreGeoBone head = getAnimationProcessor().getBone("celestroid");
+        CoreGeoBone head = getAnimationProcessor().getBone("head");
 
         if (head != null)
         {
