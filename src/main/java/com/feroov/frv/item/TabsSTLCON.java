@@ -54,6 +54,7 @@ public class TabsSTLCON
             event.accept(ItemsSTLCON.COSMIC_RAY_GUN);
             event.accept(ItemsSTLCON.BLUSHTHORN_NECTAR_BOTTLE);
             event.accept(ItemsSTLCON.CELESTROID_SPAWN_EGG);
+            event.accept(ItemsSTLCON.XERON_SPAWN_EGG);
             event.accept(ItemsSTLCON.MOTHERSHIP_SPAWN_EGG);
         }
     }

@@ -52,6 +52,9 @@ public class ItemsSTLCON
     public static final RegistryObject<Item> MOTHERSHIP_SPAWN_EGG = ITEMS.register("mothership_spawn_egg",
             () -> new ForgeSpawnEggItem(EntitiesSTLCON.MOTHERSHIP,  0x5E5C5D, 0x029AF7, new Item.Properties()));
 
+    public static final RegistryObject<Item> XERON_SPAWN_EGG = ITEMS.register("xeron_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.XERON,  0x029AF7, 0X006AFF, new Item.Properties()));
+
 
 
 
