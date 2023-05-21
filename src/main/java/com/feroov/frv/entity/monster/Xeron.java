@@ -39,7 +39,7 @@ public class Xeron extends PathfinderMob implements GeoEntity
         return Monster.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.32D)
-                .add(Attributes.FOLLOW_RANGE, 30.0D)
+                .add(Attributes.FOLLOW_RANGE, 15.0D)
                 .add(Attributes.ATTACK_DAMAGE, 1.5D).build();
     }
 
