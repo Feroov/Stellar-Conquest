@@ -29,7 +29,16 @@
   },
   "has_precipitation": false,
   "creature_spawn_probability": 0.2,
-  "spawners": {},
+  "spawners": {
+    "monster": [
+      {
+        "type": "frv:xeron",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 3
+      }
+    ]
+  },
   "spawn_costs": {},
   "carvers": {
     "air": [
