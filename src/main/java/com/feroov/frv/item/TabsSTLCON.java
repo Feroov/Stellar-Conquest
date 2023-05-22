@@ -24,7 +24,7 @@ public class TabsSTLCON
                         .title(Component.translatable("creativemodetab.stlcon_items")));
 
         STLCON_BLOCKS = event.registerCreativeModeTab(new ResourceLocation(STLCON.MOD_ID, "stlcon_blocks"),
-                builder -> builder.icon(() -> new ItemStack(BlocksSTLCON.XENOSPHERE_PORTAL.get()))
+                builder -> builder.icon(() -> new ItemStack(BlocksSTLCON.XENOFLUX.get()))
                         .title(Component.translatable("creativemodetab.stlcon_blocks")));
     }
 
@@ -32,25 +32,26 @@ public class TabsSTLCON
     public static void registerCreativeModeTabs(CreativeModeTabEvent.BuildContents event) {
         if(event.getTab() == TabsSTLCON.STLCON_BLOCKS)
         {
-            event.accept(BlocksSTLCON.XENOSPHERE_PORTAL);
             event.accept(BlocksSTLCON.BLUSHTHORN);
             event.accept(BlocksSTLCON.XENOSGRASS);
+            event.accept(BlocksSTLCON.XENOS_SAPLING);
             event.accept(BlocksSTLCON.XENOSGRASS_BLOCK);
             event.accept(BlocksSTLCON.XENOSDIRT);
-            event.accept(BlocksSTLCON.XENOSTONE);
-            event.accept(BlocksSTLCON.XENOCOBBLESTONE);
             event.accept(BlocksSTLCON.XENOS_LOG);
             event.accept(BlocksSTLCON.XENOS_WOOD);
             event.accept(BlocksSTLCON.XENOS_PLANKS);
             event.accept(BlocksSTLCON.STRIPPED_XENOS_LOG);
             event.accept(BlocksSTLCON.STRIPPED_XENOS_WOOD);
             event.accept(BlocksSTLCON.XENOS_LEAVES);
-            event.accept(BlocksSTLCON.XENOS_SAPLING);
+            event.accept(BlocksSTLCON.XENOFLUX);
+            event.accept(BlocksSTLCON.XENOSTONE);
+            event.accept(BlocksSTLCON.XENOCOBBLESTONE);
         }
 
         if(event.getTab() == TabsSTLCON.STLCON_ITEMS)
         {
             event.accept(ItemsSTLCON.ADMIN_SWORD);
+            event.accept(ItemsSTLCON.XENOS_EYE);
             event.accept(ItemsSTLCON.COSMIC_RAY_GUN);
             event.accept(ItemsSTLCON.BLUSHTHORN_NECTAR_BOTTLE);
             event.accept(ItemsSTLCON.CELESTROID_SPAWN_EGG);

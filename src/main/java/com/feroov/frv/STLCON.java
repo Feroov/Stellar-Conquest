@@ -7,6 +7,7 @@ import com.feroov.frv.item.ItemsSTLCON;
 import com.feroov.frv.item.RangedItems;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import com.feroov.frv.world.dimension.DimensionsSTLCON;
+import com.feroov.frv.world.dimension.POIRegistry;
 import com.feroov.frv.world.feature.FeatureModifiers;
 import com.feroov.frv.world.placement.PlacementRegistry;
 import net.minecraft.world.level.block.Blocks;
@@ -34,6 +35,7 @@ public class STLCON
         ItemsSTLCON.register(eventBus);
         BlocksSTLCON.register(eventBus);
         DimensionsSTLCON.register();
+        POIRegistry.POI.register(eventBus);
         FeatureModifiers.FOLIAGE_PLACERS.register(eventBus);
 
         eventBus.addListener(this::setup);

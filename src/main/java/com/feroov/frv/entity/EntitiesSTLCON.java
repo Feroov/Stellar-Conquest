@@ -10,6 +10,7 @@ import com.feroov.frv.entity.projectile.RaygunBeam;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -19,6 +20,9 @@ public class EntitiesSTLCON
 {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, STLCON.MOD_ID);
+
+    public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister
+            .create(ForgeRegistries.BLOCK_ENTITY_TYPES, STLCON.MOD_ID);
 
     // Monster Entities
     public static final RegistryObject<EntityType<Celestroid>> CELESTROID =
@@ -57,5 +61,11 @@ public class EntitiesSTLCON
                     .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "mothership_beam").toString()));
 
 
-    public static void register(IEventBus eventBus) { ENTITY_TYPES.register(eventBus); }
+
+
+    public static void register(IEventBus eventBus)
+    {
+        ENTITY_TYPES.register(eventBus);
+        TILES.register(eventBus);
+    }
 }

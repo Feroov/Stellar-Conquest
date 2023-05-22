@@ -13,6 +13,7 @@ import com.feroov.frv.entity.projectile.renderer.CelestroidBeamRenderer;
 import com.feroov.frv.entity.projectile.renderer.MothershipBeamRenderer;
 import com.feroov.frv.entity.projectile.renderer.RaygunBeamRenderer;
 import com.feroov.frv.particles.HeartParticles;
+import com.feroov.frv.particles.XenospherePortalParticles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -60,5 +61,6 @@ public class ClientModEvents
     public static void registerParticleFactories(final RegisterParticleProvidersEvent event)
     {
         Minecraft.getInstance().particleEngine.register(ModParticles.HEART_PARTICLES.get(), HeartParticles.Provider::new);
+        Minecraft.getInstance().particleEngine.register(ModParticles.XENOSPHERE_PORTAL_PARTICLES.get(), XenospherePortalParticles.Provider::new);
     }
 }

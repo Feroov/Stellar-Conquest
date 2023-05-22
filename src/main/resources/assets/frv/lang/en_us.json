@@ -6,6 +6,7 @@
   "item.frv.admin_sword": "\u00A74\u00A7lBan Hammer",
   "item.frv.raygun": "\u00A7bCosmic Ray Gun",
   "item.frv.blushthorn_nectar": "\u00A75Blushthorn Nectar Bottle",
+  "item.frv.xenos_eye": "\u00A7eEye of Xeron",
 
 
 
@@ -14,6 +15,7 @@
   "block.frv.blushthorn": "\u00A75Blushthorn",
   "block.frv.xenosdirt": "Xenosdirt",
   "block.frv.xenostone": "Xenostone",
+  "block.frv.xenoflux": "\u00A7eXenoflux",
   "block.frv.xenocobblestone": "Xenos Cobblestone",
   "block.frv.xenosphere_portal": "§b§kco§r§bXenosphere Teleporter§b§kco",
   "block.frv.stripped_xenos_log": "Stripped Xenos Log",

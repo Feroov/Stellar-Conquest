@@ -27,13 +27,26 @@
     },
     {
       "rolls": {
+        "min": 14,
+        "max": 14
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "frv:xenoflux"
+        }
+      ]
+    },
+
+    {
+      "rolls": {
         "min": 1,
         "max": 1
       },
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "frv:xenosphere_portal"
+          "name": "frv:xenos_eye"
         }
       ]
     }
