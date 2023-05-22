@@ -13,6 +13,7 @@ public class ModParticles
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, STLCON.MOD_ID);
 
     public static final RegistryObject<SimpleParticleType> HEART_PARTICLES = PARTICLE_TYPES.register("heart_particles", () -> new SimpleParticleType(true));
+    public static final RegistryObject<SimpleParticleType> XENOSPHERE_PORTAL_PARTICLES = PARTICLE_TYPES.register("xenosphere_portal_particles", () -> new SimpleParticleType(true));
 
     public static void register(IEventBus eventBus) {
         PARTICLE_TYPES.register(eventBus);

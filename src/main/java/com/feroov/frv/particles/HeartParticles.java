@@ -28,27 +28,18 @@ public class HeartParticles extends TextureSheetParticle
     }
 
     @Override
-    public void tick() {
-        super.tick();
-        fadeOut();
-    }
+    public void tick()  { super.tick(); fadeOut(); }
 
-    private void fadeOut() {
-        this.alpha = (-(1/(float)lifetime) * age + 1);
-    }
+    private void fadeOut() { this.alpha = (-(1/(float)lifetime) * age + 1); }
 
     @Override
-    public ParticleRenderType getRenderType() {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
-    }
+    public ParticleRenderType getRenderType() { return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT; }
 
     @OnlyIn(Dist.CLIENT)
-    public static class Provider implements ParticleProvider<SimpleParticleType> {
+    public static class Provider implements ParticleProvider<SimpleParticleType>
+    {
         private final SpriteSet sprites;
-
-        public Provider(SpriteSet spriteSet) {
-            this.sprites = spriteSet;
-        }
+        public Provider(SpriteSet spriteSet) { this.sprites = spriteSet; }
 
         public Particle createParticle(SimpleParticleType particleType, ClientLevel level,
                                        double x, double y, double z,
