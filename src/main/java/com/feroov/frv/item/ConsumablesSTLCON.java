@@ -10,6 +10,6 @@ public class ConsumablesSTLCON
     public static final FoodProperties BLUSHTHORN_NECTAR_BOTTLE = (new FoodProperties.Builder())
             .nutrition(3)
             .saturationMod(0.6F)
-            .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 400 ,3), 1.0f)
+            .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 400 ,1), 1.0f)
             .build();
 }
