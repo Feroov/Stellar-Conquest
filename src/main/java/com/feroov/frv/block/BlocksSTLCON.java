@@ -4,6 +4,7 @@ import com.feroov.frv.block.custom.XenosWoodType;
 import com.feroov.frv.block.custom.vegetation.Blushthorn;
 import com.feroov.frv.block.custom.vegetation.Xenosgrass;
 import com.feroov.frv.block.custom.XenosgrassBlock;
+import com.feroov.frv.entity.BossVariant;
 import com.feroov.frv.item.ItemsSTLCON;
 import com.feroov.frv.world.tree.XenosTreeGrower;
 import net.minecraft.ChatFormatting;
@@ -39,6 +40,13 @@ public class BlocksSTLCON
     // ------------------------------------------ Teleporter Blocks ------------------------------------------
     public static final RegistryObject<Block> XENOSPHERE_TELEPORTER = registerBlock("xenosphere_portal", () ->
             new STLCONPortalBlocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MOD_ID, "xenosdirt"))));
+    // ---------------------------------------------------------------------------------------------------
+
+
+    // ------------------------------------------ Spawner Blocks ------------------------------------------
+    public static final RegistryObject<Block> MOTHERSHIP_SPAWNER = registerBlock("mothership_boss_spawner",
+            () -> new BossSpawnerBlock(BlockBehaviour.Properties.of(Material.STONE).strength(-1.0F, 3600000.8F)
+                    .noOcclusion().noLootTable(), BossVariant.MOTHERSHIP));
     // ---------------------------------------------------------------------------------------------------
 
 
@@ -131,6 +139,7 @@ public class BlocksSTLCON
             () -> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), BlocksSTLCON.XENOS_SAPLING,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_ORANGE_TULIP)));
     // ---------------------------------------------------------------------------------------------------
+
 
 
 

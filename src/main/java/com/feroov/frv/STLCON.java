@@ -1,6 +1,7 @@
 package com.feroov.frv;
 
 import com.feroov.frv.block.BlocksSTLCON;
+import com.feroov.frv.entity.BlockEntitiesSTLCON;
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.events.ModParticles;
 import com.feroov.frv.item.ItemsSTLCON;
@@ -30,12 +31,13 @@ public class STLCON
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         SoundEventsSTLCON.register(eventBus);
+        BlocksSTLCON.register(eventBus);
         EntitiesSTLCON.register(eventBus);
         ModParticles.register(eventBus);
         ItemsSTLCON.register(eventBus);
-        BlocksSTLCON.register(eventBus);
         DimensionsSTLCON.register();
         POIRegistry.POI.register(eventBus);
+        BlockEntitiesSTLCON.BLOCK_ENTITIES.register(eventBus);
         FeatureModifiers.FOLIAGE_PLACERS.register(eventBus);
 
         eventBus.addListener(this::setup);

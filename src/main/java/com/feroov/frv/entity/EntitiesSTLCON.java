@@ -1,12 +1,14 @@
 package com.feroov.frv.entity;
 
 import com.feroov.frv.STLCON;
+import com.feroov.frv.block.BlocksSTLCON;
 import com.feroov.frv.entity.monster.Celestroid;
 import com.feroov.frv.entity.monster.Mothership;
 import com.feroov.frv.entity.monster.Xeron;
 import com.feroov.frv.entity.projectile.CelestroidBeam;
 import com.feroov.frv.entity.projectile.MothershipBeam;
 import com.feroov.frv.entity.projectile.RaygunBeam;
+import com.feroov.frv.entity.spawner.MothershipSpawnerBlockEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -20,9 +22,6 @@ public class EntitiesSTLCON
 {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, STLCON.MOD_ID);
-
-    public static final DeferredRegister<BlockEntityType<?>> TILES = DeferredRegister
-            .create(ForgeRegistries.BLOCK_ENTITY_TYPES, STLCON.MOD_ID);
 
     // Monster Entities
     public static final RegistryObject<EntityType<Celestroid>> CELESTROID =
@@ -60,12 +59,5 @@ public class EntitiesSTLCON
                     .updateInterval(10)
                     .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "mothership_beam").toString()));
 
-
-
-
-    public static void register(IEventBus eventBus)
-    {
-        ENTITY_TYPES.register(eventBus);
-        TILES.register(eventBus);
-    }
+    public static void register(IEventBus eventBus)  { ENTITY_TYPES.register(eventBus); }
 }
