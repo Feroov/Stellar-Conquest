@@ -1,5 +1,8 @@
 {
-  "variants": {
-    "": { "model": "frv:block/xenosphere_portal" }
+  "forge_marker": 1,
+  "variants":
+  {
+    "axis=z": { "model": "frv:block/xenosphere_portal_ew" },
+    "axis=x": { "model": "frv:block/xenosphere_portal_ns" }
   }
 }
