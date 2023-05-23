@@ -64,7 +64,7 @@ public class Celestroid extends Ghast implements Enemy, GeoEntity
     public static AttributeSupplier setAttributes()
     {
         return Monster.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 45.0D)
+                .add(Attributes.MAX_HEALTH, 18.0D)
                 .add(Attributes.FOLLOW_RANGE, 75.0D).build();
     }
 

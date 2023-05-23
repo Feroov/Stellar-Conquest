@@ -26,7 +26,7 @@ public class EntitiesSTLCON
     // Monster Entities
     public static final RegistryObject<EntityType<Celestroid>> CELESTROID =
             ENTITY_TYPES.register("celestroid",
-                    () -> EntityType.Builder.of(Celestroid::new, MobCategory.MONSTER)
+                    () -> EntityType.Builder.of(Celestroid::new, MobCategory.CREATURE)
                             .sized(3.0f, 3.0f).canSpawnFarFromPlayer()
                             .build(new ResourceLocation(STLCON.MOD_ID, "celestroid").toString()));
 
@@ -39,7 +39,7 @@ public class EntitiesSTLCON
 
     public static final RegistryObject<EntityType<Xeron>> XERON =
             ENTITY_TYPES.register("xeron",
-                    () -> EntityType.Builder.of(Xeron::new, MobCategory.MONSTER)
+                    () -> EntityType.Builder.of(Xeron::new, MobCategory.CREATURE)
                             .sized(0.5f, 1.2f).canSpawnFarFromPlayer()
                             .build(new ResourceLocation(STLCON.MOD_ID, "xeron").toString()));
 

@@ -84,7 +84,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
     public static AttributeSupplier setAttributes()
     {
         return Monster.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 500.0D)
+                .add(Attributes.MAX_HEALTH, 250.0D)
                 .add(Attributes.FOLLOW_RANGE, 175.0D).build();
     }
 

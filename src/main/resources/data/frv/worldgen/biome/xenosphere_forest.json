@@ -30,12 +30,12 @@
   "has_precipitation": false,
   "creature_spawn_probability": 0.2,
   "spawners": {
-    "monster": [
+    "creature": [
       {
         "type": "frv:xeron",
-        "weight": 20,
+        "maxCount": 4,
         "minCount": 1,
-        "maxCount": 3
+        "weight": 20
       }
     ]
   },
