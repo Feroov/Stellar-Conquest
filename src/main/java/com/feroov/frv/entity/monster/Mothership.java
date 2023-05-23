@@ -84,8 +84,8 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
     public static AttributeSupplier setAttributes()
     {
         return Monster.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 500.0D)
-                .add(Attributes.FOLLOW_RANGE, 175.0D).build();
+                .add(Attributes.MAX_HEALTH, 250.0D)
+                .add(Attributes.FOLLOW_RANGE, 120.0D).build();
     }
 
 
@@ -207,7 +207,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
         {
             RandomSource random = this.parentEntity.getRandom();
             double d0 = this.parentEntity.getX() + (random.nextFloat() * 2.0F - 1.0F) * 16.0F;
-            double d1 = this.parentEntity.getY() + (random.nextFloat() * 2.0F - 1.0F) * 12.0F;
+            double d1 = this.parentEntity.getY() + (random.nextFloat() * 2.0F - 1.0F) * 5.0F;
             double d2 = this.parentEntity.getZ() + (random.nextFloat() * 2.0F - 1.0F) * 16.0F;
             this.parentEntity.getMoveControl().setWantedPosition(d0, d1, d2, 1.0);
         }
@@ -239,7 +239,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
 
                     if (this.isNotColliding(vec3d, Mth.ceil(d0)))
                     {
-                        this.parentEntity.setDeltaMovement(this.parentEntity.getDeltaMovement().add(vec3d.scale(0.1)));
+                        this.parentEntity.setDeltaMovement(this.parentEntity.getDeltaMovement().add(vec3d.scale(0.07)));
                     }
                     else { this.operation = Operation.WAIT; }
                 }

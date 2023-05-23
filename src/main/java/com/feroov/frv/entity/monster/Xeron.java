@@ -5,17 +5,21 @@ import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -27,12 +31,12 @@ import software.bernie.geckolib.core.object.PlayState;
 import javax.annotation.Nonnull;
 
 
-public class Xeron extends PathfinderMob implements GeoEntity
+public class Xeron extends Animal implements GeoEntity
 {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(Xeron.class, EntityDataSerializers.BOOLEAN);
 
-    public Xeron(EntityType<? extends PathfinderMob> entityType, Level level) { super(entityType, level); }
+    public Xeron(EntityType<? extends Animal> entityType, Level level) { super(entityType, level); }
 
     public static AttributeSupplier setAttributes()
     {
@@ -49,7 +53,7 @@ public class Xeron extends PathfinderMob implements GeoEntity
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new XeronMeleeAttack(this, 0.75D, true));
-        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Mob.class, 15.0F));
+        this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Mob.class, 25.0F));
         this.goalSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.73D));
         this.goalSelector.addGoal(7, new MoveTowardsRestrictionGoal(this, 0.73D));
@@ -117,6 +121,17 @@ public class Xeron extends PathfinderMob implements GeoEntity
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
+
+    @Nullable
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
+        return null;
+    }
+
+    @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return true;
+    }
 
     @Override
     protected void defineSynchedData() { super.defineSynchedData(); this.entityData.define(ATTACKING, false); }

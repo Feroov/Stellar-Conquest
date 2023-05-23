@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "frv:mothership_spawn",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 1694767080,
+    "spacing": 16,
+    "separation": 8,
+    "type": "minecraft:random_spread"
+  }
+}

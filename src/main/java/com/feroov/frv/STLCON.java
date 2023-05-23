@@ -11,6 +11,7 @@ import com.feroov.frv.world.dimension.DimensionsSTLCON;
 import com.feroov.frv.world.dimension.POIRegistry;
 import com.feroov.frv.world.feature.FeatureModifiers;
 import com.feroov.frv.world.placement.PlacementRegistry;
+import com.feroov.frv.world.structure.StructuresSTLCON;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.common.MinecraftForge;
@@ -36,6 +37,7 @@ public class STLCON
         ModParticles.register(eventBus);
         ItemsSTLCON.register(eventBus);
         DimensionsSTLCON.register();
+        StructuresSTLCON.DEFERRED_REGISTRY_STRUCTURE.register(eventBus);
         POIRegistry.POI.register(eventBus);
         BlockEntitiesSTLCON.BLOCK_ENTITIES.register(eventBus);
         FeatureModifiers.FOLIAGE_PLACERS.register(eventBus);

@@ -27,6 +27,9 @@
   "block.frv.xenos_sapling": "Xenos Sapling",
 
 
+  "advancements.frv.kill_mothership.title": "Cosmic Conqueror",
+  "advancements.frv.kill_mothership.description": "UFO? More like 'U-Didn't-Float'",
+
 
   "item.frv.celestroid_spawn_egg": "Celestroid Spawn Egg", "entity.frv.celestroid": "Celestroid",
   "item.frv.xeron_spawn_egg": "Xeron Spawn Egg", "entity.frv.xeron": "Xeron",
