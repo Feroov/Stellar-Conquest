@@ -8,6 +8,7 @@ import com.feroov.frv.item.custom.consumeable.BushthornNectar;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -15,6 +16,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.minecraft.world.item.Items.GLASS_BOTTLE;
@@ -23,27 +25,31 @@ public class ItemsSTLCON
 {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, STLCON.MOD_ID);
 
-    public static final RegistryObject<Item> ADMIN_SWORD = ITEMS.register("admin_sword",
-            () -> new SwordItem(TiersSTLCON.ADMIN, 0, 9996f,
-                    new Item.Properties())
-    {
-        @Override
-        public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)
-        {
-            super.appendHoverText(stack, worldIn, tooltip, flagIn);
-            tooltip.add(Component.translatable("Banish everything off the screen").withStyle(ChatFormatting.RED));
-            tooltip.add(Component.translatable(" "));
-            tooltip.add(Component.translatable("Creative Mode Exclusive!").withStyle(ChatFormatting.UNDERLINE));
-        }
-    });
+    public static final RegistryObject<Item> ADMIN_SWORD = ITEMS.register("admin_sword", () -> new SwordItem(TiersSTLCON.ADMIN, 0, 9996f, new Item.Properties())  { @Override  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)  { super.appendHoverText(stack, worldIn, tooltip, flagIn); tooltip.add(Component.translatable("Banish everything off the screen").withStyle(ChatFormatting.RED)); tooltip.add(Component.translatable(" ")); tooltip.add(Component.translatable("Creative Mode Exclusive!").withStyle(ChatFormatting.UNDERLINE)); }});
 
+    // ------------------------------------------ Weapons ------------------------------------------
+    public static final RegistryObject<CosmicRayGun> COSMIC_RAY_GUN = ITEMS.register("raygun", CosmicRayGun::new);
+    // -----------------------------------------------------------------------------------------------
+
+
+
+    // ------------------------------------------ Materials ------------------------------------------
     public static final RegistryObject<Item> XENOS_EYE = ITEMS.register("xenos_eye", () -> new XenosEye((new Item.Properties())));
+    public static final RegistryObject<Item> XENITE_INGOT = ITEMS.register("xenite_ingot", () -> new Item(new Item.Properties()) { @Override  public boolean isFoil(ItemStack stack) { return true; } });
+    public static final RegistryObject<Item> ASTRALITE_INGOT = ITEMS.register("astralite_ingot", () -> new Item(new Item.Properties()) { @Override  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)  { super.appendHoverText(stack, worldIn, tooltip, flagIn); tooltip.add(Component.translatable("Glimmering Xenospheric").withStyle(ChatFormatting.AQUA)); tooltip.add(Component.translatable("metal unyielding,").withStyle(ChatFormatting.AQUA)); tooltip.add(Component.translatable("azure brilliance with").withStyle(ChatFormatting.AQUA)); tooltip.add(Component.translatable("unparalleled strength.").withStyle(ChatFormatting.AQUA)); }});
+    public static final RegistryObject<Item> USKIUM = ITEMS.register("uskium", () -> new Item(new Item.Properties())  { @Override  public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) { return 2000; }});
+    // -----------------------------------------------------------------------------------------------
 
+
+
+    // ----------------------------------------- Consumables ------------------------------------------
     public static final RegistryObject<Item> BLUSHTHORN_NECTAR_BOTTLE = ITEMS.register("blushthorn_nectar",
             () -> new BushthornNectar((new Item.Properties()).craftRemainder(GLASS_BOTTLE).food(ConsumablesSTLCON.BLUSHTHORN_NECTAR_BOTTLE).stacksTo(16)));
+    // ------------------------------------------------------------------------------------------------
 
-    public static final RegistryObject<CosmicRayGun> COSMIC_RAY_GUN = ITEMS.register("raygun", CosmicRayGun::new);
 
+
+    // ------------------------------------------ Spawn Eggs-------------------------------------------
     public static final RegistryObject<Item> CELESTROID_SPAWN_EGG = ITEMS.register("celestroid_spawn_egg",
             () -> new ForgeSpawnEggItem(EntitiesSTLCON.CELESTROID, 0x029AF7, 0x5E5C5D, new Item.Properties()));
 
@@ -52,6 +58,9 @@ public class ItemsSTLCON
 
     public static final RegistryObject<Item> XERON_SPAWN_EGG = ITEMS.register("xeron_spawn_egg",
             () -> new ForgeSpawnEggItem(EntitiesSTLCON.XERON,  0x029AF7, 0X006AFF, new Item.Properties()));
+    // ------------------------------------------------------------------------------------------------
+
+
 
 
 
