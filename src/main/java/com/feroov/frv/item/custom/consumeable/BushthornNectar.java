@@ -63,7 +63,7 @@ public class BushthornNectar extends Item
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)
     {
-        tooltip.add(Component.translatable("Grants vitality and heals").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.RED));
-        tooltip.add(Component.translatable("with floral essence.").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.RED));
+        tooltip.add(Component.translatable("Grants vitality and heals").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GREEN));
+        tooltip.add(Component.translatable("with floral essence.").withStyle(ChatFormatting.ITALIC).withStyle(ChatFormatting.GREEN));
     }
 }
