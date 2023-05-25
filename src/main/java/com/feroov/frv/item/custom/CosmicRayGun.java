@@ -43,7 +43,7 @@ public class CosmicRayGun extends Item
         if (shooter instanceof Player)
         {
             Player playerentity = (Player) shooter;
-            if (stack.getDamageValue() < stack.getMaxDamage() - 1)
+            if (stack.getDamageValue() < stack.getMaxDamage())
             {
                 playerentity.getCooldowns().addCooldown(this, 50);
 

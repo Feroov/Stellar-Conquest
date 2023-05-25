@@ -129,7 +129,8 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
         if (this.level.isClientSide())
         {
             this.level.addParticle(ParticleTypes.SONIC_BOOM, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-            this.level.addParticle(ParticleTypes.SCULK_CHARGE_POP, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+
         }
     }
 
