@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "frv:xenite_ore"
+  },
+  "result": "frv:xenite_ingot",
+  "experience": 1.3,
+  "cookingtime": 200
+}
