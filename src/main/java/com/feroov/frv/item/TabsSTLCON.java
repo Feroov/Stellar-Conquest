@@ -16,11 +16,17 @@ public class TabsSTLCON
 {
     public static CreativeModeTab STLCON_ITEMS;
     public static CreativeModeTab STLCON_BLOCKS;
+    public static CreativeModeTab STLCON_GEAR;
 
     @SubscribeEvent
-    public static void registerCreativeModeTabs(CreativeModeTabEvent.Register event) {
-        STLCON_ITEMS = event.registerCreativeModeTab(new ResourceLocation(STLCON.MOD_ID, "stlcon_items"),
+    public static void registerCreativeModeTabs(CreativeModeTabEvent.Register event)
+    {
+        STLCON_GEAR = event.registerCreativeModeTab(new ResourceLocation(STLCON.MOD_ID, "stlcon_gear"),
                 builder -> builder.icon(() -> new ItemStack(ItemsSTLCON.COSMIC_RAY_GUN.get()))
+                        .title(Component.translatable("creativemodetab.stlcon_gear")));
+
+        STLCON_ITEMS = event.registerCreativeModeTab(new ResourceLocation(STLCON.MOD_ID, "stlcon_items"),
+                builder -> builder.icon(() -> new ItemStack(ItemsSTLCON.ASTRALITE_INGOT.get()))
                         .title(Component.translatable("creativemodetab.stlcon_items")));
 
         STLCON_BLOCKS = event.registerCreativeModeTab(new ResourceLocation(STLCON.MOD_ID, "stlcon_blocks"),
@@ -29,7 +35,8 @@ public class TabsSTLCON
     }
 
     @SubscribeEvent
-    public static void registerCreativeModeTabs(CreativeModeTabEvent.BuildContents event) {
+    public static void registerCreativeModeTabs(CreativeModeTabEvent.BuildContents event)
+    {
         if(event.getTab() == TabsSTLCON.STLCON_BLOCKS)
         {
             event.accept(BlocksSTLCON.BLUSHTHORN);
@@ -46,17 +53,28 @@ public class TabsSTLCON
             event.accept(BlocksSTLCON.XENOFLUX);
             event.accept(BlocksSTLCON.XENOSTONE);
             event.accept(BlocksSTLCON.XENOCOBBLESTONE);
+            event.accept(BlocksSTLCON.USKIUM_ORE);
+            event.accept(BlocksSTLCON.XENITE_ORE);
+            event.accept(BlocksSTLCON.ASTRALITE_ORE);
         }
 
         if(event.getTab() == TabsSTLCON.STLCON_ITEMS)
         {
-            event.accept(ItemsSTLCON.ADMIN_SWORD);
+
+            event.accept(ItemsSTLCON.USKIUM);
+            event.accept(ItemsSTLCON.XENITE_INGOT);
+            event.accept(ItemsSTLCON.ASTRALITE_INGOT);
             event.accept(ItemsSTLCON.XENOS_EYE);
-            event.accept(ItemsSTLCON.COSMIC_RAY_GUN);
             event.accept(ItemsSTLCON.BLUSHTHORN_NECTAR_BOTTLE);
             event.accept(ItemsSTLCON.CELESTROID_SPAWN_EGG);
             event.accept(ItemsSTLCON.XERON_SPAWN_EGG);
             event.accept(ItemsSTLCON.MOTHERSHIP_SPAWN_EGG);
+        }
+
+        if(event.getTab() == TabsSTLCON.STLCON_GEAR)
+        {
+            event.accept(ItemsSTLCON.ADMIN_SWORD);
+            event.accept(ItemsSTLCON.COSMIC_RAY_GUN);
         }
     }
 }
