@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "frv:xenoflux"
+    "frv:xenoflux",
+    "frv:xenite_ore"
   ]
 }
