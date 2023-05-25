@@ -5,6 +5,7 @@ import com.feroov.frv.block.STLCONPortalBlocks;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -48,7 +49,9 @@ public class XenosEye extends Item
         ItemStack itemstack = player.getItemInHand(hand);
         Level worldIn = context.getLevel();
         RandomSource random = worldIn.random;
-        worldIn.playSound(player, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, worldIn.getRandom().nextFloat() * 0.4F + 0.8F);
+        worldIn.playSound(player, pos, SoundEvents.EVOKER_CAST_SPELL, SoundSource.BLOCKS, 1.0F, worldIn.getRandom().nextFloat() * 0.4F + 0.8F);
+        worldIn.addParticle(ParticleTypes.SQUID_INK,
+                pos.getX() + 0.5f, pos.getY() + 1.5f, pos.getZ() + 0.5f,0d, 0d,0d);
 
         if (!player.mayUseItemAt(pos, facing, itemstack)) { return InteractionResult.SUCCESS; }
         if (facing != Direction.UP) { return InteractionResult.SUCCESS; }
@@ -63,6 +66,7 @@ public class XenosEye extends Item
                     portalBlock = (STLCONPortalBlocks) ForgeRegistries.BLOCKS.getValue(new ResourceLocation(STLCON.MOD_ID, "xenosphere_portal"));
                     assert portalBlock != null;
                     portalBlock.createPortal(context.getLevel(), framePos);
+                    itemstack.shrink(1);
                     return InteractionResult.CONSUME;
                 }
                 else
@@ -71,12 +75,15 @@ public class XenosEye extends Item
                     {
                         worldIn.setBlock(context.getClickedPos().above(), Blocks.FIRE.defaultBlockState(), 0);
                     }
+                    itemstack.shrink(1);
+                    player.setItemInHand(hand, itemstack);
                     return InteractionResult.SUCCESS;
                 }
             }
         }
         return InteractionResult.SUCCESS;
     }
+
 
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)
