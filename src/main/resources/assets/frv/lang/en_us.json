@@ -1,23 +1,27 @@
 {
   "creativemodetab.stlcon_items": "Stellar Conquest - Items",
   "creativemodetab.stlcon_blocks": "Stellar Conquest - Blocks",
+  "creativemodetab.stlcon_gear": "Stellar Conquest - Gear",
 
 
   "item.frv.admin_sword": "\u00A74\u00A7lBan Hammer",
   "item.frv.raygun": "\u00A7bCosmic Ray Gun",
   "item.frv.blushthorn_nectar": "\u00A75Blushthorn Nectar Bottle",
   "item.frv.xenos_eye": "\u00A7eEye of Xeron",
+  "item.frv.xenite_ingot": "Xenite Ingot",
+  "item.frv.astralite_ingot": "\u00A7eAstralite Ingot",
+  "item.frv.uskium": "Uskium",
 
 
 
+  "block.frv.xenosphere_portal": "§b§kco§r§bXenosphere Teleporter§b§kco",
+  "block.frv.xenoflux": "\u00A7eXenoflux",
+  "block.frv.blushthorn": "\u00A75Blushthorn",
   "block.frv.xenosgrass_block": "Xenos Grass Block",
   "block.frv.xenosgrass": "Xenosgrass",
-  "block.frv.blushthorn": "\u00A75Blushthorn",
   "block.frv.xenosdirt": "Xenosdirt",
   "block.frv.xenostone": "Xenostone",
-  "block.frv.xenoflux": "\u00A7eXenoflux",
   "block.frv.xenocobblestone": "Xenos Cobblestone",
-  "block.frv.xenosphere_portal": "§b§kco§r§bXenosphere Teleporter§b§kco",
   "block.frv.stripped_xenos_log": "Stripped Xenos Log",
   "block.frv.stripped_xenos_wood": "Stripped Xenos Wood",
   "block.frv.xenos_leaves": "Xenos Leaves",
@@ -25,6 +29,9 @@
   "block.frv.xenos_wood": "Xenos Wood",
   "block.frv.xenos_planks": "Xenos Planks",
   "block.frv.xenos_sapling": "Xenos Sapling",
+  "block.frv.uskium_ore": "Uskium Ore",
+  "block.frv.xenite_ore": "Xenite Ore",
+  "block.frv.astralite_ore": "\u00A7eAstralite Ore",
 
 
   "advancements.frv.kill_mothership.title": "Cosmic Conqueror",

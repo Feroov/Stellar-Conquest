@@ -49,6 +49,11 @@
   },
   "features": [
     [
+      "frv:uskium_placed",
+      "frv:xenite_placed",
+      "frv:astralite_placed"
+    ],
+    [
       "frv:xenosphere_plants",
       "frv:xenos_placed"
     ]

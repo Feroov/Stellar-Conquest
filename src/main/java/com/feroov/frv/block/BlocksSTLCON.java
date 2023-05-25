@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -76,8 +77,8 @@ public class BlocksSTLCON
                 @Override
                 public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> components, TooltipFlag flag)
                 {
-                    components.add(Component.translatable("Pain soothing plant")
-                            .withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC));
+                    components.add(Component.translatable("Heart soothing plant.")
+                            .withStyle(ChatFormatting.GREEN));
                     super.appendHoverText(stack, level, components, flag);
                 }});
 
@@ -89,12 +90,26 @@ public class BlocksSTLCON
                 public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> components, TooltipFlag flag)
                 {
                     components.add(Component.translatable("You feel the pulsating energy.")
-                            .withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
+                            .withStyle(ChatFormatting.AQUA));
                     super.appendHoverText(stack, level, components, flag);
                 }
             });
     // ---------------------------------------------------------------------------------------------------
 
+
+    // ------------------------------------------ Ore Blocks ------------------------------------------
+    public static final RegistryObject<Block> USKIUM_ORE = registerBlock("uskium_ore",
+            () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE)
+                    .strength(5f).requiresCorrectToolForDrops(), UniformInt.of(2, 6)));
+
+    public static final RegistryObject<Block> XENITE_ORE = registerBlock("xenite_ore",
+            () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE)
+                    .strength(9f).requiresCorrectToolForDrops(), UniformInt.of(2, 6)));
+
+    public static final RegistryObject<Block> ASTRALITE_ORE = registerBlock("astralite_ore",
+            () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE)
+                    .strength(13f).requiresCorrectToolForDrops(), UniformInt.of(2, 6)));
+    // ----------------------------------------------------------------------------------------------------
 
     // ------------------------------------------ Wood Types ------------------------------------------
     public static final RegistryObject<Block> XENOS_LOG = registerBlock("xenos_log",
