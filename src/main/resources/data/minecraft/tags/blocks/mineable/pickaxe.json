@@ -3,6 +3,9 @@
   "values": [
     "frv:xenostone",
     "frv:xenocobblestone",
-    "frv:xenoflux"
+    "frv:xenoflux",
+    "frv:xenite_ore",
+    "frv:astralite_ore",
+    "frv:uskium_ore"
   ]
 }
