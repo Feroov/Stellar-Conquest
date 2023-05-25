@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "group": "xenite_ingot",
+  "ingredient": {
+    "item": "frv:astralite_ore"
+  },
+  "result": "frv:astralite_ingot",
+  "experience": 5.0,
+  "cookingtime": 150
+}
