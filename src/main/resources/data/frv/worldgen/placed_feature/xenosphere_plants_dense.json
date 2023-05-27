@@ -1,0 +1,23 @@
+{
+	"feature": "frv:xenosphere_vegetation_dense",
+	"placement": [
+		{
+			"type": "minecraft:count",
+			"count": 256
+		},
+		{
+			"type": "minecraft:in_square"
+		},
+		{
+			"type": "frv:surface_placement",
+			"surface": "highest_ground",
+			"mode": "random_section",
+			"min_height": 59,
+			"max_height": 120,
+			"bury": 0
+		},
+		{
+			"type": "minecraft:biome"
+		}
+	]
+}
