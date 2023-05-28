@@ -1,5 +1,5 @@
 {
-  "temperature": -0.7,
+  "temperature": 0.7,
   "downfall": 0,
   "precipitation": "none",
   "effects": {
@@ -48,14 +48,27 @@
     ]
   },
   "features": [
+    [],
+    [
+      "frv:xenos_pond_placed"
+    ],
+    [],
+    [],
+    [],
+    [],
     [
       "frv:uskium_placed",
       "frv:xenite_placed",
       "frv:astralite_placed"
     ],
+    [],
+    [
+      "frv:xenos_spring_placed"
+    ],
     [
       "frv:xenosphere_plants",
       "frv:xenos_placed"
-    ]
+    ],
+    []
   ]
 }
