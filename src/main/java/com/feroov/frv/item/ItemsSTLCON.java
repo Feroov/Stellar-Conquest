@@ -49,6 +49,10 @@ public class ItemsSTLCON
 
 
 
+    // ----------------------------------------- General ------------------------------------------
+    // ------------------------------------------------------------------------------------------------
+
+
     // ------------------------------------------ Spawn Eggs-------------------------------------------
     public static final RegistryObject<Item> CELESTROID_SPAWN_EGG = ITEMS.register("celestroid_spawn_egg",
             () -> new ForgeSpawnEggItem(EntitiesSTLCON.CELESTROID, 0x029AF7, 0x5E5C5D, new Item.Properties()));

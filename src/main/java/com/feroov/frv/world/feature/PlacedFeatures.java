@@ -13,9 +13,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
-import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraft.world.level.levelgen.placement.PlacementModifier;
+import net.minecraft.world.level.levelgen.placement.*;
 
 import java.util.List;
 
@@ -34,6 +32,7 @@ public class PlacedFeatures
 
         register(context, XENOS_PLACED_KEY, configuredFeatures.getOrThrow(ConfiguredFeaturesSTLCON.XENOS_KEY),
                 VegetationPlacements.treePlacement(PlacementUtils.countExtra(55, 0.1f, 55), BlocksSTLCON.XENOS_SAPLING.get()));
+
 
         register(context, XENITE_PLACED_KEY, configuredFeatures.getOrThrow(ConfiguredFeaturesSTLCON.XENITE_ORE_KEY),
                 OrePlacementSTLCON.commonOrePlacement(9, // veins per chunk

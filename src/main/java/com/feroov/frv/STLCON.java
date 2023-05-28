@@ -10,7 +10,7 @@ import com.feroov.frv.sound.SoundEventsSTLCON;
 import com.feroov.frv.world.dimension.DimensionsSTLCON;
 import com.feroov.frv.world.dimension.POIRegistry;
 import com.feroov.frv.world.feature.FeatureModifiers;
-import com.feroov.frv.world.placement.PlacementRegistry;
+import com.feroov.frv.world.placement.PlacementRegistrySTLCON;
 import com.feroov.frv.world.structure.StructuresSTLCON;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
@@ -49,7 +49,7 @@ public class STLCON
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        PlacementRegistry.init();
+        PlacementRegistrySTLCON.init();
 
         event.enqueueWork(() ->
         {
@@ -57,8 +57,5 @@ public class STLCON
         });
     }
 
-    private void doClientStuff(final FMLClientSetupEvent event)
-    {
-        RangedItems.addRanged();
-    }
+    private void doClientStuff(final FMLClientSetupEvent event)  { RangedItems.addRanged(); }
 }
