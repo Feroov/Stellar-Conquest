@@ -1,5 +1,6 @@
-package com.feroov.frv.world.placement;
+package com.feroov.frv.world.placement.components;
 
+import com.feroov.frv.world.placement.PlacementRegistrySTLCON;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -92,6 +93,6 @@ public class Surface extends PlacementModifier {
 	}
 	@Override
 	public PlacementModifierType<?> type() {
-		return PlacementRegistry.SURFACE_PLACEMENT;
+		return PlacementRegistrySTLCON.SURFACE_PLACEMENT;
 	}
 }

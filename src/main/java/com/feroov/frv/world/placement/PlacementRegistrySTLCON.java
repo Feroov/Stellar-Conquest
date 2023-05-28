@@ -1,14 +1,17 @@
 package com.feroov.frv.world.placement;
 
 import com.feroov.frv.STLCON;
+import com.feroov.frv.world.placement.components.Surface;
+import com.feroov.frv.world.placement.components.Underground;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
+import net.minecraftforge.registries.RegistryObject;
 
-public class PlacementRegistry
+public class PlacementRegistrySTLCON
 {
     public static final PlacementModifierType<Surface> SURFACE_PLACEMENT = register(new ResourceLocation(STLCON.MOD_ID, "surface_placement"), Surface.CODEC);
     public static final PlacementModifierType<Underground> UNDERGROUND = register(new ResourceLocation(STLCON.MOD_ID, "underground"), Underground.CODEC);

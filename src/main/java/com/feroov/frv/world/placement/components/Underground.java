@@ -1,5 +1,6 @@
-package com.feroov.frv.world.placement;
+package com.feroov.frv.world.placement.components;
 
+import com.feroov.frv.world.placement.PlacementRegistrySTLCON;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -20,6 +21,6 @@ public class Underground extends PlacementFilter {
 		return !level.canSeeSkyFromBelowWater(pos.above());
 	}
 	public PlacementModifierType<?> type() {
-		return PlacementRegistry.UNDERGROUND;
+		return PlacementRegistrySTLCON.UNDERGROUND;
 	}
 }
