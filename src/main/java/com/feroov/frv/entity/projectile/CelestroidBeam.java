@@ -4,7 +4,6 @@ import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.entity.monster.Celestroid;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
