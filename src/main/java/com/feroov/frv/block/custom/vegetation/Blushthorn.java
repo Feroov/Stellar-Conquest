@@ -3,7 +3,6 @@ package com.feroov.frv.block.custom.vegetation;
 import com.feroov.frv.block.PlantBlocksSTLCON;
 import com.feroov.frv.events.ModParticles;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
