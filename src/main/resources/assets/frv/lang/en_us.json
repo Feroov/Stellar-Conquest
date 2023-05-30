@@ -12,6 +12,11 @@
   "item.frv.astralite_ingot": "\u00A7eAstralite Ingot",
   "item.frv.uskium": "Uskium",
 
+  "item.frv.xenostone_sword": "Xenostone Sword",
+  "item.frv.xenostone_pickaxe": "Xenostone Pickaxe",
+  "item.frv.xenostone_axe": "Xenostone Axe",
+  "item.frv.xenostone_shovel": "Xenostone Shovel",
+  "item.frv.xenostone_hoe": "Xenostone Hoe",
 
 
   "block.frv.xenosphere_portal": "§b§kco§r§bXenosphere Teleporter§b§kco",
@@ -40,5 +45,6 @@
 
   "item.frv.celestroid_spawn_egg": "Celestroid Spawn Egg", "entity.frv.celestroid": "Celestroid",
   "item.frv.xeron_spawn_egg": "Xeron Spawn Egg", "entity.frv.xeron": "Xeron",
+  "item.frv.xeron_guard_spawn_egg": "Xeron Guard Spawn Egg", "entity.frv.xeron_guard": "Xeron Guard",
   "item.frv.mothership_spawn_egg": "\u00A74\u00A7cCelestroid Mothership\u00A7c Spawn Egg", "entity.frv.mothership": "\u00A74\u00A7cCelestroid Mothership\u00A7c"
 }

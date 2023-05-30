@@ -68,6 +68,7 @@ public class TabsSTLCON
             event.accept(ItemsSTLCON.BLUSHTHORN_NECTAR_BOTTLE);
             event.accept(ItemsSTLCON.CELESTROID_SPAWN_EGG);
             event.accept(ItemsSTLCON.XERON_SPAWN_EGG);
+            event.accept(ItemsSTLCON.XERON_GUARD_SPAWN_EGG);
             event.accept(ItemsSTLCON.MOTHERSHIP_SPAWN_EGG);
         }
 
@@ -75,6 +76,11 @@ public class TabsSTLCON
         {
             event.accept(ItemsSTLCON.ADMIN_SWORD);
             event.accept(ItemsSTLCON.COSMIC_RAY_GUN);
+            event.accept(ItemsSTLCON.XENOSTONE_SWORD);
+            event.accept(ItemsSTLCON.XENOSTONE_PICKAXE);
+            event.accept(ItemsSTLCON.XENOSTONE_AXE);
+            event.accept(ItemsSTLCON.XENOSTONE_SHOVEL);
+            event.accept(ItemsSTLCON.XENOSTONE_HOE);
         }
     }
 }

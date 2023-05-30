@@ -6,8 +6,10 @@ import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.entity.monster.Celestroid;
 import com.feroov.frv.entity.monster.Mothership;
 import com.feroov.frv.entity.monster.Xeron;
+import com.feroov.frv.entity.monster.XeronGuard;
 import com.feroov.frv.entity.monster.renderer.CelestroidRenderer;
 import com.feroov.frv.entity.monster.renderer.MothershipRenderer;
+import com.feroov.frv.entity.monster.renderer.XeronGuardRenderer;
 import com.feroov.frv.entity.monster.renderer.XeronRenderer;
 import com.feroov.frv.entity.projectile.renderer.CelestroidBeamRenderer;
 import com.feroov.frv.entity.projectile.renderer.MothershipBeamRenderer;
@@ -38,6 +40,7 @@ public class ClientModEvents
         event.put(EntitiesSTLCON.CELESTROID.get(), Celestroid.setAttributes());
         event.put(EntitiesSTLCON.MOTHERSHIP.get(), Mothership.setAttributes());
         event.put(EntitiesSTLCON.XERON.get(), Xeron.setAttributes());
+        event.put(EntitiesSTLCON.XERON_GUARD.get(), XeronGuard.setAttributes());
     }
 
     @SubscribeEvent
@@ -46,6 +49,7 @@ public class ClientModEvents
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID.get(), CelestroidRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.MOTHERSHIP.get(), MothershipRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.XERON.get(), XeronRenderer::new);
+        event.registerEntityRenderer(EntitiesSTLCON.XERON_GUARD.get(), XeronGuardRenderer::new);
 
         event.registerEntityRenderer(EntitiesSTLCON.RAYGUN_BEAM.get(), RaygunBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_BEAM.get(), CelestroidBeamRenderer::new);

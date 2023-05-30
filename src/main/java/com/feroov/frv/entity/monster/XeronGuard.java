@@ -2,20 +2,26 @@ package com.feroov.frv.entity.monster;
 
 
 import com.feroov.frv.sound.SoundEventsSTLCON;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.TimeUtil;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -27,20 +33,31 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
+import java.util.UUID;
 
 
-public class Xeron extends Animal implements GeoEntity
+public class XeronGuard extends Animal implements GeoEntity, NeutralMob
 {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-    protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(Xeron.class, EntityDataSerializers.BOOLEAN);
+    protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(XeronGuard.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(XeronGuard.class, EntityDataSerializers.INT);
+    private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
+    @Nullable
+    private UUID persistentAngerTarget;
 
-    public Xeron(EntityType<? extends Animal> entityType, Level level) { super(entityType, level); }
+    public XeronGuard(EntityType<? extends Animal> entityType, Level level)
+    {
+        super(entityType, level);
+        this.xpReward = 20;
+    }
 
     public static AttributeSupplier setAttributes()
     {
         return Monster.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 10.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.32D).build();
+                .add(Attributes.MAX_HEALTH, 25.0D)
+                .add(Attributes.MOVEMENT_SPEED, 0.32D)
+                .add(Attributes.FOLLOW_RANGE, 25.0D)
+                .add(Attributes.ATTACK_DAMAGE, 3.5D).build();
     }
 
     @Override
@@ -48,32 +65,34 @@ public class Xeron extends Animal implements GeoEntity
     {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
-        this.targetSelector.addGoal(3, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.goalSelector.addGoal(1, new XeronMeleeAttack(this, 0.95D, true));
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Mob.class, 25.0F));
-        this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.73D));
-        this.goalSelector.addGoal(7, new MoveTowardsRestrictionGoal(this, 0.73D));
-        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+        this.targetSelector.addGoal(2, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.goalSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true, this::isAngryAt));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.73D));
+        this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 0.73D));
+        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+        this.targetSelector.addGoal(7, new ResetUniversalAngerTargetGoal<>(this, true));
     }
 
     @Override
     protected SoundEvent getAmbientSound()
     {
-        this.playSound(SoundEventsSTLCON.XERON_AMBIENT.get(), 1.0F, 1.0F);
+        this.playSound(SoundEventsSTLCON.XERON_AMBIENT.get(), 1.0F, 0.7F);
         return null;
     }
 
     @Override
     protected SoundEvent getHurtSound(@Nonnull DamageSource damageSourceIn)
     {
-        this.playSound(SoundEventsSTLCON.XERON_HURT.get(), 1.0F, 1.0F);
+        this.playSound(SoundEventsSTLCON.XERON_HURT.get(), 1.0F, 0.7F);
         return null;
     }
 
     @Override
     protected SoundEvent getDeathSound()
     {
-        this.playSound(SoundEvents.SHULKER_DEATH, 1.0F, 2.0F);
+        this.playSound(SoundEvents.SHULKER_DEATH, 1.0F, 1.6F);
         return null;
     }
 
@@ -103,7 +122,7 @@ public class Xeron extends Animal implements GeoEntity
 
         if(isAggressive())
         {
-            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
+            animationState.getController().setAnimation(RawAnimation.begin().then("defensive", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
         animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
@@ -130,7 +149,12 @@ public class Xeron extends Animal implements GeoEntity
     }
 
     @Override
-    protected void defineSynchedData() { super.defineSynchedData(); this.entityData.define(ATTACKING, false); }
+    protected void defineSynchedData()
+    {
+        super.defineSynchedData();
+        this.entityData.define(ATTACKING, false);
+        this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
+    }
 
     public void setAttacking(boolean attack) {
         this.entityData.set(ATTACKING, attack);
@@ -140,16 +164,63 @@ public class Xeron extends Animal implements GeoEntity
         return this.entityData.get(ATTACKING);
     }
 
+    @Override
+    public void addAdditionalSaveData(CompoundTag p_30418_) {
+        super.addAdditionalSaveData(p_30418_);
+        this.addPersistentAngerSaveData(p_30418_);
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag p_30402_) {
+        super.readAdditionalSaveData(p_30402_);
+        this.readPersistentAngerSaveData(this.level, p_30402_);
+    }
+
+    public void aiStep() {
+        super.aiStep();
+        if (!this.level.isClientSide) {
+            this.updatePersistentAnger((ServerLevel)this.level, true);
+        }
+
+    }
+    @Override
+    public int getRemainingPersistentAngerTime()
+    {
+        return this.entityData.get(DATA_REMAINING_ANGER_TIME);
+    }
+
+    @Override
+    public void setRemainingPersistentAngerTime(int remainingPersistentAngerTime)
+    {
+        this.entityData.set(DATA_REMAINING_ANGER_TIME, remainingPersistentAngerTime);
+    }
+
+    @Nullable
+    @Override
+    public UUID getPersistentAngerTarget() {
+        return this.persistentAngerTarget;
+    }
+
+    @Override
+    public void setPersistentAngerTarget(@Nullable UUID uuid) {
+        this.persistentAngerTarget = uuid;
+    }
+
+    @Override
+    public void startPersistentAngerTimer() {
+        this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
+    }
+
     public static class XeronMeleeAttack extends MeleeAttackGoal
     {
-        private Xeron entity;
+        private XeronGuard entity;
         private int animCounter = 0;
         private int animTickLength = 19;
 
         public XeronMeleeAttack(PathfinderMob pathfinderMob, double speedModifier, boolean followingTargetEvenIfNotSeen)
         {
             super(pathfinderMob, speedModifier, followingTargetEvenIfNotSeen);
-            if(pathfinderMob instanceof Xeron xeron)
+            if(pathfinderMob instanceof XeronGuard xeron)
             {
                 entity = xeron;
             }
