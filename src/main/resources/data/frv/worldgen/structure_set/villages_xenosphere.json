@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "frv:village_xenosphere",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 408231499,
+    "spacing": 16,
+    "separation": 5
+  }
+}

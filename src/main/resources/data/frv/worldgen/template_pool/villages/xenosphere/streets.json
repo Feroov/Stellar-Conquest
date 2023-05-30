@@ -1,0 +1,150 @@
+{
+  "name": "frv:villages/xenosphere/streets",
+  "fallback": "frv:villages/xenosphere/terminators",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/corner_01",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/corner_02",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/corner_03",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/straight_01",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/straight_02",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/straight_03",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/straight_04",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/straight_05",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/straight_06",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/crossroad_01",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/crossroad_02",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/crossroad_03",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/crossroad_04",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/crossroad_05",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/crossroad_06",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "frv:villages/xenosphere/streets/turn_01",
+        "processors": "frv:villages/xenosphere/path_randomizer",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    }
+  ]
+}
