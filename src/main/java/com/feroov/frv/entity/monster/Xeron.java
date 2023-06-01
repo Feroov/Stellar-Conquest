@@ -110,10 +110,6 @@ public class Xeron extends Animal implements GeoEntity
         return PlayState.CONTINUE;
     }
 
-    @Override
-    public boolean causeFallDamage(float p_146828_, float p_146829_, DamageSource p_146830_) {
-        return false;
-    }
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
