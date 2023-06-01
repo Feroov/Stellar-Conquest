@@ -79,7 +79,7 @@ public class XeronGuardRenderer extends GeoEntityRenderer<XeronGuard>
                 poseStack.mulPose(Axis.XP.rotationDegrees(90));
                 poseStack.mulPose(Axis.YP.rotationDegrees(180));
                 poseStack.mulPose(Axis.ZP.rotationDegrees(0));
-                poseStack.translate(0.0D, 0.120D, -1.3D);
+                poseStack.translate(0.0D, 0.120D, -1.2D);
                 super.renderStackForBone(poseStack, bone, stack, animatable, bufferSource, partialTick, packedLight, packedOverlay);
             }
         });
