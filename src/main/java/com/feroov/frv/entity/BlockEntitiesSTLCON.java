@@ -15,6 +15,4 @@ public class BlockEntitiesSTLCON
 
     public static final RegistryObject<BlockEntityType<MothershipSpawnerBlockEntity>> MOTHERSHIP_SPAWNER = BLOCK_ENTITIES.register("mothership_spawner", () ->
             BlockEntityType.Builder.of(MothershipSpawnerBlockEntity::new, BlocksSTLCON.MOTHERSHIP_SPAWNER.get()).build(null));
-
-
 }

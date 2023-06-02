@@ -49,6 +49,14 @@ public class TabsSTLCON
             event.accept(BlocksSTLCON.XENOS_PLANKS);
             event.accept(BlocksSTLCON.STRIPPED_XENOS_LOG);
             event.accept(BlocksSTLCON.STRIPPED_XENOS_WOOD);
+            event.accept(BlocksSTLCON.XENOS_STAIRS);
+            event.accept(BlocksSTLCON.XENOS_SLAB);
+            event.accept(BlocksSTLCON.XENOS_FENCE);
+            event.accept(BlocksSTLCON.XENOS_FENCE_GATE);
+            event.accept(BlocksSTLCON.XENOS_DOOR);
+            event.accept(BlocksSTLCON.XENOS_TRAPDOOR);
+            event.accept(BlocksSTLCON.XENOS_BUTTON);
+            event.accept(BlocksSTLCON.XENOS_PRESSURE_PLATE);
             event.accept(BlocksSTLCON.XENOS_LEAVES);
             event.accept(BlocksSTLCON.XENOFLUX);
             event.accept(BlocksSTLCON.XENOSTONE);
@@ -66,9 +74,9 @@ public class TabsSTLCON
             event.accept(ItemsSTLCON.ASTRALITE_INGOT);
             event.accept(ItemsSTLCON.XENOS_EYE);
             event.accept(ItemsSTLCON.BLUSHTHORN_NECTAR_BOTTLE);
-            event.accept(ItemsSTLCON.CELESTROID_SPAWN_EGG);
             event.accept(ItemsSTLCON.XERON_SPAWN_EGG);
             event.accept(ItemsSTLCON.XERON_GUARD_SPAWN_EGG);
+            event.accept(ItemsSTLCON.CELESTROID_SPAWN_EGG);
             event.accept(ItemsSTLCON.MOTHERSHIP_SPAWN_EGG);
         }
 

@@ -1,7 +1,7 @@
 package com.feroov.frv.entity.projectile;
 
 import com.feroov.frv.entity.EntitiesSTLCON;
-import com.feroov.frv.entity.monster.Mothership;
+import com.feroov.frv.entity.neutral.Mothership;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.Entity;

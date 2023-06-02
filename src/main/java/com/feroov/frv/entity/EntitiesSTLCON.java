@@ -1,10 +1,10 @@
 package com.feroov.frv.entity;
 
 import com.feroov.frv.STLCON;
-import com.feroov.frv.entity.monster.Celestroid;
-import com.feroov.frv.entity.monster.Mothership;
-import com.feroov.frv.entity.monster.Xeron;
-import com.feroov.frv.entity.monster.XeronGuard;
+import com.feroov.frv.entity.neutral.Celestroid;
+import com.feroov.frv.entity.neutral.Mothership;
+import com.feroov.frv.entity.neutral.Xeron;
+import com.feroov.frv.entity.neutral.XeronGuard;
 import com.feroov.frv.entity.projectile.CelestroidBeam;
 import com.feroov.frv.entity.projectile.MothershipBeam;
 import com.feroov.frv.entity.projectile.RaygunBeam;

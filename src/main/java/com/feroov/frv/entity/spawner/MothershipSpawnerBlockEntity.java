@@ -3,7 +3,7 @@ package com.feroov.frv.entity.spawner;
 import com.feroov.frv.entity.BlockEntitiesSTLCON;
 import com.feroov.frv.entity.BossSpawnerBlockEntity;
 import com.feroov.frv.entity.EntitiesSTLCON;
-import com.feroov.frv.entity.monster.Mothership;
+import com.feroov.frv.entity.neutral.Mothership;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;

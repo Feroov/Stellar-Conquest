@@ -1,6 +1,6 @@
 package com.feroov.frv.entity.ai;
 
-import com.feroov.frv.entity.monster.Celestroid;
+import com.feroov.frv.entity.neutral.Celestroid;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;

@@ -1,9 +1,10 @@
 package com.feroov.frv.block;
 
-import com.feroov.frv.block.custom.XenosWoodType;
+
+import com.feroov.frv.block.custom.wood.XenosWoodType;
 import com.feroov.frv.block.custom.vegetation.Blushthorn;
 import com.feroov.frv.block.custom.vegetation.Xenosgrass;
-import com.feroov.frv.block.custom.XenosgrassBlock;
+import com.feroov.frv.block.custom.vegetation.XenosgrassBlock;
 import com.feroov.frv.entity.BossVariant;
 import com.feroov.frv.item.ItemsSTLCON;
 import com.feroov.frv.world.tree.XenosTreeGrower;
@@ -21,6 +22,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -97,6 +100,7 @@ public class BlocksSTLCON
     // ---------------------------------------------------------------------------------------------------
 
 
+
     // ------------------------------------------ Ore Blocks ------------------------------------------
     public static final RegistryObject<Block> USKIUM_ORE = registerBlock("uskium_ore",
             () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE)
@@ -136,6 +140,36 @@ public class BlocksSTLCON
                     return false;
                 }
             });
+
+    public static final RegistryObject<Block> XENOS_STAIRS = registerBlock("xenos_stairs",
+            () -> new StairBlock(() -> XENOS_PLANKS.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of(Material.WOOD).strength(2f).sound(SoundType.WOOD)));
+
+    public static final RegistryObject<Block> XENOS_SLAB = registerBlock("xenos_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)
+                    .strength(2f)));
+
+    public static final RegistryObject<Block> XENOS_FENCE = registerBlock("xenos_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)
+                    .strength(2f)));
+
+    public static final RegistryObject<Block> XENOS_FENCE_GATE = registerBlock("xenos_fence_gate",() ->
+            new FenceGateBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F, 3.0F), WoodType.OAK));
+
+    public static final RegistryObject<Block> XENOS_BUTTON = registerBlock("xenos_button",() -> woodenButton(BlockSetType.OAK));
+
+    public static final RegistryObject<Block> XENOS_PRESSURE_PLATE = registerBlock("xenos_pressure_plate",() ->
+            new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.of(Material.WOOD)
+                    .noCollission().strength(0.5F), BlockSetType.OAK));
+
+    public static final RegistryObject<Block> XENOS_DOOR = registerBlock("xenos_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.of(Material.WOOD)
+                    .strength(3.0F).noOcclusion(), BlockSetType.DARK_OAK));
+
+    public static final RegistryObject<Block> XENOS_TRAPDOOR = registerBlock("xenos_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD)
+                    .strength(3.0F).noOcclusion(), BlockSetType.OAK));
+
     public static final RegistryObject<Block> XENOS_LEAVES = registerBlock("xenos_leaves",
             () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)) {
                 @Override
@@ -155,9 +189,8 @@ public class BlocksSTLCON
                     BlockBehaviour.Properties.copy(Blocks.POTTED_ORANGE_TULIP)));
     // ---------------------------------------------------------------------------------------------------
 
-
-
-
+    private static <T extends Block> RegistryObject<T> registerBlockWithoutBlockItem(String name, Supplier<T> block) { return BLOCKS.register(name, block); }
+    private static ButtonBlock woodenButton(BlockSetType p_273357_) {return new ButtonBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.5F), p_273357_, 30, true);}
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) { RegistryObject<T> toReturn = BLOCKS.register(name, block); registerBlockItem(name, toReturn); return toReturn; }
     private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block)  { return ItemsSTLCON.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties())); }
     public static void register(IEventBus eventBus) { BLOCKS.register(eventBus); }

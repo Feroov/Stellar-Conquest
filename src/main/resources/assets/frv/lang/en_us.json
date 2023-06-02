@@ -33,6 +33,14 @@
   "block.frv.xenos_log": "Xenos Log",
   "block.frv.xenos_wood": "Xenos Wood",
   "block.frv.xenos_planks": "Xenos Planks",
+  "block.frv.xenos_fence": "Xenos Fence",
+  "block.frv.xenos_fence_gate": "Xenos Fence Gate",
+  "block.frv.xenos_stairs": "Xenos Stairs",
+  "block.frv.xenos_slab": "Xenos Slab",
+  "block.frv.xenos_door": "Xenos Door",
+  "block.frv.xenos_trapdoor": "Xenos Trapdoor",
+  "block.frv.xenos_pressure_plate": "Xenos Pressure Plate",
+  "block.frv.xenos_button": "Xenos Button",
   "block.frv.xenos_sapling": "Xenos Sapling",
   "block.frv.uskium_ore": "Uskium Ore",
   "block.frv.xenite_ore": "Xenite Ore",
@@ -41,7 +49,6 @@
 
   "advancements.frv.kill_mothership.title": "Cosmic Conqueror",
   "advancements.frv.kill_mothership.description": "UFO? More like 'U-Didn't-Float'",
-
 
   "item.frv.celestroid_spawn_egg": "Celestroid Spawn Egg", "entity.frv.celestroid": "Celestroid",
   "item.frv.xeron_spawn_egg": "Xeron Spawn Egg", "entity.frv.xeron": "Xeron",

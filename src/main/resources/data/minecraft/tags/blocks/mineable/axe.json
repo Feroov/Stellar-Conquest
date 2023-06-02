@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "frv:xenos_planks",
+    "frv:xenos_slab",
+    "frv:xenos_fence",
+    "frv:xenos_stairs",
+    "frv:xenos_fence_gate",
+    "frv:xenos_button",
+    "frv:xenos_pressure_plate",
+    "frv:xenos_door",
+    "frv:xenos_trapdoor"
+  ]
+}
