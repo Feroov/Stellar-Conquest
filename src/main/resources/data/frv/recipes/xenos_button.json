@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "frv:xenos_planks"
+    }
+  ],
+  "result": {
+    "item": "frv:xenos_button"
+  }
+}
