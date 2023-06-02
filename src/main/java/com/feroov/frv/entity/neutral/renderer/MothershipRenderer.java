@@ -1,8 +1,8 @@
-package com.feroov.frv.entity.monster.renderer;
+package com.feroov.frv.entity.neutral.renderer;
 
 import com.feroov.frv.STLCON;
-import com.feroov.frv.entity.monster.Mothership;
-import com.feroov.frv.entity.monster.model.MothershipModel;
+import com.feroov.frv.entity.neutral.Mothership;
+import com.feroov.frv.entity.neutral.model.MothershipModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;

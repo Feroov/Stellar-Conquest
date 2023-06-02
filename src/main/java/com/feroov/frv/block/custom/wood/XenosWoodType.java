@@ -1,4 +1,4 @@
-package com.feroov.frv.block.custom;
+package com.feroov.frv.block.custom.wood;
 
 import com.feroov.frv.block.BlocksSTLCON;
 import net.minecraft.core.BlockPos;

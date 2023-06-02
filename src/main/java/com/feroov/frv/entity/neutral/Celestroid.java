@@ -1,4 +1,4 @@
-package com.feroov.frv.entity.monster;
+package com.feroov.frv.entity.neutral;
 
 import com.feroov.frv.entity.ai.CelestroidAttackGoal;
 import com.feroov.frv.entity.projectile.CelestroidBeam;

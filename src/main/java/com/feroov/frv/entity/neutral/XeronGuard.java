@@ -1,4 +1,4 @@
-package com.feroov.frv.entity.monster;
+package com.feroov.frv.entity.neutral;
 
 
 import com.feroov.frv.sound.SoundEventsSTLCON;
@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -49,12 +50,13 @@ public class XeronGuard extends Animal implements GeoEntity, NeutralMob
     {
         super(entityType, level);
         this.xpReward = 20;
+        ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);
     }
 
     public static AttributeSupplier setAttributes()
     {
         return Monster.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 25.0D)
+                .add(Attributes.MAX_HEALTH, 15.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.32D)
                 .add(Attributes.FOLLOW_RANGE, 25.0D)
                 .add(Attributes.ATTACK_DAMAGE, 3.5D).build();
@@ -65,6 +67,7 @@ public class XeronGuard extends Animal implements GeoEntity, NeutralMob
     {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new OpenDoorGoal(this, true));
         this.goalSelector.addGoal(1, new XeronMeleeAttack(this, 0.95D, true));
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Mob.class, 25.0F));
         this.targetSelector.addGoal(2, (new HurtByTargetGoal(this)).setAlertOthers());

@@ -1,4 +1,4 @@
-package com.feroov.frv.block.custom;
+package com.feroov.frv.block.custom.vegetation;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

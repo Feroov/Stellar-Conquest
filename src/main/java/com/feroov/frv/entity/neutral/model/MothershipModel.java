@@ -1,7 +1,7 @@
-package com.feroov.frv.entity.monster.model;
+package com.feroov.frv.entity.neutral.model;
 
 import com.feroov.frv.STLCON;
-import com.feroov.frv.entity.monster.Mothership;
+import com.feroov.frv.entity.neutral.Mothership;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib.constant.DataTickets;

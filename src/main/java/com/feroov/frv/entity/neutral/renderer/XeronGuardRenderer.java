@@ -1,10 +1,8 @@
-package com.feroov.frv.entity.monster.renderer;
+package com.feroov.frv.entity.neutral.renderer;
 
 import com.feroov.frv.STLCON;
-import com.feroov.frv.entity.monster.Xeron;
-import com.feroov.frv.entity.monster.XeronGuard;
-import com.feroov.frv.entity.monster.model.XeronGuardModel;
-import com.feroov.frv.entity.monster.model.XeronModel;
+import com.feroov.frv.entity.neutral.XeronGuard;
+import com.feroov.frv.entity.neutral.model.XeronGuardModel;
 import com.feroov.frv.item.ItemsSTLCON;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
