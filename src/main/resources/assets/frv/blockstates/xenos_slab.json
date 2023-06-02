@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "frv:block/xenos_slab"
+    },
+    "type=double": {
+      "model": "frv:block/xenos_planks"
+    },
+    "type=top": {
+      "model": "frv:block/xenos_slab_top"
+    }
+  }
+}

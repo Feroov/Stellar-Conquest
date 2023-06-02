@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "frv:block/xenos_planks",
+    "top": "frv:block/xenos_planks",
+    "side": "frv:block/xenos_planks"
+  }
+}
