@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_right_open",
+  "textures": {
+    "bottom": "frv:block/xenos_door_bottom",
+    "top": "frv:block/xenos_door_top"
+  }
+}
