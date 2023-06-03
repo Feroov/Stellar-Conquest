@@ -12,6 +12,24 @@
       }
     },
     {
+      "weight": 3,
+      "element": {
+        "location": "frv:villages/xenosphere/houses/small_house_2",
+        "processors": "minecraft:mossify_10_percent",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "frv:villages/xenosphere/houses/small_house_3",
+        "processors": "minecraft:mossify_10_percent",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
       "weight": 10,
       "element": {
         "element_type": "minecraft:empty_pool_element"

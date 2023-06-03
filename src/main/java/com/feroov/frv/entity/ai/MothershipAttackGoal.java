@@ -1,6 +1,6 @@
 package com.feroov.frv.entity.ai;
 
-import com.feroov.frv.entity.neutral.Mothership;
+import com.feroov.frv.entity.monster.Mothership;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
