@@ -1,8 +1,8 @@
-package com.feroov.frv.entity.neutral.renderer;
+package com.feroov.frv.entity.passive.renderer;
 
 import com.feroov.frv.STLCON;
-import com.feroov.frv.entity.neutral.Xeron;
-import com.feroov.frv.entity.neutral.model.XeronModel;
+import com.feroov.frv.entity.passive.Xeron;
+import com.feroov.frv.entity.passive.model.XeronModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;

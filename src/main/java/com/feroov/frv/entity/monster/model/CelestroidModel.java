@@ -1,7 +1,7 @@
-package com.feroov.frv.entity.neutral.model;
+package com.feroov.frv.entity.monster.model;
 
 import com.feroov.frv.STLCON;
-import com.feroov.frv.entity.neutral.Celestroid;
+import com.feroov.frv.entity.monster.Celestroid;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib.constant.DataTickets;

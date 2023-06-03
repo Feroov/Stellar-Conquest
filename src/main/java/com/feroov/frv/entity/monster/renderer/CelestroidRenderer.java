@@ -1,8 +1,8 @@
-package com.feroov.frv.entity.neutral.renderer;
+package com.feroov.frv.entity.monster.renderer;
 
 import com.feroov.frv.STLCON;
-import com.feroov.frv.entity.neutral.Celestroid;
-import com.feroov.frv.entity.neutral.model.CelestroidModel;
+import com.feroov.frv.entity.monster.Celestroid;
+import com.feroov.frv.entity.monster.model.CelestroidModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

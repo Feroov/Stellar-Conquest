@@ -1,4 +1,4 @@
-package com.feroov.frv.entity.neutral;
+package com.feroov.frv.entity.monster;
 
 
 import com.feroov.frv.entity.EntitiesSTLCON;

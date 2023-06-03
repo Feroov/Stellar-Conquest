@@ -1,4 +1,4 @@
-package com.feroov.frv.entity.neutral;
+package com.feroov.frv.entity.passive;
 
 
 import com.feroov.frv.sound.SoundEventsSTLCON;
