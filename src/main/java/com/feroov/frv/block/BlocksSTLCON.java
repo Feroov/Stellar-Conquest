@@ -70,7 +70,7 @@ public class BlocksSTLCON
                     requiresCorrectToolForDrops().strength(2.5F, 7.0F)));
 
     public static final RegistryObject<Block> XENOCOBBLESTONE = registerBlock("xenocobblestone",
-            () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).
+            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).
                     requiresCorrectToolForDrops().strength(3.1F, 7.0F)));
 
     public static final RegistryObject<Block> BLUSHTHORN = registerBlock("blushthorn",
@@ -97,6 +97,10 @@ public class BlocksSTLCON
                     super.appendHoverText(stack, level, components, flag);
                 }
             });
+
+    public static final RegistryObject<Block> GLOWXEN = registerBlock("glowxen",
+            () -> new Block(BlockBehaviour.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS)
+                    .lightLevel((p_50874_) -> { return 15; })));
     // ---------------------------------------------------------------------------------------------------
 
 
@@ -114,6 +118,8 @@ public class BlocksSTLCON
             () -> new DropExperienceBlock(BlockBehaviour.Properties.of(Material.STONE)
                     .strength(13f).requiresCorrectToolForDrops(), UniformInt.of(2, 6)));
     // ----------------------------------------------------------------------------------------------------
+
+
 
     // ------------------------------------------ Wood Types ------------------------------------------
     public static final RegistryObject<Block> XENOS_LOG = registerBlock("xenos_log",

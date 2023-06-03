@@ -59,6 +59,7 @@ public class TabsSTLCON
             event.accept(BlocksSTLCON.XENOS_PRESSURE_PLATE);
             event.accept(BlocksSTLCON.XENOS_LEAVES);
             event.accept(BlocksSTLCON.XENOFLUX);
+            event.accept(BlocksSTLCON.GLOWXEN);
             event.accept(BlocksSTLCON.XENOSTONE);
             event.accept(BlocksSTLCON.XENOCOBBLESTONE);
             event.accept(BlocksSTLCON.USKIUM_ORE);
