@@ -9,14 +9,14 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
 import org.joml.*;
 
 import javax.annotation.Nullable;
 
 
-public class XenosphereSky extends DimensionSpecialEffects {
+public class XenosphereSky extends DimensionSpecialEffects
+{
     public static final ResourceLocation EARTH = new ResourceLocation(STLCON.MOD_ID, "textures/environment/celestial/earth.png");
     public static final ResourceLocation SUN_LOCATION = new ResourceLocation(STLCON.MOD_ID, "textures/environment/celestial/sun.png");
     public static final ResourceLocation GALAXY1 = new ResourceLocation(STLCON.MOD_ID, "textures/environment/celestial/galaxy1.png");
@@ -90,9 +90,9 @@ public class XenosphereSky extends DimensionSpecialEffects {
         BufferUploader.drawWithShader(bufferbuilder.end());
 
         float f17 = 150.0F;
-        float x = 350.0F;  // Keep x coordinate close to zero
-        float y = 350.0F;  // Positive y coordinate to position the planet above the horizon
-        float z = 350.0F;  // Keep z coordinate close to zero
+        float x = 350.0F;
+        float y = 350.0F;
+        float z = 350.0F;
 
         RenderSystem.setShaderTexture(0, GALAXY1);
         bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
