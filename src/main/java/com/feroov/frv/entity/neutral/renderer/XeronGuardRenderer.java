@@ -74,6 +74,7 @@ public class XeronGuardRenderer extends GeoEntityRenderer<XeronGuard>
 
             @Override
             protected void renderStackForBone(PoseStack poseStack, GeoBone bone, ItemStack stack, XeronGuard animatable, MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay) {
+                poseStack.scale(0.8f,0.8f,0.8f);
                 poseStack.mulPose(Axis.XP.rotationDegrees(90));
                 poseStack.mulPose(Axis.YP.rotationDegrees(180));
                 poseStack.mulPose(Axis.ZP.rotationDegrees(0));

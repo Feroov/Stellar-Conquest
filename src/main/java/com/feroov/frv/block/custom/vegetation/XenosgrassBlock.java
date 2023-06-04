@@ -40,8 +40,9 @@ public class XenosgrassBlock extends Block implements BonemealableBlock {
         if (direction != Direction.UP)
             return false;
         PlantType plantType = plantable.getPlantType(getter, pos.relative(direction));
-        return plantType == PlantType.PLAINS || plantType == PlantType.CAVE;
+        return plantType == PlantType.PLAINS || plantType == PlantType.CAVE || plantable instanceof LumiBloomCropBlock;
     }
+
 
     @Override
     public boolean isValidBonemealTarget(LevelReader p_256229_, BlockPos p_256432_, BlockState p_255677_, boolean p_256630_) {

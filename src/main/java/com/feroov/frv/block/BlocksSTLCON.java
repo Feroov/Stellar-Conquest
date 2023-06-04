@@ -1,6 +1,7 @@
 package com.feroov.frv.block;
 
 
+import com.feroov.frv.block.custom.vegetation.LumiBloomCropBlock;
 import com.feroov.frv.block.custom.wood.XenosWoodType;
 import com.feroov.frv.block.custom.vegetation.Blushthorn;
 import com.feroov.frv.block.custom.vegetation.Xenosgrass;
@@ -75,32 +76,18 @@ public class BlocksSTLCON
 
     public static final RegistryObject<Block> BLUSHTHORN = registerBlock("blushthorn",
             () -> new Blushthorn(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT)
-                    .instabreak().sound(SoundType.GRASS).noCollission().noOcclusion().lightLevel((light) -> 10))
-            {
-                @Override
-                public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> components, TooltipFlag flag)
-                {
-                    components.add(Component.translatable("Heart soothing plant.")
-                            .withStyle(ChatFormatting.GREEN));
-                    super.appendHoverText(stack, level, components, flag);
-                }});
+                    .instabreak().sound(SoundType.GRASS).noCollission().noOcclusion().lightLevel((light) -> 10)) {@Override public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> components, TooltipFlag flag) {components.add(Component.translatable("Heart soothing plant.").withStyle(ChatFormatting.GREEN).withStyle(ChatFormatting.ITALIC));super.appendHoverText(stack, level, components, flag);}});
 
     public static final RegistryObject<Block> XENOFLUX = registerBlock("xenoflux",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.DEEPSLATE).
-                    requiresCorrectToolForDrops().strength(4.0F, 7.0F))
-            {
-                @Override
-                public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> components, TooltipFlag flag)
-                {
-                    components.add(Component.translatable("You feel the pulsating energy.")
-                            .withStyle(ChatFormatting.AQUA));
-                    super.appendHoverText(stack, level, components, flag);
-                }
-            });
+                    requiresCorrectToolForDrops().strength(4.0F, 7.0F)) { @Override public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> components, TooltipFlag flag) { components.add(Component.translatable("You feel the pulsating energy.").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC)); super.appendHoverText(stack, level, components, flag); }});
 
     public static final RegistryObject<Block> GLOWXEN = registerBlock("glowxen",
             () -> new Block(BlockBehaviour.Properties.of(Material.GLASS).strength(0.3F).sound(SoundType.GLASS)
                     .lightLevel((p_50874_) -> { return 15; })));
+
+    public static final RegistryObject<Block> LUMIBLOOM_CROP = BLOCKS.register("lumibloom_crop",
+            () -> new LumiBloomCropBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT).lightLevel((light) -> 10)));
     // ---------------------------------------------------------------------------------------------------
 
 
@@ -140,12 +127,7 @@ public class BlocksSTLCON
 
     public static final RegistryObject<Block> XENOS_PLANKS = registerBlock("xenos_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)
-                    .strength(2f)) {
-                @Override
-                public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
-                    return false;
-                }
-            });
+                    .strength(2f)) {@Override public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {return false;}});
 
     public static final RegistryObject<Block> XENOS_STAIRS = registerBlock("xenos_stairs",
             () -> new StairBlock(() -> XENOS_PLANKS.get().defaultBlockState(),
@@ -177,12 +159,7 @@ public class BlocksSTLCON
                     .strength(3.0F).noOcclusion(), BlockSetType.OAK));
 
     public static final RegistryObject<Block> XENOS_LEAVES = registerBlock("xenos_leaves",
-            () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)) {
-                @Override
-                public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
-                    return false;
-                }
-            });
+            () -> new LeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)) {@Override public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {return false;}});
 
     public static final RegistryObject<SaplingBlock> XENOS_SAPLING = registerBlock("xenos_sapling",
             () -> new SaplingBlock(new XenosTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
@@ -195,7 +172,7 @@ public class BlocksSTLCON
                     BlockBehaviour.Properties.copy(Blocks.POTTED_ORANGE_TULIP)));
     // ---------------------------------------------------------------------------------------------------
 
-    private static <T extends Block> RegistryObject<T> registerBlockWithoutBlockItem(String name, Supplier<T> block) { return BLOCKS.register(name, block); }
+
     private static ButtonBlock woodenButton(BlockSetType p_273357_) {return new ButtonBlock(BlockBehaviour.Properties.of(Material.DECORATION).noCollission().strength(0.5F), p_273357_, 30, true);}
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) { RegistryObject<T> toReturn = BLOCKS.register(name, block); registerBlockItem(name, toReturn); return toReturn; }
     private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block)  { return ItemsSTLCON.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties())); }

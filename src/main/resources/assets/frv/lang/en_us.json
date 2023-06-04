@@ -11,6 +11,9 @@
   "item.frv.xenite_ingot": "Xenite Ingot",
   "item.frv.astralite_ingot": "\u00A7eAstralite Ingot",
   "item.frv.uskium": "Uskium",
+  "item.frv.lumibloom": "Lumibloom",
+  "item.frv.lumibloom_seeds": "Lumibloom Seeds",
+  "item.frv.wispxen_dust": "\u00A7eWispxen Dust",
 
   "item.frv.xenostone_sword": "Xenostone Sword",
   "item.frv.xenostone_pickaxe": "Xenostone Pickaxe",
@@ -46,12 +49,14 @@
   "block.frv.uskium_ore": "Uskium Ore",
   "block.frv.xenite_ore": "Xenite Ore",
   "block.frv.astralite_ore": "\u00A7eAstralite Ore",
+  "block.frv.lumibloom_crop": "Lumibloom Crop",
 
 
   "advancements.frv.kill_mothership.title": "Cosmic Conqueror",
   "advancements.frv.kill_mothership.description": "UFO? More like 'U-Didn't-Float'",
 
   "item.frv.celestroid_spawn_egg": "Celestroid Spawn Egg", "entity.frv.celestroid": "Celestroid",
+  "item.frv.wispxen_spawn_egg": "Wispxen Spawn Egg", "entity.frv.wispxen": "Wispxen",
   "item.frv.xeron_spawn_egg": "Xeron Spawn Egg", "entity.frv.xeron": "Xeron",
   "item.frv.xeron_guard_spawn_egg": "Xeron Guard Spawn Egg", "entity.frv.xeron_guard": "Xeron Guard",
   "item.frv.mothership_spawn_egg": "\u00A74\u00A7cCelestroid Mothership\u00A7c Spawn Egg", "entity.frv.mothership": "\u00A74\u00A7cCelestroid Mothership\u00A7c"

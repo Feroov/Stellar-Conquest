@@ -5,11 +5,13 @@ import com.feroov.frv.STLCON;
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.entity.monster.Celestroid;
 import com.feroov.frv.entity.monster.Mothership;
+import com.feroov.frv.entity.passive.Wispxen;
 import com.feroov.frv.entity.passive.Xeron;
 import com.feroov.frv.entity.neutral.XeronGuard;
 import com.feroov.frv.entity.monster.renderer.CelestroidRenderer;
 import com.feroov.frv.entity.monster.renderer.MothershipRenderer;
 import com.feroov.frv.entity.neutral.renderer.XeronGuardRenderer;
+import com.feroov.frv.entity.passive.renderer.WispxenRenderer;
 import com.feroov.frv.entity.passive.renderer.XeronRenderer;
 import com.feroov.frv.entity.projectile.renderer.CelestroidBeamRenderer;
 import com.feroov.frv.entity.projectile.renderer.MothershipBeamRenderer;
@@ -41,6 +43,7 @@ public class ClientModEvents
         event.put(EntitiesSTLCON.MOTHERSHIP.get(), Mothership.setAttributes());
         event.put(EntitiesSTLCON.XERON.get(), Xeron.setAttributes());
         event.put(EntitiesSTLCON.XERON_GUARD.get(), XeronGuard.setAttributes());
+        event.put(EntitiesSTLCON.WISPXEN.get(), Wispxen.setAttributes());
     }
 
     @SubscribeEvent
@@ -50,6 +53,7 @@ public class ClientModEvents
         event.registerEntityRenderer(EntitiesSTLCON.MOTHERSHIP.get(), MothershipRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.XERON.get(), XeronRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.XERON_GUARD.get(), XeronGuardRenderer::new);
+        event.registerEntityRenderer(EntitiesSTLCON.WISPXEN.get(), WispxenRenderer::new);
 
         event.registerEntityRenderer(EntitiesSTLCON.RAYGUN_BEAM.get(), RaygunBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_BEAM.get(), CelestroidBeamRenderer::new);
@@ -62,8 +66,8 @@ public class ClientModEvents
         event.register(EntitiesSTLCON.XERON.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE,
                 Mob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
-        event.register(EntitiesSTLCON.CELESTROID.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                FlyingMob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+        event.register(EntitiesSTLCON.WISPXEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE,
+                Mob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
     }
 
     @SubscribeEvent

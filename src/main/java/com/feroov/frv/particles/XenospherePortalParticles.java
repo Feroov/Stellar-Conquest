@@ -6,15 +6,14 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class XenospherePortalParticles extends TextureSheetParticle
+public class XenospherePortalParticles extends SimpleAnimatedParticle
 {
     private final double xStart;
     private final double yStart;
     private final double zStart;
 
-    protected XenospherePortalParticles(ClientLevel clientLevel, double d0, double d1, double d2, double d3, double d4, double d5)
-    {
-        super(clientLevel, d0, d1, d2);
+    XenospherePortalParticles(ClientLevel clientLevel, double d0, double d1, double d2, double d3, double d4, double d5, SpriteSet spriteSet) {
+        super(clientLevel, d0, d1, d2, spriteSet, 0.0125F);
         this.xd = d3;
         this.yd = d4;
         this.zd = d5;
@@ -27,11 +26,6 @@ public class XenospherePortalParticles extends TextureSheetParticle
         this.quadSize = 0.1F * (this.random.nextFloat() * 0.2F + 0.5F);
         float f = this.random.nextFloat() * 0.6F + 0.4F;
         this.lifetime = (int)(Math.random() * 10.0D) + 40;
-    }
-
-    public ParticleRenderType getRenderType()
-    {
-        return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
     }
 
     public void move(double p_107560_, double p_107561_, double p_107562_)
@@ -47,20 +41,6 @@ public class XenospherePortalParticles extends TextureSheetParticle
         f *= f;
         f = 1.0F - f;
         return this.quadSize * f;
-    }
-
-    public int getLightColor(float p_107564_)
-    {
-        int i = super.getLightColor(p_107564_);
-        float f = (float)this.age / (float)this.lifetime;
-        f *= f;
-        f *= f;
-        int j = i & 255;
-        int k = i >> 16 & 255;
-        k += (int)(f * 15.0F * 16.0F);
-
-        if (k > 240) { k = 240; }
-        return j | k << 16;
     }
 
     public void tick()
@@ -87,9 +67,9 @@ public class XenospherePortalParticles extends TextureSheetParticle
         private final SpriteSet sprite;
         public Provider(SpriteSet p_107570_) { this.sprite = p_107570_; }
 
-        public Particle createParticle(SimpleParticleType simpleParticleType, ClientLevel clientLevel, double d0, double d1, double d2, double d3, double d4, double d5)
-        {
-            XenospherePortalParticles portalparticle = new XenospherePortalParticles(clientLevel, d0, d1, d2, d3, d4, d5);
+        public Particle createParticle(SimpleParticleType p_106566_, ClientLevel p_106567_, double p_106568_, double p_106569_, double p_106570_, double p_106571_, double p_106572_, double p_106573_) {
+            XenospherePortalParticles portalparticle =
+                    new XenospherePortalParticles(p_106567_, p_106568_, p_106569_, p_106570_, p_106571_, p_106572_, p_106573_, this.sprite);
             portalparticle.pickSprite(this.sprite);
             return portalparticle;
         }

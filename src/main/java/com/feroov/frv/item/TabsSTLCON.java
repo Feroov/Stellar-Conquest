@@ -75,8 +75,12 @@ public class TabsSTLCON
             event.accept(ItemsSTLCON.ASTRALITE_INGOT);
             event.accept(ItemsSTLCON.XENOS_EYE);
             event.accept(ItemsSTLCON.BLUSHTHORN_NECTAR_BOTTLE);
+            event.accept(ItemsSTLCON.LUMIBLOOM_SEEDS);
+            event.accept(ItemsSTLCON.LUMIBLOOM);
+            event.accept(ItemsSTLCON.WISPXENDUST);
             event.accept(ItemsSTLCON.XERON_SPAWN_EGG);
             event.accept(ItemsSTLCON.XERON_GUARD_SPAWN_EGG);
+            event.accept(ItemsSTLCON.WISPXEN_SPAWN_EGG);
             event.accept(ItemsSTLCON.CELESTROID_SPAWN_EGG);
             event.accept(ItemsSTLCON.MOTHERSHIP_SPAWN_EGG);
         }

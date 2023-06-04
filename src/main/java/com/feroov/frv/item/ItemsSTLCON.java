@@ -5,7 +5,7 @@ import com.feroov.frv.block.BlocksSTLCON;
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.item.custom.CosmicRayGun;
 import com.feroov.frv.item.custom.XenosEye;
-import com.feroov.frv.item.custom.consumeable.BushthornNectar;
+import com.feroov.frv.item.custom.misc.BushthornNectar;
 import com.feroov.frv.item.custom.tools.PickaxeItemSTLCON;
 import com.feroov.frv.item.custom.tools.SwordItemSTLCON;
 import com.feroov.frv.item.tiers.TiersSTLCON;
@@ -14,7 +14,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -65,31 +64,52 @@ public class ItemsSTLCON
     // ------------------------------------------ Materials ------------------------------------------
     public static final RegistryObject<Item> XENOS_EYE = ITEMS.register("xenos_eye", () -> new XenosEye((new Item.Properties())));
     public static final RegistryObject<Item> XENITE_INGOT = ITEMS.register("xenite_ingot", () -> new Item(new Item.Properties()) { @Override  public boolean isFoil(ItemStack stack) { return true; } });
-    public static final RegistryObject<Item> ASTRALITE_INGOT = ITEMS.register("astralite_ingot", () -> new Item(new Item.Properties()) { @Override  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)  { super.appendHoverText(stack, worldIn, tooltip, flagIn); tooltip.add(Component.translatable("Glimmering Xenospheric").withStyle(ChatFormatting.AQUA)); tooltip.add(Component.translatable("metal unyielding,").withStyle(ChatFormatting.AQUA)); tooltip.add(Component.translatable("azure brilliance with").withStyle(ChatFormatting.AQUA)); tooltip.add(Component.translatable("unparalleled strength.").withStyle(ChatFormatting.AQUA)); }});
+    public static final RegistryObject<Item> ASTRALITE_INGOT = ITEMS.register("astralite_ingot", () -> new Item(new Item.Properties()) { @Override  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)  { super.appendHoverText(stack, worldIn, tooltip, flagIn); tooltip.add(Component.translatable("Glimmering Xenospheric").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC)); tooltip.add(Component.translatable("metal unyielding,").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC)); tooltip.add(Component.translatable("azure brilliance with").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC)); tooltip.add(Component.translatable("unparalleled strength.").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));}});
     public static final RegistryObject<Item> USKIUM = ITEMS.register("uskium", () -> new Item(new Item.Properties())  { @Override  public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) { return 2000; }});
     // -----------------------------------------------------------------------------------------------
     
     
     
-    // ----------------------------------------- Consumables ------------------------------------------
+    // ------------------------------------- Consumables & Misc ---------------------------------------
     public static final RegistryObject<Item> BLUSHTHORN_NECTAR_BOTTLE = ITEMS.register("blushthorn_nectar",
             () -> new BushthornNectar((new Item.Properties()).craftRemainder(GLASS_BOTTLE).food(ConsumablesSTLCON.BLUSHTHORN_NECTAR_BOTTLE).stacksTo(16)));
+
+    public static final RegistryObject<Item> LUMIBLOOM_SEEDS = ITEMS.register("lumibloom_seeds",
+            () -> new ItemNameBlockItem(BlocksSTLCON.LUMIBLOOM_CROP.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> LUMIBLOOM = ITEMS.register("lumibloom",
+            () -> new Item(new Item.Properties().food(ConsumablesSTLCON.LUMIBLOOM)));
+
+    public static final RegistryObject<Item> WISPXENDUST = ITEMS.register("wispxen_dust",
+            () -> new Item(new Item.Properties())
+            {
+                @Override
+                public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+                    super.appendHoverText(stack, worldIn, tooltip, flagIn);
+                    tooltip.add(Component.translatable("Wispxen's growth").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
+                    tooltip.add(Component.translatable("unleashes potent dust,").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
+                    tooltip.add(Component.translatable("essential for crafting power.").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
+                }
+            });
     // ------------------------------------------------------------------------------------------------
 
 
 
     // ------------------------------------------ Spawn Eggs-------------------------------------------
     public static final RegistryObject<Item> CELESTROID_SPAWN_EGG = ITEMS.register("celestroid_spawn_egg",
-            () -> new ForgeSpawnEggItem(EntitiesSTLCON.CELESTROID, 0x029AF7, 0x5E5C5D, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.CELESTROID,  0xFFFFFF, 0x004977, new Item.Properties()));
 
     public static final RegistryObject<Item> MOTHERSHIP_SPAWN_EGG = ITEMS.register("mothership_spawn_egg",
-            () -> new ForgeSpawnEggItem(EntitiesSTLCON.MOTHERSHIP,  0x5E5C5D, 0x029AF7, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.MOTHERSHIP, 0x454545, 0x004977, new Item.Properties()));
 
     public static final RegistryObject<Item> XERON_SPAWN_EGG = ITEMS.register("xeron_spawn_egg",
-            () -> new ForgeSpawnEggItem(EntitiesSTLCON.XERON,  0x029AF7, 0X006AFF, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.XERON, 0x029AF7, 0X006AFF, new Item.Properties()));
 
     public static final RegistryObject<Item> XERON_GUARD_SPAWN_EGG = ITEMS.register("xeron_guard_spawn_egg",
-            () -> new ForgeSpawnEggItem(EntitiesSTLCON.XERON_GUARD,  0x029AF7, 0X1D2DB7, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.XERON_GUARD, 0x029AF7, 0XF1C232, new Item.Properties()));
+
+    public static final RegistryObject<Item> WISPXEN_SPAWN_EGG = ITEMS.register("wispxen_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.WISPXEN, 0x02F7ED, 0X9CF7F4, new Item.Properties()));
     // ------------------------------------------------------------------------------------------------
 
 
