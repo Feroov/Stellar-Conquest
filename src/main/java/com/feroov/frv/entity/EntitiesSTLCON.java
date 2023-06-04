@@ -1,9 +1,10 @@
 package com.feroov.frv.entity;
 
 import com.feroov.frv.STLCON;
-import com.feroov.frv.entity.neutral.Celestroid;
-import com.feroov.frv.entity.neutral.Mothership;
-import com.feroov.frv.entity.neutral.Xeron;
+import com.feroov.frv.entity.monster.Celestroid;
+import com.feroov.frv.entity.monster.Mothership;
+import com.feroov.frv.entity.passive.Wispxen;
+import com.feroov.frv.entity.passive.Xeron;
 import com.feroov.frv.entity.neutral.XeronGuard;
 import com.feroov.frv.entity.projectile.CelestroidBeam;
 import com.feroov.frv.entity.projectile.MothershipBeam;
@@ -46,6 +47,12 @@ public class EntitiesSTLCON
                     () -> EntityType.Builder.of(XeronGuard::new, MobCategory.CREATURE)
                             .sized(0.5f, 1.2f).canSpawnFarFromPlayer()
                             .build(new ResourceLocation(STLCON.MOD_ID, "xeron_guard").toString()));
+
+    public static final RegistryObject<EntityType<Wispxen>> WISPXEN =
+            ENTITY_TYPES.register("wispxen",
+                    () -> EntityType.Builder.of(Wispxen::new, MobCategory.CREATURE)
+                            .sized(0.3f, 0.3f).canSpawnFarFromPlayer()
+                            .build(new ResourceLocation(STLCON.MOD_ID, "wispxen").toString()));
 
     // Projectiles Entities
     public static final RegistryObject<EntityType<RaygunBeam>> RAYGUN_BEAM = ENTITY_TYPES.register("raygun_beam",
