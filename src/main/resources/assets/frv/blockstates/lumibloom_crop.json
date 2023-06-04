@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "age=0": { "model": "frv:block/lumibloom_stage0" },
+    "age=1": { "model": "frv:block/lumibloom_stage1" },
+    "age=2": { "model": "frv:block/lumibloom_stage2" },
+    "age=3": { "model": "frv:block/lumibloom_stage3" },
+    "age=4": { "model": "frv:block/lumibloom_stage4" },
+    "age=5": { "model": "frv:block/lumibloom_stage5" },
+    "age=6": { "model": "frv:block/lumibloom_stage6" }
+  }
+}

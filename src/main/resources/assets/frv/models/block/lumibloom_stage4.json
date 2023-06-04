@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "frv:block/lumibloom_stage4"
+  },
+  "render_type": "cutout"
+}
