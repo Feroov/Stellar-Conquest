@@ -1,4 +1,4 @@
-package com.feroov.frv.item.custom.consumeable;
+package com.feroov.frv.item.custom.misc;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
