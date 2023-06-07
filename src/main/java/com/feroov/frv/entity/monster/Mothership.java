@@ -111,6 +111,11 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
     }
 
     @Override
+    public boolean isPersistenceRequired() {
+        return super.isPersistenceRequired();
+    }
+
+    @Override
     public void checkDespawn(){
         if (this.getLevel().getDifficulty() == Difficulty.PEACEFUL) {
             this.discard();

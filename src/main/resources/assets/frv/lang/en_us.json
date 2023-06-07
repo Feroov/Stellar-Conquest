@@ -52,10 +52,21 @@
   "block.frv.lumibloom_crop": "Lumibloom Crop",
 
 
-  "advancements.frv.kill_mothership.title": "Cosmic Conqueror",
-  "advancements.frv.kill_mothership.description": "UFO? More like 'U-Didn't-Float'",
+  "advancements.frv.kill_mothership.title": "Cosmic Conqueror", "advancements.frv.kill_mothership.description": "UFO? More like 'U-Didn't-Float'",
+  "advancements.frv.enter_the_xenosphere.title": "Bioluminescence Planet?", "advancements.frv.enter_the_xenosphere.description": "Build, light and enter the Xenosphere Portal",
+  "advancements.frv.get_xenos_log.title": "Just like old days", "advancements.frv.get_xenos_log.description": "Aquire the Xenos Log",
+  "advancements.frv.get_xenostone_pickaxe.title": "A nicer upgrade to stone", "advancements.frv.get_xenostone_pickaxe.description": "Craft the Xenostone Pickaxe",
+  "advancements.frv.find_xeron_village.title": "Friendly short people!", "advancements.frv.find_xeron_village.description": "Find a Xeron Village",
+  "advancements.frv.get_lumibloom_seeds.title": "Glowing Seeds!", "advancements.frv.get_lumibloom_seeds.description": "Aquire Lumibloom seeds",
+  "advancements.frv.get_lumibloom.title": "Nutritious glowing flower", "advancements.frv.get_lumibloom.description": "Harvest Lumibloom",
+  "advancements.frv.get_blushthorn.title": "Pricky but Healing", "advancements.frv.get_blushthorn.description": "Harvest \u00A75Blushthorn",
+  "advancements.frv.get_xenite_ingot.title": "Alluring Ingot!", "advancements.frv.get_xenite_ingot.description": "Aquire Xenite Ingot",
+  "advancements.frv.get_astralite_ingot.title": "Enigmatic Ingot!", "advancements.frv.get_astralite_ingot.description": "Aquire \u00A7eAstralite Ingot",
+  "advancements.frv.breed_wispxen.title": "Look how small!", "advancements.frv.breed_wispxen.description": "Breed two Wispxens",
+  "advancements.frv.get_wispxen_dust.title": "Shiny useful dust!", "advancements.frv.get_wispxen_dust.description": "Wait for a baby Wispxen to grow!",
 
-  "item.frv.celestroid_spawn_egg": "Celestroid Spawn Egg", "entity.frv.celestroid": "Celestroid",
+
+  "item.frv.celestroid_spawn_egg": "Celestroid Ship Spawn Egg", "entity.frv.celestroid": "Celestroid Ship",
   "item.frv.wispxen_spawn_egg": "Wispxen Spawn Egg", "entity.frv.wispxen": "Wispxen",
   "item.frv.xeron_spawn_egg": "Xeron Spawn Egg", "entity.frv.xeron": "Xeron",
   "item.frv.xeron_guard_spawn_egg": "Xeron Guard Spawn Egg", "entity.frv.xeron_guard": "Xeron Guard",

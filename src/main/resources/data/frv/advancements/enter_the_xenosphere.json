@@ -1,0 +1,27 @@
+{
+  "display": {
+    "icon": {
+      "item": "frv:xenos_eye",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.frv.enter_the_xenosphere.title"
+    },
+    "description": {
+      "translate": "advancements.frv.enter_the_xenosphere.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "frv:kill_mothership",
+  "criteria": {
+    "entered_nether": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "frv:the_xenosphere"
+      }
+    }
+  }
+}

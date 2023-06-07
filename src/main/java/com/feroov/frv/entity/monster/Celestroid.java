@@ -90,6 +90,12 @@ public class Celestroid extends Ghast implements Enemy, GeoEntity
         return null;
     }
 
+
+    @Override
+    public boolean isPersistenceRequired() {
+        return super.isPersistenceRequired();
+    }
+
     @Override
     public void checkDespawn(){
         if (this.getLevel().getDifficulty() == Difficulty.PEACEFUL) {

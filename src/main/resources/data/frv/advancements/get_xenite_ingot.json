@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "frv:xenite_ingot",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.frv.get_xenite_ingot.title"
+    },
+    "description": {
+      "translate": "advancements.frv.get_xenite_ingot.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "frv:get_xenostone_pickaxe",
+  "criteria": {
+    "stone_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "frv:xenite_ingot"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
