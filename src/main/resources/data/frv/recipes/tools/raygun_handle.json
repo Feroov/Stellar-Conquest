@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  #",
+    "W##",
+    "## "
+  ],
+  "key": {
+    "#": {
+      "item": "frv:astralite_ingot"
+    },
+    "W": {
+      "item": "frv:wispxen_dust"
+    }
+  },
+  "result": {
+    "item": "frv:raygun_handle",
+    "count": 1
+  }
+}

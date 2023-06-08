@@ -74,7 +74,7 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
         }
 
 
-        float projectiledamage = 20.0F;
+        float projectiledamage = 30.0F;
         if (entity.hurt(damagesource, projectiledamage))
         {
             this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);

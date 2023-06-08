@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#C#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "frv:astralite_ingot"
+    },
+    "C": {
+      "item": "frv:xenos_eye"
+    }
+  },
+  "result": {
+    "item": "frv:raygun_energy",
+    "count": 1
+  }
+}

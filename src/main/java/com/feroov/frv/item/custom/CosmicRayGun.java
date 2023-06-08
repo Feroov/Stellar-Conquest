@@ -37,6 +37,7 @@ public class CosmicRayGun extends Item
         return InteractionResultHolder.consume(shooter.getItemInHand(hand));
     }
 
+
     @Override
     public void releaseUsing(ItemStack stack, Level level, LivingEntity shooter, int ticksRemaining)
     {
@@ -45,7 +46,7 @@ public class CosmicRayGun extends Item
             Player playerentity = (Player) shooter;
             if (stack.getDamageValue() < stack.getMaxDamage())
             {
-                playerentity.getCooldowns().addCooldown(this, 50);
+                playerentity.getCooldowns().addCooldown(this, 30);
 
                 if (!level.isClientSide)
                 {
@@ -80,13 +81,9 @@ public class CosmicRayGun extends Item
     @Override
     public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)
     {
-        String heart = "\u2764";
+        String heart = "❤";
 
-        tooltip.add(Component.translatable("Fires a beam of cosmic radiation.")
-                .withStyle(ChatFormatting.ITALIC));
-        tooltip.add(Component.translatable("Deals high damage")
-                .withStyle(ChatFormatting.RED));
-        tooltip.add(Component.translatable(heart + " x10")
-                .withStyle(ChatFormatting.RED));
+        tooltip.add(Component.translatable("♨ Fires a beam of cosmic radiation. ♨").withStyle(ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("Deals high damage " + heart + " x15").withStyle(ChatFormatting.RED));
     }
 }

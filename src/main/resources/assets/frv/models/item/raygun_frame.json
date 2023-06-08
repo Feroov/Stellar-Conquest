@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "frv:item/astralite_ingot"
+    "layer0": "frv:item/raygun_frame"
   }
 }

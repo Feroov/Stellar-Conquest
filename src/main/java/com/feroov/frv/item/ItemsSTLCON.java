@@ -63,6 +63,9 @@ public class ItemsSTLCON
     
     // ------------------------------------------ Materials ------------------------------------------
     public static final RegistryObject<Item> XENOS_EYE = ITEMS.register("xenos_eye", () -> new XenosEye((new Item.Properties())));
+    public static final RegistryObject<Item> RAYGUN_HANDLE = ITEMS.register("raygun_handle", () -> new Item((new Item.Properties().stacksTo(1))));
+    public static final RegistryObject<Item> RAYGUN_FRAME = ITEMS.register("raygun_frame", () -> new Item((new Item.Properties().stacksTo(1))));
+    public static final RegistryObject<Item> RAYGUN_ENERGY = ITEMS.register("raygun_energy", () -> new Item((new Item.Properties().stacksTo(1))));
     public static final RegistryObject<Item> XENITE_INGOT = ITEMS.register("xenite_ingot", () -> new Item(new Item.Properties()) { @Override  public boolean isFoil(ItemStack stack) { return true; } });
     public static final RegistryObject<Item> ASTRALITE_INGOT = ITEMS.register("astralite_ingot", () -> new Item(new Item.Properties()) { @Override  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)  { super.appendHoverText(stack, worldIn, tooltip, flagIn); tooltip.add(Component.translatable("Glimmering Xenospheric").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC)); tooltip.add(Component.translatable("metal unyielding,").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC)); tooltip.add(Component.translatable("azure brilliance with").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC)); tooltip.add(Component.translatable("unparalleled strength.").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));}});
     public static final RegistryObject<Item> USKIUM = ITEMS.register("uskium", () -> new Item(new Item.Properties())  { @Override  public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) { return 2000; }});
