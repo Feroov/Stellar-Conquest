@@ -55,7 +55,7 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
     protected void onHitEntity(EntityHitResult entityHitResult)
     {
         super.onHitEntity(entityHitResult);
-        if (!this.level.isClientSide)
+        if (!this.level().isClientSide)
         {
             Entity entity = entityHitResult.getEntity();
             Entity entity1 = this.getOwner();
@@ -73,13 +73,13 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
                     }
                 }
             }
-            this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-            this.level.addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            this.level().addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 
         }
 
-        boolean flag = ForgeEventFactory.getMobGriefingEvent(this.getLevel(), this.getOwner());
-        this.getLevel().explode(null, this.getX(), this.getY(), this.getZ(), this.power, flag, Level.ExplosionInteraction.NONE);
+        boolean flag = ForgeEventFactory.getMobGriefingEvent(this.level(), this.getOwner());
+        this.level().explode(null, this.getX(), this.getY(), this.getZ(), this.power, flag, Level.ExplosionInteraction.NONE);
         this.discard();
     }
 
@@ -88,11 +88,11 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
     {
         super.onHitBlock(blockHitResult);
 
-        this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-        this.level.addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+        this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+        this.level().addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 
-        boolean flag = ForgeEventFactory.getMobGriefingEvent(this.getLevel(), this.getOwner());
-        this.getLevel().explode(null, this.getX(), this.getY(), this.getZ(), (float) this.power, flag, Level.ExplosionInteraction.NONE);
+        boolean flag = ForgeEventFactory.getMobGriefingEvent(this.level(), this.getOwner());
+        this.level().explode(null, this.getX(), this.getY(), this.getZ(), (float) this.power, flag, Level.ExplosionInteraction.NONE);
         this.discard();
     }
 

@@ -168,7 +168,7 @@ public class Wispxen extends Animal implements GeoEntity
     protected void ageBoundaryReached()
     {
         super.ageBoundaryReached();
-        if (!this.isBaby() && this.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))
+        if (!this.isBaby() && this.level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))
         {
             this.spawnAtLocation(ItemsSTLCON.WISPXENDUST.get(), 1);
         }
@@ -178,11 +178,11 @@ public class Wispxen extends Animal implements GeoEntity
     public void aiStep()
     {
         super.aiStep();
-        if (this.level.isClientSide)
+        if (this.level().isClientSide)
         {
             for(int i = 0; i < 1; i++)
             {
-                this.level.addParticle(ModParticles.XENOSPHERE_PORTAL_PARTICLES.get(),
+                this.level().addParticle(ModParticles.XENOSPHERE_PORTAL_PARTICLES.get(),
                         this.getX(),
                         this.getY() + 0.2D,
                         this.getZ(),

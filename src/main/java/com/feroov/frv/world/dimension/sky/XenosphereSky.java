@@ -34,7 +34,7 @@ public class XenosphereSky extends DimensionSpecialEffects
         BufferBuilder bufferbuilder = tesselator.getBuilder();
         RenderSystem.setShader(GameRenderer::getPositionShader);
         if (skyBuffer != null) skyBuffer.close();
-        skyBuffer = new VertexBuffer();
+        skyBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
         BufferBuilder.RenderedBuffer bufferbuilder$renderedbuffer = StarrySky.drawStars(bufferbuilder);
         skyBuffer.bind();
         skyBuffer.upload(bufferbuilder$renderedbuffer);

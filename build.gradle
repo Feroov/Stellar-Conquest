@@ -2,9 +2,10 @@ plugins {
     id 'eclipse'
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
-version = '1.19.4-1.2.2'
+version = '1.20-2.0'
 group = 'com.feroov.frv'
 archivesBaseName = 'frv'
 
@@ -14,7 +15,7 @@ println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty '
         "(${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
 
-    mappings channel: 'official', version: '1.19.4'
+    mappings channel: 'official', version: '1.20'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
@@ -89,8 +90,14 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.19.4-45.0.63'
-    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19.4:4.1.2')
+    minecraft 'net.minecraftforge:forge:1.20-46.0.1'
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.20:4.2')
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+
+mixin {
+    add sourceSets.main, "stlcon.refmap.json"
+    config 'stlcon.mixins.json'
 }
 
 jar {

@@ -3,21 +3,18 @@ loaderVersion="[45,)" #mandatory
 license="All rights reserved"
 [[mods]] #mandatory
 modId="frv" #mandatory
-version="1.19.4-1.1.0" #mandatory
+version="1.20-2.0" #mandatory
 displayName="Stellar Conquest" #mandatory
 displayURL="https://legacy.curseforge.com/minecraft/mc-mods/the-stellar-conquest" #optional
 logoFile="stlconlogo.png" #optional
 authors="Feroov" #optional
 # (#mandatory)
 description='''
-Stellar Conquest is a Minecraft mod that takes players on a thrilling adventure across the galaxy,
-battling against alien creatures and exploring distant planets. Players must first defeat the alien
-mothership to gain access to the alien dimension, where they will face new challenges and discover
- rare resources.'''
+Stellar Conquest is a Minecraft mod that offers a thrilling galaxy adventure.Players battle aliens, explore planets by defeating a mothership, and unlocking the pathway to alien dimensions for new challenges and rare resources.'''
 
 [[dependencies.geckolib]]
 modId="geckolib"
 mandatory=true
-versionRange="[1.19.3,1.20)"
+versionRange="[1.20)"
 ordering="NONE"
 side="BOTH"

@@ -61,7 +61,7 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
         Entity entity = entityHitResult.getEntity();
         if (entityHitResult.getType() != HitResult.Type.ENTITY || !entityHitResult.getEntity().is(entity))
         {
-            if (!this.level.isClientSide) { this.remove(RemovalReason.KILLED); }
+            if (!this.level().isClientSide) { this.remove(RemovalReason.KILLED); }
         }
 
         Entity entity1 = this.getOwner();
@@ -77,13 +77,13 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
         float projectiledamage = 20.0F;
         if (entity.hurt(damagesource, projectiledamage))
         {
-            this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-            this.level.addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            this.level().addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 
             if (entity instanceof LivingEntity)
             {
                 LivingEntity livingentity = (LivingEntity) entity;
-                if (!this.level.isClientSide && entity1 instanceof LivingEntity)
+                if (!this.level().isClientSide && entity1 instanceof LivingEntity)
                 {
                     EnchantmentHelper.doPostHurtEffects(livingentity, entity1);
                     EnchantmentHelper.doPostDamageEffects((LivingEntity) entity1, livingentity);
@@ -96,12 +96,12 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
                     ((ServerPlayer) entity1).connection
                             .send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 14.0F));
                 }
-                this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-                this.level.addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+                this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+                this.level().addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
             }
 
 
-        } else { if (!this.level.isClientSide) { this.remove(RemovalReason.KILLED); } }
+        } else { if (!this.level().isClientSide) { this.remove(RemovalReason.KILLED); } }
     }
 
 
@@ -111,10 +111,10 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
     {
         super.onHitBlock(blockHitResult);
         this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.0F, 1.0F);
-        this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-        this.level.addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+        this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+        this.level().addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 
-        if (!this.level.isClientSide())
+        if (!this.level().isClientSide())
             this.remove(RemovalReason.DISCARDED);
     }
 
@@ -126,10 +126,10 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
         if (this.ticksInAir >= 80) { this.remove(RemovalReason.DISCARDED); }
 
 
-        if (this.level.isClientSide())
+        if (this.level().isClientSide())
         {
-            this.level.addParticle(ParticleTypes.SONIC_BOOM, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-            this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            this.level().addParticle(ParticleTypes.SONIC_BOOM, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 
         }
     }

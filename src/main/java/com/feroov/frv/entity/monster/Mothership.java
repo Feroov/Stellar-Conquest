@@ -117,7 +117,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
 
     @Override
     public void checkDespawn(){
-        if (this.getLevel().getDifficulty() == Difficulty.PEACEFUL) {
+        if (this.level().getDifficulty() == Difficulty.PEACEFUL) {
             this.discard();
         } else {
             super.checkDespawn();
@@ -159,9 +159,9 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
         double d3 = this.getTarget().getBoundingBox().minY + this.getTarget().getBbHeight() / 2.0F - (0.5D + this.getY() + this.getBbHeight() / 2.0F);
         double d4 = this.getTarget().getZ() - (this.getZ() + vec3d.z() * 4.0D);
 
-        MothershipBeam mothershipBeam = new MothershipBeam(this.level, this, d2, d3, d4, 1);
+        MothershipBeam mothershipBeam = new MothershipBeam(this.level(), this, d2, d3, d4, 1);
         mothershipBeam.setPos(this.getX() + vec3d.x() * 4.0D, this.getY() + this.getBbHeight() / 2.0F + 0.5D, this.getZ() + vec3d.z() * 4.0D);
-        this.getLevel().addFreshEntity(mothershipBeam);
+        this.level().addFreshEntity(mothershipBeam);
 
         if (this.getRandom().nextInt(6) == 0) {
             this.setTarget(null);
@@ -257,7 +257,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
             for (int i = 1; i < distance; ++i)
             {
                 axisalignedbb = axisalignedbb.move(pos);
-                if (!this.parentEntity.level.noCollision(this.parentEntity, axisalignedbb)) { return false; }
+                if (!this.parentEntity.level().noCollision(this.parentEntity, axisalignedbb)) { return false; }
             }
             return true;
         }
@@ -426,7 +426,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
     }
 
     public boolean isCastingSpell() {
-        if (this.level.isClientSide) {
+        if (this.level().isClientSide) {
             return this.entityData.get(DATA_SPELL_CASTING_ID) > 0;
         } else {
             return this.spellCastingTickCount > 0;
@@ -481,11 +481,11 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
 
             do {
                 BlockPos blockpos1 = blockpos.below();
-                BlockState blockstate = Mothership.this.level.getBlockState(blockpos1);
-                if (blockstate.isFaceSturdy(Mothership.this.level, blockpos1, Direction.UP)) {
-                    if (!Mothership.this.level.isEmptyBlock(blockpos)) {
-                        BlockState blockstate1 = Mothership.this.level.getBlockState(blockpos);
-                        VoxelShape voxelshape = blockstate1.getCollisionShape(Mothership.this.level, blockpos);
+                BlockState blockstate = Mothership.this.level().getBlockState(blockpos1);
+                if (blockstate.isFaceSturdy(Mothership.this.level(), blockpos1, Direction.UP)) {
+                    if (!Mothership.this.level().isEmptyBlock(blockpos)) {
+                        BlockState blockstate1 = Mothership.this.level().getBlockState(blockpos);
+                        VoxelShape voxelshape = blockstate1.getCollisionShape(Mothership.this.level(), blockpos);
                         if (!voxelshape.isEmpty()) {
                             d0 = voxelshape.max(Direction.Axis.Y);
                         }
@@ -498,14 +498,14 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
                 blockpos = blockpos.below();
             } while(blockpos.getY() >= Mth.floor(p_190876_5_) - 1);
 
-            ServerLevel serverworld = (ServerLevel)Mothership.this.level;
+            ServerLevel serverworld = (ServerLevel)Mothership.this.level();
 
             for(int i = 0; i < 1; ++i) {
                 BlockPos blockpos2 = Mothership.this.blockPosition().offset(-2 +
                         Mothership.this.random.nextInt(1), 1, -2 + Mothership.this.random.nextInt(1));
-                Celestroid corruptMinion = EntitiesSTLCON.CELESTROID.get().create(Mothership.this.level);
+                Celestroid corruptMinion = EntitiesSTLCON.CELESTROID.get().create(Mothership.this.level());
                 corruptMinion.moveTo(blockpos2, 0.0F, 0.0F);
-                corruptMinion.finalizeSpawn(serverworld, Mothership.this.level.getCurrentDifficultyAt(blockpos),
+                corruptMinion.finalizeSpawn(serverworld, Mothership.this.level().getCurrentDifficultyAt(blockpos),
                         MobSpawnType.MOB_SUMMONED, (SpawnGroupData)null, (CompoundTag)null);
                 serverworld.addFreshEntityWithPassengers(corruptMinion);
             }

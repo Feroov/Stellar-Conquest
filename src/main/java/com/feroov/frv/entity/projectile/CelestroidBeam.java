@@ -52,7 +52,7 @@ public class CelestroidBeam extends AbstractHurtingProjectile implements GeoEnti
     protected void onHitEntity(EntityHitResult entityHitResult)
     {
         super.onHitEntity(entityHitResult);
-        if (!this.level.isClientSide)
+        if (!this.level().isClientSide)
         {
             Entity entity = entityHitResult.getEntity();
             Entity entity1 = this.getOwner();
@@ -70,12 +70,12 @@ public class CelestroidBeam extends AbstractHurtingProjectile implements GeoEnti
                     }
                 }
             }
-            this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-            this.level.addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            this.level().addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 
         }
 
-        if (!this.level.isClientSide())
+        if (!this.level().isClientSide())
             this.remove(RemovalReason.DISCARDED);
     }
 
@@ -83,10 +83,10 @@ public class CelestroidBeam extends AbstractHurtingProjectile implements GeoEnti
     protected void onHitBlock(BlockHitResult blockHitResult)
     {
         super.onHitBlock(blockHitResult);
-        this.level.addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-        this.level.addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+        this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+        this.level().addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 
-        if (!this.level.isClientSide())
+        if (!this.level().isClientSide())
             this.remove(RemovalReason.DISCARDED);
     }
 

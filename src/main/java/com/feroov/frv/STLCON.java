@@ -6,6 +6,7 @@ import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.events.ModParticles;
 import com.feroov.frv.item.ItemsSTLCON;
 import com.feroov.frv.item.RangedItems;
+import com.feroov.frv.item.TabsSTLCON;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import com.feroov.frv.world.dimension.DimensionsSTLCON;
 import com.feroov.frv.world.dimension.POIRegistry;
@@ -39,6 +40,7 @@ public class STLCON
         ModParticles.register(eventBus);
         ItemsSTLCON.register(eventBus);
         DimensionsSTLCON.register();
+        TabsSTLCON.TABS.register(eventBus);
         StructuresSTLCON.DEFERRED_REGISTRY_STRUCTURE.register(eventBus);
         POIRegistry.POI.register(eventBus);
         BlockEntitiesSTLCON.BLOCK_ENTITIES.register(eventBus);

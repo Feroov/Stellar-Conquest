@@ -17,7 +17,6 @@ import net.minecraft.world.level.*;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.*;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -37,7 +36,7 @@ public class STLCONPortalBlocks extends Block
 
     public STLCONPortalBlocks(Block frame)
     {
-        super(BlockBehaviour.Properties.of(Material.PORTAL)
+        super(BlockBehaviour.Properties.of()
                 .strength(-1F)
                 .noCollission()
                 .lightLevel((state) -> 11)
@@ -77,13 +76,13 @@ public class STLCONPortalBlocks extends Block
 
     @Override
     public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-        if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions() && !entity.level.isClientSide
+        if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions() && !entity.level().isClientSide
                 && world != null && world.dimension() != null) {
             if (entity.isOnPortalCooldown()) {
                 entity.setPortalCooldown();
             }
             if (!entity.isOnPortalCooldown() && entity instanceof LivingEntity) {
-                entity.level.getProfiler().push(world.dimension().location().getPath());
+                entity.level().getProfiler().push(world.dimension().location().getPath());
                 if (this == ForgeRegistries.BLOCKS.getValue(new ResourceLocation(STLCON.MOD_ID, "xenosphere_portal"))) {
                     ResourceKey<Level> key = world.dimension() == DimensionsSTLCON.XENOSPHERE_KEY ? Level.OVERWORLD : DimensionsSTLCON.XENOSPHERE_KEY;
                     if (world.getServer().getLevel(key) != null) {
@@ -93,13 +92,7 @@ public class STLCONPortalBlocks extends Block
                                 true, POIRegistry.XENOSPHERE_PORTAL.getKey()));
                     }
                 }
-//                else if (this == ForgeRegistries.BLOCKS.getValue(new ResourceLocation(DivineRPG.MODID, "wildwood_portal"))) {
-//                    ResourceKey<Level> key = world.dimension() == LevelRegistry.WILDWOOD ? Level.OVERWORLD : LevelRegistry.WILDWOOD;
-//                    if (world.getServer().getLevel(key) != null) {
-//                        entity.changeDimension(world.getServer().getLevel(key), new DivineTeleporter(world.getServer().getLevel(key), ForgeRegistries.BLOCKS.getValue(new ResourceLocation(DivineRPG.MODID, "wildwood_portal")), ForgeRegistries.BLOCKS.getValue(new ResourceLocation(DivineRPG.MODID, "eden_block")), true, PointOfInterestRegistry.WILDWOOD_PORTAL.getKey()));
-//                    }
-//                }
-                entity.level.getProfiler().pop();
+                entity.level().getProfiler().pop();
             }
         }
     }

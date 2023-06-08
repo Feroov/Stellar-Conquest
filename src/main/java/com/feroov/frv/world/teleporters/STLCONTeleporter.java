@@ -186,14 +186,14 @@ public class STLCONTeleporter implements ITeleporter
                 int xOffset = directionIn.getStepX() * i + direction.getStepX() * offsetScale;
                 int zOffset = directionIn.getStepZ() * i + direction.getStepZ() * offsetScale;
                 offsetPos.setWithOffset(originalPos, xOffset, j, zOffset);
-                if (j < 0 && !isBlockMaterialSolid(offsetPos)) { return false; }
+//                if (j < 0 && !isBlockMaterialSolid(offsetPos)) { return false; }
                 if (j >= 0 && !isEmptyBlock(offsetPos)) { return false; }
             }
         }
         return true;
     }
 
-    private boolean isBlockMaterialSolid(BlockPos pos) { return world.getBlockState(pos).getMaterial().isSolid(); }
+//    private boolean isBlockMaterialSolid(BlockPos pos) { return world.getBlockState(pos).getMaterial().isSolid(); }
     private boolean isEmptyBlock(BlockPos pos) { return world.isEmptyBlock(pos); }
 
     @Nullable
@@ -203,7 +203,7 @@ public class STLCONTeleporter implements ITeleporter
         boolean sameDimension = destWorld.dimension() == world.dimension();
         boolean hasFrame = this.hasFrame;
 
-        if (entity.level.dimension() != world.dimension() && !sameDimension) { return null; }
+        if (entity.level().dimension() != world.dimension() && !sameDimension) { return null; }
         if (!hasFrame) { return new PortalInfo(new Vec3(entity.getX(), 255D, entity.getZ()), Vec3.ZERO, entity.yRot, entity.xRot); }
 
         WorldBorder border = destWorld.getWorldBorder();
@@ -211,7 +211,7 @@ public class STLCONTeleporter implements ITeleporter
         double minZ = Math.max(-2.9999872E7D, border.getMinZ() + 16.0D);
         double maxX = Math.min(2.9999872E7D, border.getMaxX() - 16.0D);
         double maxZ = Math.min(2.9999872E7D, border.getMaxZ() - 16.0D);
-        double coordinateDifference = DimensionType.getTeleportationScale(entity.level.dimensionType(), destWorld.dimensionType());
+        double coordinateDifference = DimensionType.getTeleportationScale(entity.level().dimensionType(), destWorld.dimensionType());
         BlockPos blockpos = new BlockPos(
                 (int) Mth.clamp(entity.getX() * coordinateDifference, minX, maxX),
                 (int) entity.getY(),
@@ -222,7 +222,7 @@ public class STLCONTeleporter implements ITeleporter
 
         return portalResult.map(result ->
         {
-            BlockState blockstate = entity.level.getBlockState(entity.blockPosition());
+            BlockState blockstate = entity.level().getBlockState(entity.blockPosition());
             Direction.Axis axis = blockstate.hasProperty(BlockStateProperties.HORIZONTAL_AXIS)
                     ? blockstate.getValue(BlockStateProperties.HORIZONTAL_AXIS)
                     : Direction.Axis.X;
@@ -230,7 +230,7 @@ public class STLCONTeleporter implements ITeleporter
             Vec3 vector3d;
             if (blockstate.hasProperty(BlockStateProperties.HORIZONTAL_AXIS))
             {
-                BlockUtil.FoundRectangle rectangle = BlockUtil.getLargestRectangleAround(entity.blockPosition(), axis, 21, Direction.Axis.Y, 21, (pos) -> entity.level.getBlockState(pos) == blockstate);
+                BlockUtil.FoundRectangle rectangle = BlockUtil.getLargestRectangleAround(entity.blockPosition(), axis, 21, Direction.Axis.Y, 21, (pos) -> entity.level().getBlockState(pos) == blockstate);
                 vector3d = entity.getRelativePortalPosition(axis, rectangle);
             } else { vector3d = new Vec3(0.5D, 0.0D, 0.0D); }
             return PortalShape.createPortalInfo(destWorld, result, axis, vector3d, entity.getDimensions(entity.getPose()), entity.getDeltaMovement(), entity.yRot, entity.xRot);

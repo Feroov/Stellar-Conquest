@@ -28,12 +28,12 @@ public class XenosgrassBlock extends Block implements BonemealableBlock {
         super(properties);
     }
 
-    @Nullable
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return ctx.getLevel().getBlockState(ctx.getClickedPos().above()).getMaterial().isSolid() ?
-                Blocks.DIRT.defaultBlockState() : super.getStateForPlacement(ctx);
-    }
+//    @Nullable
+//    @Override
+//    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+//        return ctx.getLevel().getBlockState(ctx.getClickedPos().above()).getTags()) ?
+//                Blocks.DIRT.defaultBlockState() : super.getStateForPlacement(ctx);
+//    }
 
     @Override
     public boolean canSustainPlant(BlockState state, BlockGetter getter, BlockPos pos, Direction direction, IPlantable plantable) {

@@ -22,13 +22,13 @@ public class StarrySky extends DimensionSpecialEffects {
         BufferBuilder bufferbuilder = tesselator.getBuilder();
         RenderSystem.setShader(GameRenderer::getPositionShader);
         if(starBuffer != null) starBuffer.close();
-        starBuffer = new VertexBuffer();
+        starBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
         BufferBuilder.RenderedBuffer bufferbuilder$renderedbuffer = drawStars(bufferbuilder);
         starBuffer.bind();
         starBuffer.upload(bufferbuilder$renderedbuffer);
         VertexBuffer.unbind();
         if(skyBuffer != null) skyBuffer.close();
-        skyBuffer = new VertexBuffer();
+        skyBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
         skyBuffer.bind();
         skyBuffer.upload(bufferbuilder$renderedbuffer);
         VertexBuffer.unbind();

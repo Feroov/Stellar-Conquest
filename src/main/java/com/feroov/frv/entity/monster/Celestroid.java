@@ -98,7 +98,7 @@ public class Celestroid extends Ghast implements Enemy, GeoEntity
 
     @Override
     public void checkDespawn(){
-        if (this.getLevel().getDifficulty() == Difficulty.PEACEFUL) {
+        if (this.level().getDifficulty() == Difficulty.PEACEFUL) {
             this.discard();
         } else {
             super.checkDespawn();
@@ -139,9 +139,9 @@ public class Celestroid extends Ghast implements Enemy, GeoEntity
         double d3 = this.getTarget().getBoundingBox().minY + this.getTarget().getBbHeight() / 2.0F - (0.5D + this.getY() + this.getBbHeight() / 2.0F);
         double d4 = this.getTarget().getZ() - (this.getZ() + vec3d.z() * 4.0D);
 
-        CelestroidBeam raygunBeam = new CelestroidBeam(this.level, this, d2, d3, d4);
+        CelestroidBeam raygunBeam = new CelestroidBeam(this.level(), this, d2, d3, d4);
         raygunBeam.setPos(this.getX() + vec3d.x() * 4.0D, this.getY() + this.getBbHeight() / 2.0F + 0.5D, this.getZ() + vec3d.z() * 4.0D);
-        this.getLevel().addFreshEntity(raygunBeam);
+        this.level().addFreshEntity(raygunBeam);
 
         if (this.getRandom().nextInt(6) == 0) {
             this.setTarget(null);
@@ -237,7 +237,7 @@ public class Celestroid extends Ghast implements Enemy, GeoEntity
             for (int i = 1; i < distance; ++i)
             {
                 axisalignedbb = axisalignedbb.move(pos);
-                if (!this.parentEntity.level.noCollision(this.parentEntity, axisalignedbb)) { return false; }
+                if (!this.parentEntity.level().noCollision(this.parentEntity, axisalignedbb)) { return false; }
             }
             return true;
         }

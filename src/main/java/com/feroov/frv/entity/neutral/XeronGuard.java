@@ -171,13 +171,13 @@ public class XeronGuard extends Animal implements GeoEntity, NeutralMob
     @Override
     public void readAdditionalSaveData(CompoundTag p_30402_) {
         super.readAdditionalSaveData(p_30402_);
-        this.readPersistentAngerSaveData(this.level, p_30402_);
+        this.readPersistentAngerSaveData(this.level(), p_30402_);
     }
 
     public void aiStep() {
         super.aiStep();
-        if (!this.level.isClientSide) {
-            this.updatePersistentAnger((ServerLevel)this.level, true);
+        if (!this.level().isClientSide) {
+            this.updatePersistentAnger((ServerLevel)this.level(), true);
         }
 
     }
