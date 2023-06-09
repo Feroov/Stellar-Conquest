@@ -40,6 +40,8 @@ public class Xeron extends Animal implements GeoEntity
 {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private static final Ingredient ITEM_INTEREST = Ingredient.of(ItemsSTLCON.LUMIBLOOM.get(), ItemsSTLCON.LUMIBLOOM_SEEDS.get());
+    private static final int INTERACT_COOLDOWN = 20;
+    private int interactCooldown = 0;
 
     public Xeron(EntityType<? extends Animal> entityType, Level level)
     {
@@ -69,8 +71,13 @@ public class Xeron extends Animal implements GeoEntity
     }
 
     @Override
+    public void tick() { super.tick(); if (interactCooldown > 0) { interactCooldown--; }}
+
+    @Override
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand)
     {
+        if (interactCooldown > 0) { return InteractionResult.PASS; }
+        interactCooldown = INTERACT_COOLDOWN;
         this.playSound(SoundEventsSTLCON.XERON_AMBIENT.get(), 1.0F, 1.6F);
 
         ItemStack itemstack = player.getItemInHand(interactionHand);
@@ -85,15 +92,19 @@ public class Xeron extends Animal implements GeoEntity
             {
                 if (!player.getAbilities().instabuild) { itemstack.shrink(1); }
 
+                double jumpVelocity = 0.4;
+                setDeltaMovement(getDeltaMovement().add(0, jumpVelocity, 0));
+
                 ItemStack droppedItem = getRandomDrop();
                 if (droppedItem != null)
                 {
-                    double x = getX() ;
-                    double y = getY() + 1;
-                    double z = getZ() ;
+                    double x = getX();
+                    double y = getY() + 1.2;
+                    double z = getZ();
                     spawnAtLocation(droppedItem, x, y, z);
+
+                    return InteractionResult.SUCCESS;
                 }
-                return InteractionResult.SUCCESS;
             }
             return super.mobInteract(player, interactionHand);
         }
@@ -102,18 +113,27 @@ public class Xeron extends Animal implements GeoEntity
     private ItemStack getRandomDrop()
     {
         Random random = new Random();
-        int randomNumber = random.nextInt(4);
-        return switch (randomNumber) {
-            case 0 -> new ItemStack(BlocksSTLCON.XENOS_SAPLING.get());
-            case 1 -> new ItemStack(BlocksSTLCON.XENOSDIRT.get());
-            case 2 -> new ItemStack(BlocksSTLCON.XENOS_LOG.get());
-            case 3 -> new ItemStack(ItemsSTLCON.USKIUM.get());
-            default -> null;
-        };
+        int randomNumber = random.nextInt(6);
+
+        // Rare drops
+        if (randomNumber == 0) { return new ItemStack(ItemsSTLCON.XENITE_INGOT.get());}
+        else
+        {
+            return switch (randomNumber) // Common drops
+            {
+                case 1 -> new ItemStack(BlocksSTLCON.XENOS_SAPLING.get());
+                case 2 -> new ItemStack(BlocksSTLCON.XENOSDIRT.get());
+                case 3 -> new ItemStack(BlocksSTLCON.XENOS_LOG.get());
+                case 4 -> new ItemStack(ItemsSTLCON.USKIUM.get());
+                case 5 -> new ItemStack(Items.SUGAR);
+                default -> null;
+            };
+        }
     }
 
     @Nullable
-    public ItemEntity spawnAtLocation(ItemStack stack, double x, double y, double z) {
+    public ItemEntity spawnAtLocation(ItemStack stack, double x, double y, double z)
+    {
         if (stack.isEmpty()) { return null; }
         else if (level().isClientSide()) { return null; }
         else
