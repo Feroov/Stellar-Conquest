@@ -36,7 +36,7 @@ public class ConfiguredFeaturesSTLCON
                 new StraightTrunkPlacer(4, 3, 0),
                 BlockStateProvider.simple(BlocksSTLCON.XENOS_LEAVES.get()),
                 new LeafSpheroidFoliagePlacer(1.5f, 2.25f, ConstantInt.of(0), 1, 1, 0.5f, 0),
-                new TwoLayersFeatureSize(2, 2, 2)).build());
+                new TwoLayersFeatureSize(2, 0, 2)).build());
 
         // Ores
         register(context, USKIUM_ORE_KEY, Feature.ORE, new OreConfiguration(xenostoneReplaceables,

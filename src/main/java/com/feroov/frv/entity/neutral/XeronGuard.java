@@ -1,6 +1,9 @@
 package com.feroov.frv.entity.neutral;
 
 
+import com.feroov.frv.entity.monster.Celestroid;
+import com.feroov.frv.entity.passive.Xeron;
+import com.feroov.frv.item.ItemsSTLCON;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -11,19 +14,28 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -37,7 +49,7 @@ import javax.annotation.Nonnull;
 import java.util.UUID;
 
 
-public class XeronGuard extends Animal implements GeoEntity, NeutralMob
+public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
 {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(XeronGuard.class, EntityDataSerializers.BOOLEAN);
@@ -45,12 +57,14 @@ public class XeronGuard extends Animal implements GeoEntity, NeutralMob
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
     @Nullable
     private UUID persistentAngerTarget;
+    private static final Ingredient ITEM_INTEREST = Ingredient.of(ItemsSTLCON.XENITE_INGOT.get());
 
-    public XeronGuard(EntityType<? extends Animal> entityType, Level level)
+    public XeronGuard(EntityType<? extends TamableAnimal> entityType, Level level)
     {
         super(entityType, level);
         this.xpReward = 20;
         ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);
+        this.setTame(false);
     }
 
     public static AttributeSupplier setAttributes()
@@ -67,15 +81,96 @@ public class XeronGuard extends Animal implements GeoEntity, NeutralMob
     {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(0, new TemptGoal(this, 0.6D, ITEM_INTEREST, false));
+        this.targetSelector.addGoal(1, new OwnerHurtByTargetGoal(this));
         this.goalSelector.addGoal(1, new OpenDoorGoal(this, true));
         this.goalSelector.addGoal(1, new XeronMeleeAttack(this, 0.95D, true));
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Mob.class, 25.0F));
         this.targetSelector.addGoal(2, (new HurtByTargetGoal(this)).setAlertOthers());
+        this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         this.goalSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true, this::isAngryAt));
+        this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.73D));
         this.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(this, 0.73D));
+        this.goalSelector.addGoal(5, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, true));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(7, new ResetUniversalAngerTargetGoal<>(this, true));
+    }
+
+    @Override
+    public InteractionResult mobInteract(Player player, InteractionHand interactionHand)
+    {
+        ItemStack itemstack = player.getItemInHand(interactionHand);
+        if (this.level().isClientSide)
+        {
+            boolean flag = this.isOwnedBy(player) || this.isTame() || itemstack.is(ItemsSTLCON.ASTRALITE_INGOT.get()) && !this.isTame() && !this.isAngry();
+            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+        } else
+        {
+            if (this.isTame())
+            {
+                if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth())
+                {
+                    if (!player.getAbilities().instabuild) { itemstack.shrink(1); }
+
+                    this.heal((float) itemstack.getFoodProperties(this).getNutrition());
+                    this.gameEvent(GameEvent.EAT, this);
+                    return InteractionResult.SUCCESS;
+                }
+            }
+            if (itemstack.is(ItemsSTLCON.ASTRALITE_INGOT.get()) && !this.isAngry())
+            {
+                if (!player.getAbilities().instabuild) { itemstack.shrink(1); }
+
+                if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, player))
+                {
+                    this.tame(player);
+                    this.navigation.stop();
+                    this.setTarget((LivingEntity)null);
+                    this.level().broadcastEntityEvent(this, (byte)7);
+                } else { this.level().broadcastEntityEvent(this, (byte)6); }
+
+                return InteractionResult.SUCCESS;
+            }
+            return super.mobInteract(player, interactionHand);
+        }
+    }
+
+
+    @Override
+    public boolean wantsToAttack(LivingEntity livingEntity, LivingEntity livingEntity2)
+    {
+        if (!(livingEntity instanceof Creeper) && !(livingEntity instanceof Ghast) && !(livingEntity instanceof Xeron))
+        {
+            if (livingEntity instanceof XeronGuard)
+            {
+                XeronGuard xeronGuard = (XeronGuard)livingEntity;
+                return !xeronGuard.isTame() || xeronGuard.getOwner() != livingEntity2;
+            }
+            else if (livingEntity instanceof Player && livingEntity2 instanceof Player && !((Player)livingEntity2).canHarmPlayer((Player)livingEntity)) { return false; }
+            else if (livingEntity instanceof AbstractHorse && ((AbstractHorse)livingEntity).isTamed()) { return false; }
+            else { return !(livingEntity instanceof TamableAnimal) || !((TamableAnimal)livingEntity).isTame();} } else { return false;}
+    }
+
+    @Override
+    public boolean doHurtTarget(Entity entity)
+    {
+        boolean success = entity.hurt(this.damageSources().mobAttack(this), 7.0F);
+        if (success) { entity.push(0.0D, 0.2D, 0.0D); }
+        return success;
+    }
+
+    @Override
+    public void setTame(boolean p_30443_) {
+        super.setTame(p_30443_);
+        if (p_30443_) {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0D);
+            this.setHealth(20.0F);
+        } else {
+            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(8.0D);
+        }
+
+        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(4.0D);
     }
 
     @Override
@@ -139,11 +234,6 @@ public class XeronGuard extends Animal implements GeoEntity, NeutralMob
     @Override
     public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
         return null;
-    }
-
-    @Override
-    protected boolean shouldDespawnInPeaceful() {
-        return true;
     }
 
     @Override

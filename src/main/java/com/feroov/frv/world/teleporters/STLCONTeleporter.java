@@ -186,14 +186,14 @@ public class STLCONTeleporter implements ITeleporter
                 int xOffset = directionIn.getStepX() * i + direction.getStepX() * offsetScale;
                 int zOffset = directionIn.getStepZ() * i + direction.getStepZ() * offsetScale;
                 offsetPos.setWithOffset(originalPos, xOffset, j, zOffset);
-//                if (j < 0 && !isBlockMaterialSolid(offsetPos)) { return false; }
+                if (j < 0 && !isBlockMaterialSolid(offsetPos)) { return false; }
                 if (j >= 0 && !isEmptyBlock(offsetPos)) { return false; }
             }
         }
         return true;
     }
 
-//    private boolean isBlockMaterialSolid(BlockPos pos) { return world.getBlockState(pos).getMaterial().isSolid(); }
+    private boolean isBlockMaterialSolid(BlockPos pos) { return world.getBlockState(pos).isSolid(); }
     private boolean isEmptyBlock(BlockPos pos) { return world.isEmptyBlock(pos); }
 
     @Nullable

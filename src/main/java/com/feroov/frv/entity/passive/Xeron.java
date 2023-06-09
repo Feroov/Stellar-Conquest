@@ -1,10 +1,14 @@
 package com.feroov.frv.entity.passive;
 
 
+import com.feroov.frv.block.BlocksSTLCON;
+import com.feroov.frv.item.ItemsSTLCON;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -12,7 +16,12 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -24,11 +33,13 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
+import java.util.Random;
 
 
 public class Xeron extends Animal implements GeoEntity
 {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private static final Ingredient ITEM_INTEREST = Ingredient.of(ItemsSTLCON.LUMIBLOOM.get(), ItemsSTLCON.LUMIBLOOM_SEEDS.get());
 
     public Xeron(EntityType<? extends Animal> entityType, Level level)
     {
@@ -48,16 +59,71 @@ public class Xeron extends Animal implements GeoEntity
     {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(0, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(1, new OpenDoorGoal(this, true));
-        this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Mob.class, 25.0F));
+        this.goalSelector.addGoal(1, new TemptGoal(this, 0.8D, ITEM_INTEREST, false));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 0.73D));
         this.goalSelector.addGoal(7, new MoveTowardsRestrictionGoal(this, 0.73D));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
     }
 
-    public boolean canBreakDoors() {
-        return false;
+    @Override
+    public InteractionResult mobInteract(Player player, InteractionHand interactionHand)
+    {
+        this.playSound(SoundEventsSTLCON.XERON_AMBIENT.get(), 1.0F, 1.6F);
+
+        ItemStack itemstack = player.getItemInHand(interactionHand);
+        if (level().isClientSide())
+        {
+            boolean flag = itemstack.is(ItemsSTLCON.LUMIBLOOM.get()) || itemstack.is(ItemsSTLCON.LUMIBLOOM_SEEDS.get());
+            return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
+        }
+        else
+        {
+            if (itemstack.is(ItemsSTLCON.LUMIBLOOM.get()) || itemstack.is(ItemsSTLCON.LUMIBLOOM_SEEDS.get()))
+            {
+                if (!player.getAbilities().instabuild) { itemstack.shrink(1); }
+
+                ItemStack droppedItem = getRandomDrop();
+                if (droppedItem != null)
+                {
+                    double x = getX() ;
+                    double y = getY() + 1;
+                    double z = getZ() ;
+                    spawnAtLocation(droppedItem, x, y, z);
+                }
+                return InteractionResult.SUCCESS;
+            }
+            return super.mobInteract(player, interactionHand);
+        }
+    }
+
+    private ItemStack getRandomDrop()
+    {
+        Random random = new Random();
+        int randomNumber = random.nextInt(4);
+        return switch (randomNumber) {
+            case 0 -> new ItemStack(BlocksSTLCON.XENOS_SAPLING.get());
+            case 1 -> new ItemStack(BlocksSTLCON.XENOSDIRT.get());
+            case 2 -> new ItemStack(BlocksSTLCON.XENOS_LOG.get());
+            case 3 -> new ItemStack(ItemsSTLCON.USKIUM.get());
+            default -> null;
+        };
+    }
+
+    @Nullable
+    public ItemEntity spawnAtLocation(ItemStack stack, double x, double y, double z) {
+        if (stack.isEmpty()) { return null; }
+        else if (level().isClientSide()) { return null; }
+        else
+        {
+            ItemEntity itemEntity = new ItemEntity(level(), x, y, z, stack);
+            itemEntity.setDefaultPickUpDelay();
+            if (captureDrops() != null)  { captureDrops().add(itemEntity); }
+            else { level().addFreshEntity(itemEntity); }
+            return itemEntity;
+        }
     }
 
     @Override
