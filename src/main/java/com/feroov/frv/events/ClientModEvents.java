@@ -11,21 +11,25 @@ import com.feroov.frv.entity.neutral.XeronGuard;
 import com.feroov.frv.entity.monster.renderer.CelestroidRenderer;
 import com.feroov.frv.entity.monster.renderer.MothershipRenderer;
 import com.feroov.frv.entity.neutral.renderer.XeronGuardRenderer;
+import com.feroov.frv.entity.passive.Zephxen;
 import com.feroov.frv.entity.passive.renderer.WispxenRenderer;
 import com.feroov.frv.entity.passive.renderer.XeronRenderer;
+import com.feroov.frv.entity.passive.renderer.ZephxenRenderer;
 import com.feroov.frv.entity.projectile.renderer.CelestroidBeamRenderer;
 import com.feroov.frv.entity.projectile.renderer.MothershipBeamRenderer;
 import com.feroov.frv.entity.projectile.renderer.RaygunBeamRenderer;
 import com.feroov.frv.particles.HeartParticles;
 import com.feroov.frv.particles.XenospherePortalParticles;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,6 +38,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = STLCON.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientModEvents
 {
+
     public ClientModEvents(){}
 
     @SubscribeEvent
@@ -44,6 +49,7 @@ public class ClientModEvents
         event.put(EntitiesSTLCON.XERON.get(), Xeron.setAttributes());
         event.put(EntitiesSTLCON.XERON_GUARD.get(), XeronGuard.setAttributes());
         event.put(EntitiesSTLCON.WISPXEN.get(), Wispxen.setAttributes());
+        event.put(EntitiesSTLCON.ZEPHXEN.get(), Zephxen.setAttributes());
     }
 
     @SubscribeEvent
@@ -54,6 +60,7 @@ public class ClientModEvents
         event.registerEntityRenderer(EntitiesSTLCON.XERON.get(), XeronRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.XERON_GUARD.get(), XeronGuardRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.WISPXEN.get(), WispxenRenderer::new);
+        event.registerEntityRenderer(EntitiesSTLCON.ZEPHXEN.get(), ZephxenRenderer::new);
 
         event.registerEntityRenderer(EntitiesSTLCON.RAYGUN_BEAM.get(), RaygunBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_BEAM.get(), CelestroidBeamRenderer::new);
@@ -67,6 +74,9 @@ public class ClientModEvents
                 Mob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
         event.register(EntitiesSTLCON.WISPXEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE,
+                Mob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+
+        event.register(EntitiesSTLCON.ZEPHXEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
     }
 
