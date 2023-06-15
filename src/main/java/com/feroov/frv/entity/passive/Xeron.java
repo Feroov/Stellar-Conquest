@@ -51,7 +51,7 @@ public class Xeron extends Animal implements GeoEntity
 
     public static AttributeSupplier setAttributes()
     {
-        return Monster.createMobAttributes()
+        return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 7.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.32D).build();
     }

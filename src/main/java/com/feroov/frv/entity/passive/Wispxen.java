@@ -49,7 +49,7 @@ public class Wispxen extends Animal implements GeoEntity
 
     public static AttributeSupplier setAttributes()
     {
-        return Monster.createMobAttributes()
+        return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 1.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.34D)
                 .add(Attributes.FLYING_SPEED, 0.17D).build();

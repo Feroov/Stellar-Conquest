@@ -69,7 +69,7 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
 
     public static AttributeSupplier setAttributes()
     {
-        return Monster.createMobAttributes()
+        return TamableAnimal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 15.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.32D)
                 .add(Attributes.FOLLOW_RANGE, 25.0D)
@@ -101,32 +101,34 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand)
     {
         ItemStack itemstack = player.getItemInHand(interactionHand);
-        if (this.level().isClientSide) {
+        if (this.level().isClientSide)
+        {
             boolean flag = this.isOwnedBy(player) || this.isTame() || (itemstack.is(ItemsSTLCON.ASTRALITE_INGOT.get()) && !this.isAngry());
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
-        } else {
-            if (this.isTame()) {
-                if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
-                    if (!player.getAbilities().instabuild) {
-                        itemstack.shrink(1);
-                    }
+        }
+        else
+        {
+            if (this.isTame())
+            {
+                if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth())
+                {
+                    if (!player.getAbilities().instabuild) { itemstack.shrink(1); }
                     this.heal((float) itemstack.getFoodProperties(this).getNutrition());
                     this.gameEvent(GameEvent.EAT, this);
                     return InteractionResult.SUCCESS;
                 }
                 return super.mobInteract(player, interactionHand);
-            } else if (itemstack.is(ItemsSTLCON.ASTRALITE_INGOT.get()) && !this.isAngry()) {
-                if (!player.getAbilities().instabuild) {
-                    itemstack.shrink(1);
-                }
-                if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, player)) {
+            }
+            else if (itemstack.is(ItemsSTLCON.ASTRALITE_INGOT.get()) && !this.isAngry())
+            {
+                if (!player.getAbilities().instabuild) { itemstack.shrink(1); }
+                if (this.random.nextInt(3) == 0 && !net.minecraftforge.event.ForgeEventFactory.onAnimalTame(this, player))
+                {
                     this.tame(player);
                     this.navigation.stop();
                     this.setTarget((LivingEntity)null);
                     this.level().broadcastEntityEvent(this, (byte)7);
-                } else {
-                    this.level().broadcastEntityEvent(this, (byte)6);
-                }
+                } else { this.level().broadcastEntityEvent(this, (byte)6); }
                 return InteractionResult.SUCCESS;
             }
             return super.mobInteract(player, interactionHand);

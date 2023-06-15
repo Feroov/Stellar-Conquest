@@ -43,7 +43,7 @@ public class BlocksSTLCON
 
     // ------------------------------------------ Teleporter Blocks ------------------------------------------
     public static final RegistryObject<Block> XENOSPHERE_TELEPORTER = registerBlock("xenosphere_portal", () ->
-            new STLCONPortalBlocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MOD_ID, "xenosdirt"))));
+            new STLCONPortalBlocks(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(MOD_ID, "xenoflux"))));
     // ---------------------------------------------------------------------------------------------------
 
 

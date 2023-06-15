@@ -1,4 +1,5 @@
 {
+  "creature_spawn_probability": 0.15,
   "temperature": 0.6,
   "downfall": 0,
   "precipitation": "none",
@@ -12,18 +13,17 @@
     "ambient_sound": "frv:xenosphere_ambience"
   },
   "has_precipitation": false,
-  "creature_spawn_probability": 0.2,
+  "spawn_costs": {},
   "spawners": {
     "creature": [
       {
-        "type": "frv:xeron",
-        "maxCount": 2,
+        "type": "frv:zephxen",
+        "maxCount": 1,
         "minCount": 1,
-        "weight": 20
+        "weight": 1
       }
     ]
   },
-  "spawn_costs": {},
   "carvers": {
     "air": [
       "minecraft:cave",

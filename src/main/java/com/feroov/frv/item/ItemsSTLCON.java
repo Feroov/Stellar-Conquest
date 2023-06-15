@@ -30,13 +30,13 @@ public class ItemsSTLCON
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, STLCON.MOD_ID);
 
 
-    // ----------------------------------------- General Items -----------------------------------------
+    // ------------------------------- Unique & Creative only -----------------------------------------
+    public static final RegistryObject<Item> ADMIN_SWORD = ITEMS.register("admin_sword", () -> new SwordItem(TiersSTLCON.ADMIN, 0, 9996f, new Item.Properties())  { @Override  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)  { super.appendHoverText(stack, worldIn, tooltip, flagIn); tooltip.add(Component.translatable("Banish everything off the screen").withStyle(ChatFormatting.RED)); tooltip.add(Component.translatable(" ")); tooltip.add(Component.translatable("Creative Mode Exclusive!").withStyle(ChatFormatting.UNDERLINE)); }});
     // ------------------------------------------------------------------------------------------------
 
 
 
     // ------------------------------------ Special Weapons ------------------------------------------
-    public static final RegistryObject<Item> ADMIN_SWORD = ITEMS.register("admin_sword", () -> new SwordItem(TiersSTLCON.ADMIN, 0, 9996f, new Item.Properties())  { @Override  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)  { super.appendHoverText(stack, worldIn, tooltip, flagIn); tooltip.add(Component.translatable("Banish everything off the screen").withStyle(ChatFormatting.RED)); tooltip.add(Component.translatable(" ")); tooltip.add(Component.translatable("Creative Mode Exclusive!").withStyle(ChatFormatting.UNDERLINE)); }});
     public static final RegistryObject<CosmicRayGun> COSMIC_RAY_GUN = ITEMS.register("raygun", CosmicRayGun::new);
     // -----------------------------------------------------------------------------------------------
 
@@ -84,16 +84,7 @@ public class ItemsSTLCON
             () -> new Item(new Item.Properties().food(ConsumablesSTLCON.LUMIBLOOM)));
 
     public static final RegistryObject<Item> WISPXENDUST = ITEMS.register("wispxen_dust",
-            () -> new Item(new Item.Properties())
-            {
-                @Override
-                public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-                    super.appendHoverText(stack, worldIn, tooltip, flagIn);
-                    tooltip.add(Component.translatable("Wispxen's growth").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
-                    tooltip.add(Component.translatable("unleashes potent dust,").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
-                    tooltip.add(Component.translatable("essential for crafting power.").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
-                }
-            });
+            () -> new Item(new Item.Properties()) { @Override public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) { super.appendHoverText(stack, worldIn, tooltip, flagIn); tooltip.add(Component.translatable("Wispxen's growth").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC)); tooltip.add(Component.translatable("unleashes potent dust,").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC)); tooltip.add(Component.translatable("essential for crafting power.").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC)); }});
     // ------------------------------------------------------------------------------------------------
 
 
@@ -113,6 +104,9 @@ public class ItemsSTLCON
 
     public static final RegistryObject<Item> WISPXEN_SPAWN_EGG = ITEMS.register("wispxen_spawn_egg",
             () -> new ForgeSpawnEggItem(EntitiesSTLCON.WISPXEN, 0x02F7ED, 0X9CF7F4, new Item.Properties()));
+
+    public static final RegistryObject<Item> ZEPHXEN_SPAWN_EGG = ITEMS.register("zephxen_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.ZEPHXEN, 0x0031AF, 0XFFFFFF, new Item.Properties()));
     // ------------------------------------------------------------------------------------------------
 
 
