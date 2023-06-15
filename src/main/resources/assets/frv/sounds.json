@@ -1,25 +1,13 @@
 {
   "raygun_shoot": {"sounds": [{"name": "frv:raygun_shoot"}], "subtitle": "frv.raygun_shoot"},
   "celestroid_ambient": {"sounds": [{"name": "frv:celestroid_ambient"}], "subtitle": "frv.celestroid_ambient"},
-  "xeron_ambient":
-  {
-    "sounds": [{
-    "name": "frv:xeron_ambient"}, {
-    "name": "frv:xeron_ambient1"}, {
-    "name": "frv:xeron_ambient2"}, {
-    "name": "frv:xeron_ambient3"}, {
-    "name": "frv:xeron_ambient4"}],
-    "subtitle": "frv.xeron_ambient"
-  },
-  "xeron_hurt":
-  {
-    "sounds": [{
-      "name": "frv:xeron_hurt"}, {
-      "name": "frv:xeron_hurt2"}, {
-      "name": "frv:xeron_hurt3"}, {
-      "name": "frv:xeron_hurt3"}],
-    "subtitle": "frv.xeron_hurt"
-  },
+
+  "xeron_ambient": {"sounds": [{"name": "frv:xeron_ambient"}, {"name": "frv:xeron_ambient1"}, {"name": "frv:xeron_ambient2"}, {"name": "frv:xeron_ambient3"}, {"name": "frv:xeron_ambient4"}], "subtitle": "frv.xeron_ambient"},
+  "xeron_hurt": {"sounds": [{"name": "frv:xeron_hurt"}, {"name": "frv:xeron_hurt2"}, {"name": "frv:xeron_hurt3"}, {"name": "frv:xeron_hurt3"}], "subtitle": "frv.xeron_hurt"},
+
+  "zephxen_ambient": {"sounds": [{"name": "frv:zephxen_ambient1"}, { "name": "frv:zephxen_ambient2"}], "subtitle": "frv.zephxen_ambient"},
+  "zephxen_hurt": {"sounds": [{"name": "frv:zephxen_hurt1"}, {"name": "frv:zephxen_hurt2"}], "subtitle": "frv.zephxen_hurt"},
+  "zephxen_death": {"sounds": [{"name": "frv:zephxen_death"}], "subtitle": "frv.zephxen_death"},
 
   "xenosphere_ambience": { "sounds": [{"name": "frv:xenosphere_ambience"}], "subtitle": "frv.xenosphere_ambience"}
 }

@@ -18,6 +18,10 @@ public class SoundEventsSTLCON
     public static final RegistryObject<SoundEvent> XERON_AMBIENT = SOUND_EVENTS.register("xeron_ambient", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "xeron_ambient")));
     public static final RegistryObject<SoundEvent> XERON_HURT = SOUND_EVENTS.register("xeron_hurt", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "xeron_hurt")));
 
+    public static final RegistryObject<SoundEvent> ZEPHXEN_AMBIENT = SOUND_EVENTS.register("zephxen_ambient", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "zephxen_ambient")));
+    public static final RegistryObject<SoundEvent> ZEPHXEN_HURT = SOUND_EVENTS.register("zephxen_hurt", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "zephxen_hurt")));
+    public static final RegistryObject<SoundEvent> ZEPHXEN_DEATH = SOUND_EVENTS.register("zephxen_death", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "zephxen_death")));
+
     public static final RegistryObject<SoundEvent> XENOSPHERE_AMBIENCE = SOUND_EVENTS.register("xenosphere_ambience", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "xenosphere_ambience")));
 
 
