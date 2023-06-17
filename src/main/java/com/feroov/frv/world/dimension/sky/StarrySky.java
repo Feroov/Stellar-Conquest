@@ -2,22 +2,19 @@ package com.feroov.frv.world.dimension.sky;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.*;
 import net.minecraft.util.*;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
 import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
-public class StarrySky extends DimensionSpecialEffects {
-
+public class StarrySky extends DimensionSpecialEffects
+{
     @Nullable private VertexBuffer skyBuffer, starBuffer;
-    public StarrySky() {
-        super(256F, true, SkyType.NORMAL, false, false);
 
-        //create sky
+    public StarrySky()
+    {
+        super(256F, true, SkyType.NORMAL, false, false);
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferbuilder = tesselator.getBuilder();
         RenderSystem.setShader(GameRenderer::getPositionShader);
@@ -35,17 +32,20 @@ public class StarrySky extends DimensionSpecialEffects {
     }
 
     @Override
-    public Vec3 getBrightnessDependentFogColor(Vec3 color, float sunHeight) {
+    public Vec3 getBrightnessDependentFogColor(Vec3 color, float sunHeight)
+    {
         return color.multiply(sunHeight  * 0.94 + 0.06, sunHeight * 0.94 + 0.06, sunHeight  * 0.91 + 0.09);
     }
-    public boolean isFoggyAt(int i, int ii) {return false;}
+    public boolean isFoggyAt(int i, int ii) { return false; }
 
 
-    public static BufferBuilder.RenderedBuffer drawStars(BufferBuilder builder) {
+    public static BufferBuilder.RenderedBuffer drawStars(BufferBuilder builder)
+    {
         RandomSource random = RandomSource.create(10842L);
         builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
 
-        for (int i = 0; i < 7000; ++i) {
+        for (int i = 0; i < 7000; ++i)
+        {
             double d0 = random.nextFloat() * 2.0F - 1.0F;
             double d1 = random.nextFloat() * 2.0F - 1.0F;
             double d2 = random.nextFloat() * 2.0F - 1.0F;
@@ -69,7 +69,8 @@ public class StarrySky extends DimensionSpecialEffects {
                 double d15 = Math.sin(d14);
                 double d16 = Math.cos(d14);
 
-                for (int j = 0; j < 4; ++j) {
+                for (int j = 0; j < 4; ++j)
+                {
                     double d18 = ((j & 2) - 1) * d3;
                     double d19 = ((j + 1 & 2) - 1) * d3;
                     double d21 = d18 * d16 - d19 * d15;

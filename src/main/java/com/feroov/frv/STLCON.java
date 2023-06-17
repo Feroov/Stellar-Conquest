@@ -13,8 +13,6 @@ import com.feroov.frv.world.dimension.POIRegistry;
 import com.feroov.frv.world.feature.FeatureModifiers;
 import com.feroov.frv.world.placement.PlacementRegistrySTLCON;
 import com.feroov.frv.world.structure.StructuresSTLCON;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.common.MinecraftForge;
@@ -27,7 +25,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 @Mod(STLCON.MOD_ID)
 public class STLCON
 {
-
     public static final String MOD_ID = "frv";
 
     public STLCON()

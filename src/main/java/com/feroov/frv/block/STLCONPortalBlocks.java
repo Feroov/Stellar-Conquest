@@ -75,17 +75,21 @@ public class STLCONPortalBlocks extends Block
     }
 
     @Override
-    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity)
+    {
         if (!entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions() && !entity.level().isClientSide
-                && world != null && world.dimension() != null) {
-            if (entity.isOnPortalCooldown()) {
-                entity.setPortalCooldown();
-            }
-            if (!entity.isOnPortalCooldown() && entity instanceof LivingEntity) {
+                && world != null && world.dimension() != null)
+        {
+            if (entity.isOnPortalCooldown()) { entity.setPortalCooldown(); }
+
+            if (!entity.isOnPortalCooldown() && entity instanceof LivingEntity)
+            {
                 entity.level().getProfiler().push(world.dimension().location().getPath());
-                if (this == ForgeRegistries.BLOCKS.getValue(new ResourceLocation(STLCON.MOD_ID, "xenosphere_portal"))) {
+                if (this == ForgeRegistries.BLOCKS.getValue(new ResourceLocation(STLCON.MOD_ID, "xenosphere_portal")))
+                {
                     ResourceKey<Level> key = world.dimension() == DimensionsSTLCON.XENOSPHERE_KEY ? Level.OVERWORLD : DimensionsSTLCON.XENOSPHERE_KEY;
-                    if (world.getServer().getLevel(key) != null) {
+                    if (world.getServer().getLevel(key) != null)
+                    {
                         entity.changeDimension(world.getServer().getLevel(key), new STLCONTeleporter(world.getServer().getLevel(key),
                                 ForgeRegistries.BLOCKS.getValue(new ResourceLocation(STLCON.MOD_ID, "xenosphere_portal")),
                                 ForgeRegistries.BLOCKS.getValue(new ResourceLocation(STLCON.MOD_ID, "xenoflux")),
@@ -99,8 +103,10 @@ public class STLCONPortalBlocks extends Block
 
     @OnlyIn(Dist.CLIENT)
     @Override
-    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
-        if (rand.nextInt(100) == 0) {
+    public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand)
+    {
+        if (rand.nextInt(100) == 0)
+        {
             worldIn.playLocalSound((double)pos.getX() + 0.5D, 
                     (double)pos.getY() + 0.5D, 
                     (double)pos.getZ() + 0.5D, 
@@ -108,7 +114,8 @@ public class STLCONPortalBlocks extends Block
                     rand.nextFloat() * 0.4F + 0.8F, false);
         }
 
-        for(int i = 0; i < 4; ++i) {
+        for(int i = 0; i < 4; ++i)
+        {
             double d0 = (double)pos.getX() + rand.nextDouble();
             double d1 = (double)pos.getY() + rand.nextDouble();
             double d2 = (double)pos.getZ() + rand.nextDouble();
@@ -116,14 +123,17 @@ public class STLCONPortalBlocks extends Block
             double d4 = ((double)rand.nextFloat() - 0.5D) * 0.5D;
             double d5 = ((double)rand.nextFloat() - 0.5D) * 0.5D;
             int j = rand.nextInt(2) * 2 - 1;
-            if (!worldIn.getBlockState(pos.west()).is(this) && !worldIn.getBlockState(pos.east()).is(this)) {
+
+            if (!worldIn.getBlockState(pos.west()).is(this) && !worldIn.getBlockState(pos.east()).is(this))
+            {
                 d0 = (double)pos.getX() + 0.5D + 0.25D * (double)j;
                 d3 = (double)(rand.nextFloat() * 2.0F * (float)j);
-            } else {
+            }
+            else
+            {
                 d2 = (double)pos.getZ() + 0.5D + 0.25D * (double)j;
                 d5 = (double)(rand.nextFloat() * 2.0F * (float)j);
             }
-
             worldIn.addParticle(ModParticles.XENOSPHERE_PORTAL_PARTICLES.get(), d0, d1, d2, d3, d4, d5);
         }
     }
@@ -148,9 +158,7 @@ public class STLCONPortalBlocks extends Block
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(AXIS);
-    }
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) { builder.add(AXIS); }
 
     public boolean createPortal(LevelAccessor worldIn, BlockPos pos)
     {
@@ -163,7 +171,8 @@ public class STLCONPortalBlocks extends Block
         {
             portal.createPortalBlocks();
             return true;
-        } else { return false;}
+        }
+        else { return false;}
     }
 
 
@@ -224,7 +233,8 @@ public class STLCONPortalBlocks extends Block
             {
                 this.leftDir = Direction.EAST;
                 this.rightDir = Direction.WEST;
-            } else { this.leftDir = Direction.NORTH; this.rightDir = Direction.SOUTH; }
+            }
+            else { this.leftDir = Direction.NORTH; this.rightDir = Direction.SOUTH; }
 
             for (BlockPos blockpos = pos; pos.getY() > blockpos.getY() - 21 && pos.getY() > 0 &&
                     this.canConnect(worldIn.getBlockState(pos.below())); pos = pos.below()) {;}
@@ -243,7 +253,8 @@ public class STLCONPortalBlocks extends Block
             if (this.bottomLeft != null) { this.height = this.calculatePortalHeight(); }
         }
 
-        protected int getDistanceUntilEdge(BlockPos pos, Direction directionIn) {
+        protected int getDistanceUntilEdge(BlockPos pos, Direction directionIn)
+        {
             int i;
             for (i = 0; i < 22; ++i)
             {
@@ -299,7 +310,8 @@ public class STLCONPortalBlocks extends Block
             if (this.height <= 21 && this.height >= 3)
             {
                 return this.height;
-            } else { this.bottomLeft = null; this.width = 0; this.height = 0; return 0; }
+            }
+            else { this.bottomLeft = null; this.width = 0; this.height = 0; return 0; }
         }
 
         protected boolean canConnect(BlockState pos)
@@ -323,6 +335,7 @@ public class STLCONPortalBlocks extends Block
         }
 
         private boolean isPortalCountValidForSize() { return this.portalBlockCount >= this.width * this.height; }
+
         public boolean validatePortal() { return this.isValid() && this.isPortalCountValidForSize(); }
     }
 }

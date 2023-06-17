@@ -138,10 +138,7 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
 
 
     @Override
-    public boolean isNoGravity()
-    {
-        return !this.isInWater();
-    }
+    public boolean isNoGravity()  { return !this.isInWater(); }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers)
