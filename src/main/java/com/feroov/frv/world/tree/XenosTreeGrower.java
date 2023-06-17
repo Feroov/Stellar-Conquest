@@ -11,7 +11,8 @@ public class XenosTreeGrower extends AbstractTreeGrower
 {
     @Nullable
     @Override
-    protected ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource p_222910_, boolean p_222911_) {
+    protected ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource randomSource, boolean bool)
+    {
         return ConfiguredFeaturesSTLCON.XENOS_KEY;
     }
 }

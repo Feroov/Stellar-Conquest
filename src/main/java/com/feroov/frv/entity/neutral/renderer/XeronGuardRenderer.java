@@ -28,25 +28,24 @@ public class XeronGuardRenderer extends GeoEntityRenderer<XeronGuard>
     {
         super(renderManager, new XeronGuardModel());
         this.shadowRadius = 0.28F;
-        addRenderLayer(new BlockAndItemGeoLayer<>(this) {
+        addRenderLayer(new BlockAndItemGeoLayer<>(this)
+        {
             @Nullable
             @Override
-            protected ItemStack getStackForBone(GeoBone bone, XeronGuard animatable) {
-                return switch (bone.getName()) {
-                    case "sword" -> new ItemStack(ItemsSTLCON.XENOSTONE_SWORD.get());
-                    default -> null;
-                };
+            protected ItemStack getStackForBone(GeoBone bone, XeronGuard animatable)
+            {
+                return switch (bone.getName()) { case "sword" -> new ItemStack(ItemsSTLCON.XENOSTONE_SWORD.get()); default -> null; };
             }
 
             @Override
-            protected ItemDisplayContext getTransformTypeForStack(GeoBone bone, ItemStack stack, XeronGuard animatable) {
-                return switch (bone.getName()) {
-                    default -> ItemDisplayContext.THIRD_PERSON_RIGHT_HAND;
-                };
+            protected ItemDisplayContext getTransformTypeForStack(GeoBone bone, ItemStack stack, XeronGuard animatable)
+            {
+                return switch (bone.getName()) { default -> ItemDisplayContext.THIRD_PERSON_RIGHT_HAND; };
             }
 
             @Override
-            protected void renderStackForBone(PoseStack poseStack, GeoBone bone, ItemStack stack, XeronGuard animatable, MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay) {
+            protected void renderStackForBone(PoseStack poseStack, GeoBone bone, ItemStack stack, XeronGuard animatable, MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay)
+            {
                 poseStack.mulPose(Axis.XP.rotationDegrees(-80));
                 poseStack.mulPose(Axis.YP.rotationDegrees(0));
                 poseStack.mulPose(Axis.ZP.rotationDegrees(0));
@@ -55,25 +54,23 @@ public class XeronGuardRenderer extends GeoEntityRenderer<XeronGuard>
             }
         });
 
-        addRenderLayer(new BlockAndItemGeoLayer<>(this) {
+        addRenderLayer(new BlockAndItemGeoLayer<>(this)
+        {
             @Nullable
             @Override
-            protected ItemStack getStackForBone(GeoBone bone, XeronGuard animatable) {
-                return switch (bone.getName()) {
-                    case "shield" -> new ItemStack(Items.SHIELD);
-                    default -> null;
-                };
+            protected ItemStack getStackForBone(GeoBone bone, XeronGuard animatable)
+            {
+                return switch (bone.getName()) { case "shield" -> new ItemStack(Items.SHIELD); default -> null; };
             }
 
             @Override
             protected ItemDisplayContext getTransformTypeForStack(GeoBone bone, ItemStack stack, XeronGuard animatable) {
-                return switch (bone.getName()) {
-                    default -> ItemDisplayContext.THIRD_PERSON_LEFT_HAND;
-                };
+                return switch (bone.getName()) { default -> ItemDisplayContext.THIRD_PERSON_LEFT_HAND; };
             }
 
             @Override
-            protected void renderStackForBone(PoseStack poseStack, GeoBone bone, ItemStack stack, XeronGuard animatable, MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay) {
+            protected void renderStackForBone(PoseStack poseStack, GeoBone bone, ItemStack stack, XeronGuard animatable, MultiBufferSource bufferSource, float partialTick, int packedLight, int packedOverlay)
+            {
                 poseStack.scale(0.8f,0.8f,0.8f);
                 poseStack.mulPose(Axis.XP.rotationDegrees(90));
                 poseStack.mulPose(Axis.YP.rotationDegrees(180));
@@ -100,7 +97,8 @@ public class XeronGuardRenderer extends GeoEntityRenderer<XeronGuard>
     @Override
     public void preRender(PoseStack poseStack, XeronGuard animatable, BakedGeoModel model,
                           MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick,
-                          int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+                          int packedLight, int packedOverlay, float red, float green, float blue, float alpha)
+    {
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay,
                 red, green, blue, alpha);
             poseStack.scale(0.75F, 0.8F, 0.75F);

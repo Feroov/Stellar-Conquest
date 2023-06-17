@@ -1,7 +1,5 @@
 package com.feroov.frv.entity.neutral;
 
-
-import com.feroov.frv.entity.monster.Celestroid;
 import com.feroov.frv.entity.passive.Xeron;
 import com.feroov.frv.item.ItemsSTLCON;
 import com.feroov.frv.sound.SoundEventsSTLCON;
@@ -23,16 +21,11 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
-import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Ghast;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -160,14 +153,15 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
     }
 
     @Override
-    public void setTame(boolean p_30443_) {
-        super.setTame(p_30443_);
-        if (p_30443_) {
+    public void setTame(boolean b)
+    {
+        super.setTame(b);
+        if (b)
+        {
             this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(20.0D);
             this.setHealth(20.0F);
-        } else {
-            this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(8.0D);
         }
+        else { this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(8.0D); }
 
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(4.0D);
     }
@@ -231,7 +225,8 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
+    public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob)
+    {
         return null;
     }
 
@@ -243,33 +238,34 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
         this.entityData.define(DATA_REMAINING_ANGER_TIME, 0);
     }
 
-    public void setAttacking(boolean attack) {
-        this.entityData.set(ATTACKING, attack);
-    }
+    public void setAttacking(boolean attack) { this.entityData.set(ATTACKING, attack); }
 
-    public boolean isAttacking() {
-        return this.entityData.get(ATTACKING);
+    public boolean isAttacking() { return this.entityData.get(ATTACKING); }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compoundTag)
+    {
+        super.addAdditionalSaveData(compoundTag);
+        this.addPersistentAngerSaveData(compoundTag);
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag p_30418_) {
-        super.addAdditionalSaveData(p_30418_);
-        this.addPersistentAngerSaveData(p_30418_);
+    public void readAdditionalSaveData(CompoundTag compoundTag)
+    {
+        super.readAdditionalSaveData(compoundTag);
+        this.readPersistentAngerSaveData(this.level(), compoundTag);
     }
 
-    @Override
-    public void readAdditionalSaveData(CompoundTag p_30402_) {
-        super.readAdditionalSaveData(p_30402_);
-        this.readPersistentAngerSaveData(this.level(), p_30402_);
-    }
-
-    public void aiStep() {
+    public void aiStep()
+    {
         super.aiStep();
-        if (!this.level().isClientSide) {
+        if (!this.level().isClientSide)
+        {
             this.updatePersistentAnger((ServerLevel)this.level(), true);
         }
 
     }
+
     @Override
     public int getRemainingPersistentAngerTime()
     {
@@ -284,19 +280,13 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
 
     @Nullable
     @Override
-    public UUID getPersistentAngerTarget() {
-        return this.persistentAngerTarget;
-    }
+    public UUID getPersistentAngerTarget() { return this.persistentAngerTarget; }
 
     @Override
-    public void setPersistentAngerTarget(@Nullable UUID uuid) {
-        this.persistentAngerTarget = uuid;
-    }
+    public void setPersistentAngerTarget(@Nullable UUID uuid) { this.persistentAngerTarget = uuid; }
 
     @Override
-    public void startPersistentAngerTimer() {
-        this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random));
-    }
+    public void startPersistentAngerTimer() { this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random)); }
 
     public static class XeronMeleeAttack extends MeleeAttackGoal
     {
@@ -314,9 +304,9 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
         }
 
         @Override
-        protected void checkAndPerformAttack(LivingEntity p_25557_, double p_25558_)
+        protected void checkAndPerformAttack(LivingEntity livingEntity, double d1)
         {
-            if (p_25558_ <= this.getAttackReachSqr(p_25557_) && this.getTicksUntilNextAttack() <= 0)
+            if (d1 <= this.getAttackReachSqr(livingEntity) && this.getTicksUntilNextAttack() <= 0)
             {
                 if(entity != null)
                 {
@@ -325,7 +315,7 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
                 }
             }
 
-            super.checkAndPerformAttack(p_25557_, p_25558_);
+            super.checkAndPerformAttack(livingEntity, d1);
         }
 
         @Override
