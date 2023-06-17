@@ -29,7 +29,5 @@ public class DimensionsSTLCON
         event.register(new ResourceLocation(STLCON.MOD_ID, "xenosphere_sky"), new XenosphereSky());
     }
 
-    public static void register() {
-        System.out.println("Registering DimensionsSTLCON for " + STLCON.MOD_ID);
-    }
+    public static void register() { System.out.println("Registering DimensionsSTLCON for " + STLCON.MOD_ID); }
 }

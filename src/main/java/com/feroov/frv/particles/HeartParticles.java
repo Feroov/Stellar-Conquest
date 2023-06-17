@@ -1,6 +1,5 @@
 package com.feroov.frv.particles;
 
-
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -43,7 +42,8 @@ public class HeartParticles extends TextureSheetParticle
 
         public Particle createParticle(SimpleParticleType particleType, ClientLevel level,
                                        double x, double y, double z,
-                                       double dx, double dy, double dz) {
+                                       double dx, double dy, double dz)
+        {
             return new HeartParticles(level, x, y, z, this.sprites, dx, dy, dz);
         }
     }
