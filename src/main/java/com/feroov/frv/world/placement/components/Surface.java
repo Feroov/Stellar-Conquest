@@ -16,13 +16,15 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
 import java.util.stream.Stream;
 
-public class Surface extends PlacementModifier {
+public class Surface extends PlacementModifier
+{
 	public static enum Surface_Type {HIGHEST_CEILING, HIGHEST_GROUND, LOWEST_CEILING, LOWEST_GROUND}
 	public static enum Mode {FULL, RANDOM_SECTION, SLICE}
-	public static final Codec<Surface> CODEC = RecordCodecBuilder.create((instance) -> {
+	public static final Codec<Surface> CODEC = RecordCodecBuilder.create((instance) ->
+	{
 		return instance.group(Codec.STRING.fieldOf("surface").forGetter((config) -> {
 	        return config.surface;
-		}),  Codec.STRING.optionalFieldOf("mode", "full").forGetter((config) -> {
+		}), Codec.STRING.optionalFieldOf("mode", "full").forGetter((config) -> {
 			return config.mode;
 		}), Codec.INT.fieldOf("min_height").forGetter((config) -> {
 		   return config.minHeight;
@@ -32,24 +34,27 @@ public class Surface extends PlacementModifier {
 			   return config.maxHeight;
 		})).apply(instance, Surface::new);
 	});
+
 	public final String surface, mode;
 	public final int minHeight, maxHeight, bury;
-	public Surface(String surface, String mode, int minHeight, int maxHeight, int bury) {
+	public Surface(String surface, String mode, int minHeight, int maxHeight, int bury)
+	{
 		this.surface = surface;
 		this.mode = mode;
 		this.minHeight = minHeight;
 		this.maxHeight = maxHeight;
 		this.bury = bury;
 	}
-	public static int getSurface(Surface_Type type, Mode mode, int minHeight, int maxHeight, int bury, WorldGenLevel level, RandomSource random, int x, int z) {
+	public static int getSurface(Surface_Type type, Mode mode, int minHeight, int maxHeight, int bury, WorldGenLevel level, RandomSource random, int x, int z)
+	{
 		final int minY, maxY;
-		if(mode == Mode.RANDOM_SECTION) {
+		if(mode == Mode.RANDOM_SECTION)
+		{
 			minY = random.nextInt(minHeight, maxHeight + 1);
 			maxY = random.nextInt(minY, maxHeight + 1);
-		} else {
-			minY = minHeight;
-			maxY = maxHeight;
 		}
+		else { minY = minHeight; maxY = maxHeight; }
+
     	MutableBlockPos pos = new MutableBlockPos(x, mode == Mode.SLICE ? random.nextInt(minY, maxY + 1) :
 				type == Surface_Type.LOWEST_CEILING || type == Surface_Type.LOWEST_GROUND ? minY : maxY, z);
     	return switch(type) {
@@ -71,28 +76,32 @@ public class Surface extends PlacementModifier {
     		yield pos.getY() - bury;
     	};
 	}
-	public static boolean hasSpace(WorldGenLevel level, BlockPos pos) {
+	public static boolean hasSpace(WorldGenLevel level, BlockPos pos)
+	{
 		BlockState state = level.getBlockState(pos);
 		return state.isAir() || state.is(Blocks.WATER);
 	}
 	@Override
-	public Stream<BlockPos> getPositions(PlacementContext context, RandomSource random, BlockPos pos) {
+	public Stream<BlockPos> getPositions(PlacementContext context, RandomSource random, BlockPos pos)
+	{
 		final int minY, maxY, y;
 		Mode modus = Mode.valueOf(mode.toUpperCase());
-		if(modus == Mode.RANDOM_SECTION) {
+		if(modus == Mode.RANDOM_SECTION)
+		{
 			minY = random.nextInt(minHeight, maxHeight + 1);
 			maxY = random.nextInt(minY, maxHeight + 1);
 			y = getSurface(Surface_Type.valueOf(surface.toUpperCase()), Mode.FULL, minY, maxY, bury, context.getLevel(), random, pos.getX(), pos.getZ());
-		} else {
+		}
+		else
+		{
 			minY = minHeight;
 			maxY = maxHeight;
 			y = getSurface(Surface_Type.valueOf(surface.toUpperCase()), modus, minY, maxY, bury, context.getLevel(), random, pos.getX(), pos.getZ());
 		}
+
 		if(y > maxY || y < minY) return Stream.of();
 		return Stream.of(pos.atY(y));
 	}
 	@Override
-	public PlacementModifierType<?> type() {
-		return PlacementRegistrySTLCON.SURFACE_PLACEMENT;
-	}
+	public PlacementModifierType<?> type() { return PlacementRegistrySTLCON.SURFACE_PLACEMENT; }
 }

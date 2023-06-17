@@ -56,13 +56,15 @@ public class STLCONTeleporter implements ITeleporter
                 .filter(poi -> this.world.getBlockState(poi.getPos()).hasProperty(BlockStateProperties.HORIZONTAL_AXIS))
                 .findFirst();
 
-        return optional.map(poi -> {
+        return optional.map(poi ->
+        {
             BlockPos blockpos = poi.getPos();
             this.world.getChunkSource().addRegionTicket(TicketType.PORTAL, new ChunkPos(blockpos), 3, blockpos);
             BlockState blockstate = this.world.getBlockState(blockpos);
 
             return BlockUtil.getLargestRectangleAround(blockpos, blockstate.getValue(BlockStateProperties.HORIZONTAL_AXIS),
-                    21, Direction.Axis.Y, 21, posIn -> this.world.getBlockState(posIn) == blockstate);});
+                    21, Direction.Axis.Y, 21, posIn -> this.world.getBlockState(posIn) == blockstate);
+        });
     }
 
 
@@ -248,7 +250,6 @@ public class STLCONTeleporter implements ITeleporter
                 .orElse(Direction.Axis.X);
         return this.makePortal(pos, portalAxis);
     }
-
 
     @Override
     public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity)

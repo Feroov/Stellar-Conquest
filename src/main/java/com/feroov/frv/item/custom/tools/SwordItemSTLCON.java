@@ -15,62 +15,62 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class SwordItemSTLCON extends TieredItem implements Vanishable {
+public class SwordItemSTLCON extends TieredItem implements Vanishable
+{
     private final float attackDamage;
     private final Multimap<Attribute, AttributeModifier> defaultModifiers;
 
-    public SwordItemSTLCON(Tier p_43269_, float p_43270_, float p_43271_, Item.Properties p_43272_) {
-        super(p_43269_, p_43272_);
-        this.attackDamage = (float)p_43270_ + p_43269_.getAttackDamageBonus();
+    public SwordItemSTLCON(Tier tier, float f1, float f2, Item.Properties properties)
+    {
+        super(tier, properties);
+        this.attackDamage = (float)f1 + tier.getAttackDamageBonus();
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
-        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", (double)p_43271_, AttributeModifier.Operation.ADDITION));
+        builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", (double)f2, AttributeModifier.Operation.ADDITION));
         this.defaultModifiers = builder.build();
     }
 
-    public float getDamage() {
-        return this.attackDamage;
+    public float getDamage() { return this.attackDamage; }
+
+    public boolean canAttackBlock(BlockState blockState, Level level, BlockPos blockPos, Player player)
+    {
+        return !player.isCreative();
     }
 
-    public boolean canAttackBlock(BlockState p_43291_, Level p_43292_, BlockPos p_43293_, Player p_43294_) {
-        return !p_43294_.isCreative();
+    public float getDestroySpeed(ItemStack itemStack, BlockState blockState)
+    {
+        if (blockState.is(Blocks.COBWEB)) { return 15.0F; }
+        else { return blockState.is(BlockTags.SWORD_EFFICIENT) ? 1.5F : 1.0F; }
     }
 
-    public float getDestroySpeed(ItemStack p_43288_, BlockState p_43289_) {
-        if (p_43289_.is(Blocks.COBWEB)) {
-            return 15.0F;
-        } else {
-            return p_43289_.is(BlockTags.SWORD_EFFICIENT) ? 1.5F : 1.0F;
-        }
-    }
-
-    public boolean hurtEnemy(ItemStack p_43278_, LivingEntity p_43279_, LivingEntity p_43280_) {
-        p_43278_.hurtAndBreak(1, p_43280_, (p_43296_) -> {
-            p_43296_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
-        });
+    public boolean hurtEnemy(ItemStack itemStack, LivingEntity livingEntity, LivingEntity livingEntity1)
+    {
+        itemStack.hurtAndBreak(1, livingEntity1, (p_43296_) -> { p_43296_.broadcastBreakEvent(EquipmentSlot.MAINHAND); });
         return true;
     }
 
-    public boolean mineBlock(ItemStack p_43282_, Level p_43283_, BlockState p_43284_, BlockPos p_43285_, LivingEntity p_43286_) {
-        if (p_43284_.getDestroySpeed(p_43283_, p_43285_) != 0.0F) {
-            p_43282_.hurtAndBreak(2, p_43286_, (p_43276_) -> {
+    public boolean mineBlock(ItemStack itemStack, Level level, BlockState blockState, BlockPos blockPos, LivingEntity livingEntity)
+    {
+        if (blockState.getDestroySpeed(level, blockPos) != 0.0F)
+        {
+            itemStack.hurtAndBreak(2, livingEntity, (p_43276_) ->
+            {
                 p_43276_.broadcastBreakEvent(EquipmentSlot.MAINHAND);
             });
         }
-
         return true;
     }
 
-    public boolean isCorrectToolForDrops(BlockState p_43298_) {
-        return p_43298_.is(Blocks.COBWEB);
-    }
+    public boolean isCorrectToolForDrops(BlockState blockState) { return blockState.is(Blocks.COBWEB); }
 
-    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot p_43274_) {
-        return p_43274_ == EquipmentSlot.MAINHAND ? this.defaultModifiers : super.getDefaultAttributeModifiers(p_43274_);
+    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot)
+    {
+        return equipmentSlot == EquipmentSlot.MAINHAND ? this.defaultModifiers : super.getDefaultAttributeModifiers(equipmentSlot);
     }
 
     @Override
-    public boolean canPerformAction(ItemStack stack, net.minecraftforge.common.ToolAction toolAction) {
+    public boolean canPerformAction(ItemStack stack, net.minecraftforge.common.ToolAction toolAction)
+    {
         return net.minecraftforge.common.ToolActions.DEFAULT_SWORD_ACTIONS.contains(toolAction);
     }
 }
