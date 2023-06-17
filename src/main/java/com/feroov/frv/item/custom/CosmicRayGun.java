@@ -17,23 +17,19 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-
 public class CosmicRayGun extends Item
 {
 
-    public CosmicRayGun()
-    {
-        super(new Properties().stacksTo(1).durability(75));
-    }
+    public CosmicRayGun()  { super(new Properties().stacksTo(1).durability(75)); }
 
     @Override
     public UseAnim getUseAnimation(ItemStack stack) { return UseAnim.BOW; }
 
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player shooter, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player shooter, InteractionHand hand)
+    {
         shooter.startUsingItem(hand);
-
         return InteractionResultHolder.consume(shooter.getItemInHand(hand));
     }
 

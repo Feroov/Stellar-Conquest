@@ -32,7 +32,5 @@ public class CelestroidRenderer extends GeoEntityRenderer<Celestroid>
     }
 
     @Override
-    protected int getBlockLightLevel(@NotNull Celestroid entity, @NotNull BlockPos blockPos) {
-        return 15;
-    }
+    protected int getBlockLightLevel(@NotNull Celestroid entity, @NotNull BlockPos blockPos) { return 15; }
 }

@@ -18,7 +18,6 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlac
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 
-
 public class ConfiguredFeaturesSTLCON
 {
     public static final ResourceKey<ConfiguredFeature<?, ?>> XENOS_KEY = registerKey("xenos_tree");
