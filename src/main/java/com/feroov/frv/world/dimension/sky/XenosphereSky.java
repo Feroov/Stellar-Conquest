@@ -26,10 +26,9 @@ public class XenosphereSky extends DimensionSpecialEffects
     @Nullable
     private VertexBuffer skyBuffer;
 
-    public XenosphereSky() {
+    public XenosphereSky()
+    {
         super(Float.NaN, true, SkyType.NORMAL, false, false);
-
-        //create sky
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferbuilder = tesselator.getBuilder();
         RenderSystem.setShader(GameRenderer::getPositionShader);
@@ -42,17 +41,14 @@ public class XenosphereSky extends DimensionSpecialEffects
     }
 
     @Override
-    public Vec3 getBrightnessDependentFogColor(Vec3 vec, float f) {
-        return vec.scale(0.15);
-    }
+    public Vec3 getBrightnessDependentFogColor(Vec3 vec, float f) { return vec.scale(0.15); }
 
     @Override
-    public boolean isFoggyAt(int i, int ii) {
-        return false;
-    }
+    public boolean isFoggyAt(int i, int ii) { return false; }
 
     @Override
-    public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
+    public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog)
+    {
         setupFog.run();
         Vec3 vec3 = level.getSkyColor(camera.getPosition(), partialTick);
         float f = (float) vec3.x, f1 = (float) vec3.y, f2 = (float) vec3.z;
@@ -123,7 +119,6 @@ public class XenosphereSky extends DimensionSpecialEffects
         bufferbuilder.vertex(matrix4f1, 100+ f20, -50F, f20).uv(f13, f16).endVertex();
         bufferbuilder.vertex(matrix4f1, 108- f20, -50F, -f20).uv(f13, f14).endVertex();
         bufferbuilder.vertex(matrix4f1, 80-f20, -50F, -f20).uv(f15, f14).endVertex(); BufferUploader.drawWithShader(bufferbuilder.end());
-
 
 
         float f10 = 1.0F;

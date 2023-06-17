@@ -12,9 +12,7 @@ public class Xenosgrass extends PlantBlocksSTLCON
 {
     private static final VoxelShape XENOSGRASS_SHAPE = Block.box(3, 0, 3, 13, 14, 13);
 
-    public Xenosgrass(Properties properties) {
-        super(properties);
-    }
+    public Xenosgrass(Properties properties) { super(properties); }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context)
