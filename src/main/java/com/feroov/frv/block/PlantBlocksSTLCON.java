@@ -15,10 +15,7 @@ import net.minecraftforge.common.PlantType;
 
 public abstract class PlantBlocksSTLCON extends BushBlock implements BonemealableBlock
 {
-    protected PlantBlocksSTLCON(BlockBehaviour.Properties properties)
-    {
-        super(properties);
-    }
+    protected PlantBlocksSTLCON(BlockBehaviour.Properties properties)  { super(properties); }
 
     @Override
     public PlantType getPlantType(BlockGetter getter, BlockPos pos) { return PlantType.PLAINS; }

@@ -17,7 +17,8 @@ public class PlacementRegistrySTLCON
 
     public static void init() { }
 
-    private static <P extends PlacementModifier> PlacementModifierType<P> register(ResourceLocation name, Codec<P> codec) {
+    private static <P extends PlacementModifier> PlacementModifierType<P> register(ResourceLocation name, Codec<P> codec)
+    {
         return Registry.register(BuiltInRegistries.PLACEMENT_MODIFIER_TYPE, name, () -> codec);
     }
 }

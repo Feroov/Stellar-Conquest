@@ -24,8 +24,6 @@ public class PlacedFeatures
     public static final ResourceKey<PlacedFeature> ASTRALITE_PLACED_KEY = createKey("astralite_placed");
     public static final ResourceKey<PlacedFeature> USKIUM_PLACED_KEY = createKey("uskium_placed");
 
-
-
     public static void bootstrap(BootstapContext<PlacedFeature> context)
     {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
