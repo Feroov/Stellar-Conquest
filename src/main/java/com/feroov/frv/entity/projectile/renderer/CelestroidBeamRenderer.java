@@ -12,7 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-
 public class CelestroidBeamRenderer extends GeoEntityRenderer<CelestroidBeam>
 {
     public CelestroidBeamRenderer(EntityRendererProvider.Context renderManager)
@@ -29,7 +28,8 @@ public class CelestroidBeamRenderer extends GeoEntityRenderer<CelestroidBeam>
     @Override
     public void preRender(PoseStack poseStack, CelestroidBeam animatable, BakedGeoModel model,
                           MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick,
-                          int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+                          int packedLight, int packedOverlay, float red, float green, float blue, float alpha)
+    {
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay,
                 red, green, blue, alpha);
         poseStack.scale(0.8F, 0.8F, 0.8F);

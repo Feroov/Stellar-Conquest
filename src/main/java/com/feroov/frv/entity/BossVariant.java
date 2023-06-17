@@ -1,6 +1,5 @@
 package com.feroov.frv.entity;
 
-
 import net.minecraft.world.level.block.SkullBlock;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -8,7 +7,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Locale;
 import java.util.function.Supplier;
 
-public enum BossVariant implements StringRepresentable, SkullBlock.Type {
+public enum BossVariant implements StringRepresentable, SkullBlock.Type
+{
 
     MOTHERSHIP(BlockEntitiesSTLCON.MOTHERSHIP_SPAWNER::get);
 

@@ -90,13 +90,9 @@ public class CelestroidBeam extends AbstractHurtingProjectile implements GeoEnti
             this.remove(RemovalReason.DISCARDED);
     }
 
-
     @Override
     public boolean isOnFire() { return false; }
 
     @Override
-    protected ParticleOptions getTrailParticle()
-    {
-        return ParticleTypes.SONIC_BOOM;
-    }
+    protected ParticleOptions getTrailParticle()  { return ParticleTypes.SONIC_BOOM; }
 }

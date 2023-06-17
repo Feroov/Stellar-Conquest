@@ -92,17 +92,13 @@ public class Celestroid extends Ghast implements Enemy, GeoEntity
 
 
     @Override
-    public boolean isPersistenceRequired() {
-        return super.isPersistenceRequired();
-    }
+    public boolean isPersistenceRequired() { return super.isPersistenceRequired(); }
 
     @Override
-    public void checkDespawn(){
-        if (this.level().getDifficulty() == Difficulty.PEACEFUL) {
-            this.discard();
-        } else {
-            super.checkDespawn();
-        }
+    public void checkDespawn()
+    {
+        if (this.level().getDifficulty() == Difficulty.PEACEFUL) { this.discard(); }
+        else { super.checkDespawn(); }
     }
 
     @Override
@@ -128,9 +124,7 @@ public class Celestroid extends Ghast implements Enemy, GeoEntity
     }
 
 
-    public void setCharging(boolean pCharging) {
-        this.entityData.set(DATA_IS_CHARGING, pCharging);
-    }
+    public void setCharging(boolean pCharging) { this.entityData.set(DATA_IS_CHARGING, pCharging); }
 
     public void shootRayBeam()
     {
@@ -143,14 +137,10 @@ public class Celestroid extends Ghast implements Enemy, GeoEntity
         raygunBeam.setPos(this.getX() + vec3d.x() * 4.0D, this.getY() + this.getBbHeight() / 2.0F + 0.5D, this.getZ() + vec3d.z() * 4.0D);
         this.level().addFreshEntity(raygunBeam);
 
-        if (this.getRandom().nextInt(6) == 0) {
-            this.setTarget(null);
-        }
+        if (this.getRandom().nextInt(6) == 0) { this.setTarget(null); }
     }
 
-    public boolean shouldAttack(LivingEntity living) {
-        return true;
-    }
+    public boolean shouldAttack(LivingEntity living) { return true; }
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 1.65F; }
