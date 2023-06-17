@@ -29,9 +29,7 @@ public class ZephxenRenderer extends GeoEntityRenderer<Zephxen>
     public void render(@NotNull Zephxen entity, float entityYaw, float partialTick, @NotNull PoseStack poseStack,
                        @NotNull MultiBufferSource bufferSource, int packedLight)
     {
-        if(entity.isBaby()) {
-            poseStack.scale(0.6f, 0.6f, 0.6f);
-        }
+        if(entity.isBaby()) { poseStack.scale(0.6f, 0.6f, 0.6f); }
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 

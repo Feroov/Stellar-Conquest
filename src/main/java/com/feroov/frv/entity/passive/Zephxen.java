@@ -1,8 +1,6 @@
 package com.feroov.frv.entity.passive;
 
 import com.feroov.frv.sound.SoundEventsSTLCON;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -10,8 +8,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -53,10 +49,7 @@ public class Zephxen extends Animal implements GeoEntity
     }
 
     @Override
-    public void registerGoals()
-    {
-        this.goalSelector.addGoal(1, new SetTravelCourseGoal(this));
-    }
+    public void registerGoals() { this.goalSelector.addGoal(1, new SetTravelCourseGoal(this)); }
 
     public static AttributeSupplier setAttributes()
     {
@@ -68,9 +61,7 @@ public class Zephxen extends Animal implements GeoEntity
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
-        return null;
-    }
+    public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) { return null; }
 
     @Override
     protected void defineSynchedData()
@@ -188,7 +179,8 @@ public class Zephxen extends Animal implements GeoEntity
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
-    public static class SetTravelCourseGoal extends Goal {
+    public static class SetTravelCourseGoal extends Goal
+    {
         private final Mob mob;
         public SetTravelCourseGoal(Mob mob) { this.mob = mob; this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK)); }
 
@@ -272,7 +264,8 @@ public class Zephxen extends Animal implements GeoEntity
         {
             AABB axisalignedbb = this.mob.getBoundingBox();
 
-            for (int i = 1; i < 7; ++i) {
+            for (int i = 1; i < 7; ++i)
+            {
                 axisalignedbb = axisalignedbb.move(pos);
                 if (!this.mob.level().noCollision(this.mob, axisalignedbb)) { return true; }
             } return false;
