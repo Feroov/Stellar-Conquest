@@ -110,18 +110,18 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
         return null;
     }
 
-    @Override
-    public boolean isPersistenceRequired() {
-        return super.isPersistenceRequired();
+    public SoundEvent getWarnSound()
+    {
+        return SoundEvents.BEACON_ACTIVATE;
     }
 
     @Override
+    public boolean isPersistenceRequired() { return super.isPersistenceRequired(); }
+
+    @Override
     public void checkDespawn(){
-        if (this.level().getDifficulty() == Difficulty.PEACEFUL) {
-            this.discard();
-        } else {
-            super.checkDespawn();
-        }
+        if (this.level().getDifficulty() == Difficulty.PEACEFUL) { this.discard(); }
+        else { super.checkDespawn(); }
     }
 
     @Override
@@ -148,9 +148,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
 
 
 
-    public void setCharging(boolean pCharging) {
-        this.entityData.set(DATA_IS_CHARGING, pCharging);
-    }
+    public void setCharging(boolean pCharging) { this.entityData.set(DATA_IS_CHARGING, pCharging); }
 
     public void shootRayBeam()
     {
@@ -168,9 +166,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
         }
     }
 
-    public boolean shouldAttack(LivingEntity living) {
-        return true;
-    }
+    public boolean shouldAttack(LivingEntity living) { return true; }
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 1.65F; }
@@ -300,116 +296,102 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
     }
 
     @Override
-    public boolean canBeCollidedWith() {
-        return false;
-    }
+    public boolean canBeCollidedWith() { return false; }
 
     @Override
-    public boolean isPushable() {
-        return false;
-    }
+    public boolean isPushable() { return false; }
 
     @Override
-    public void startSeenByPlayer(ServerPlayer player) {
+    public void startSeenByPlayer(ServerPlayer player)
+    {
         super.startSeenByPlayer(player);
         this.bossInfo.addPlayer(player);
     }
 
     @Override
-    public void stopSeenByPlayer(ServerPlayer player) {
+    public void stopSeenByPlayer(ServerPlayer player)
+    {
         super.stopSeenByPlayer(player);
         this.bossInfo.removePlayer(player);
     }
 
     @Override
-    public int getMaxSpawnClusterSize() {
-        return 1;
-    }
+    public int getMaxSpawnClusterSize() { return 1; }
 
 
     @Override
-    public void setCustomName(Component name) {
+    public void setCustomName(Component name)
+    {
         super.setCustomName(name);
         this.bossInfo.setName(this.getDisplayName());
     }
 
     @Override
-    protected void customServerAiStep() {
+    protected void customServerAiStep()
+    {
         super.customServerAiStep();
         this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
 
-    public enum SpellType {
+    public enum SpellType
+    {
         NONE(0, 0.0D, 0.0D, 0.0D),
         SUMMON_CELESTROID(1, 0.7D, 0.7D, 0.8D);
 
         private final int id;
         private final double[] spellColor;
 
-        private SpellType(int p_i47561_3_, double p_i47561_4_, double p_i47561_6_, double p_i47561_8_) {
-            this.id = p_i47561_3_;
-            this.spellColor = new double[]{p_i47561_4_, p_i47561_6_, p_i47561_8_};
+        private SpellType(int id, double d1, double d2, double d3)
+        {
+            this.id = id;
+            this.spellColor = new double[]{d1, d2, d3};
         }
 
-        public static SpellType byId(int p_193337_0_) {
-            for(Mothership.SpellType spellcastingillagerentity$spelltype : values()) {
-                if (p_193337_0_ == spellcastingillagerentity$spelltype.id) {
-                    return spellcastingillagerentity$spelltype;
-                }
-            }
+        public static SpellType byId(int id)
+        {
+            for (SpellType spellType : values()) { if (id == spellType.id) { return spellType; } }
             return NONE;
         }
     }
 
-    public abstract class UseSpellGoal extends Goal {
+    public abstract class UseSpellGoal extends Goal
+    {
         protected int attackWarmupDelay;
         protected int nextAttackTickCount;
 
-        protected UseSpellGoal() {
+        protected UseSpellGoal() { }
+
+        public boolean canUse()
+        {
+            LivingEntity livingEntity = Mothership.this.getTarget();
+            return livingEntity != null && livingEntity.isAlive() && !Mothership.this.isCastingSpell() && Mothership.this.tickCount >= this.nextAttackTickCount;
         }
 
-        public boolean canUse() {
-            LivingEntity livingentity = Mothership.this.getTarget();
-            if (livingentity != null && livingentity.isAlive()) {
-                if (Mothership.this.isCastingSpell()) {
-                    return false;
-                } else {
-                    return Mothership.this.tickCount >= this.nextAttackTickCount;
-                }
-            } else {
-                return false;
-            }
+        public boolean canContinueToUse()
+        {
+            LivingEntity livingEntity = Mothership.this.getTarget();
+            return livingEntity != null && livingEntity.isAlive() && this.attackWarmupDelay > 0;
         }
 
-        public boolean canContinueToUse() {
-            LivingEntity livingentity = Mothership.this.getTarget();
-            return livingentity != null && livingentity.isAlive() && this.attackWarmupDelay > 0;
-        }
-
-        public void start() {
+        public void start()
+        {
             this.attackWarmupDelay = this.getCastWarmupTime();
             Mothership.this.spellCastingTickCount = this.getCastingTime();
             this.nextAttackTickCount = Mothership.this.tickCount + this.getCastingInterval();
-            SoundEvent soundevent = this.getSpellPrepareSound();
-            if (soundevent != null) {
-                Mothership.this.playSound(soundevent, 0.0F, 1.0F);
-            }
+            SoundEvent soundEvent = this.getSpellPrepareSound();
+
+            if (soundEvent != null) { Mothership.this.playSound(soundEvent, 0.0F, 1.0F); }
         }
 
-        public void tick() {
-            --this.attackWarmupDelay;
-            if (this.attackWarmupDelay == 0) {
-                this.performSpellCasting();
-            }
-
+        public void tick()
+        {
+            --this.attackWarmupDelay; if (this.attackWarmupDelay == 0) { this.performSpellCasting(); }
         }
 
         protected abstract void performSpellCasting();
 
-        protected int getCastWarmupTime() {
-            return 20;
-        }
+        protected int getCastWarmupTime() { return 20; }
 
         protected abstract int getCastingTime();
 
@@ -418,106 +400,93 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
         @Nullable
         protected abstract SoundEvent getSpellPrepareSound();
 
-        protected abstract Mothership.SpellType getSpell();
+        protected abstract SpellType getSpell();
     }
 
-    protected SoundEvent getCastingSoundEvent() {
-        return null;
+    protected SoundEvent getCastingSoundEvent() { return null; }
+
+    public boolean isCastingSpell()
+    {
+        return this.level().isClientSide ? this.entityData.get(DATA_SPELL_CASTING_ID) > 0 : this.spellCastingTickCount > 0;
     }
 
-    public boolean isCastingSpell() {
-        if (this.level().isClientSide) {
-            return this.entityData.get(DATA_SPELL_CASTING_ID) > 0;
-        } else {
-            return this.spellCastingTickCount > 0;
-        }
-    }
+    class AttackSpellGoal extends UseSpellGoal
+    {
+        private AttackSpellGoal() { }
+        protected int getCastingTime() { return 40; }
+        protected int getCastingInterval() { return 100; }
 
-    class AttackSpellGoal extends Mothership.UseSpellGoal {
-        private AttackSpellGoal() {
-        }
+        protected void performSpellCasting()
+        {
+            LivingEntity livingEntity = Mothership.this.getTarget();
+            double minY = Math.min(livingEntity.getY(), Mothership.this.getY());
+            double maxY = Math.max(livingEntity.getY(), Mothership.this.getY()) + 1.0D;
+            float angle = (float) Mth.atan2(livingEntity.getZ() - Mothership.this.getZ(), livingEntity.getX() - Mothership.this.getX());
 
-        protected int getCastingTime() {
-            return 40;
-        }
-
-        protected int getCastingInterval() {
-            return 100;
-        }
-
-        protected void performSpellCasting() {
-            LivingEntity livingentity = Mothership.this.getTarget();
-            double d0 = Math.min(livingentity.getY(), Mothership.this.getY());
-            double d1 = Math.max(livingentity.getY(), Mothership.this.getY()) + 1.0D;
-            float f = (float) Mth.atan2(livingentity.getZ() -
-                    Mothership.this.getZ(), livingentity.getX() - Mothership.this.getX());
-            if (Mothership.this.distanceToSqr(livingentity) < 9.0D) {
-                for(int i = 0; i < 5; ++i) {
-                    float f1 = f + (float)i * (float)Math.PI * 0.4F;
-                    this.createSpellEntity(Mothership.this.getX() + (double)Mth.cos(f1) * 1.5D,
-                            Mothership.this.getZ() + (double)Mth.sin(f1) * 1.5D, d0, d1, f1, 0);
+            if (Mothership.this.distanceToSqr(livingEntity) < 9.0D)
+            {
+                for (int i = 0; i < 5; ++i)
+                {
+                    float f1 = angle + (float) i * (float) Math.PI * 0.4F;
+                    this.createSpellEntity(Mothership.this.getX() + (double) Mth.cos(f1) * 1.5D, Mothership.this.getZ() + (double) Mth.sin(f1) * 1.5D, minY, maxY, f1, 0);
                 }
 
-                for(int k = 0; k < 8; ++k) {
-                    float f2 = f + (float)k * (float)Math.PI * 2.0F / 8.0F + 1.2566371F;
-                    this.createSpellEntity(Mothership.this.getX() + (double)Mth.cos(f2) * 2.5D,
-                            Mothership.this.getZ() + (double)Mth.sin(f2) * 2.5D, d0, d1, f2, 3);
-                }
-            } else {
-                for(int l = 0; l < 16; ++l) {
-                    double d2 = 1.25D * (double)(l + 1);
-                    int j = 1 * l;
-                    this.createSpellEntity(Mothership.this.getX() +
-                            (double)Mth.cos(f) * d2, Mothership.this.getZ() + (double)Mth.sin(f) * d2, d0, d1, f, j);
+                for (int k = 0; k < 8; ++k)
+                {
+                    float f2 = angle + (float) k * (float) Math.PI * 2.0F / 8.0F + 1.2566371F;
+                    this.createSpellEntity(Mothership.this.getX() + (double) Mth.cos(f2) * 2.5D, Mothership.this.getZ() + (double) Mth.sin(f2) * 2.5D, minY, maxY, f2, 3);
                 }
             }
-
+            else
+            {
+                for (int l = 0; l < 16; ++l)
+                {
+                    double d2 = 1.25D * (double) (l + 1);
+                    int j = 1 * l;
+                    this.createSpellEntity(Mothership.this.getX() + (double) Mth.cos(angle) * d2, Mothership.this.getZ() + (double) Mth.sin(angle) * d2, minY, maxY, angle, j);
+                }
+            }
         }
 
-        private void createSpellEntity(double p_190876_1_, double p_190876_3_, double p_190876_5_, double p_190876_7_, float p_190876_9_, int p_190876_10_) {
-            BlockPos blockpos = new BlockPos((int) p_190876_1_, (int) p_190876_7_, (int) p_190876_3_);
+        private void createSpellEntity(double x, double z, double minY, double maxY, float angle, int j)
+        {
+            BlockPos blockPos = new BlockPos((int) x, (int) maxY, (int) z);
             boolean flag = false;
             double d0 = 0.0D;
 
-            do {
-                BlockPos blockpos1 = blockpos.below();
-                BlockState blockstate = Mothership.this.level().getBlockState(blockpos1);
-                if (blockstate.isFaceSturdy(Mothership.this.level(), blockpos1, Direction.UP)) {
-                    if (!Mothership.this.level().isEmptyBlock(blockpos)) {
-                        BlockState blockstate1 = Mothership.this.level().getBlockState(blockpos);
-                        VoxelShape voxelshape = blockstate1.getCollisionShape(Mothership.this.level(), blockpos);
-                        if (!voxelshape.isEmpty()) {
-                            d0 = voxelshape.max(Direction.Axis.Y);
-                        }
-                    }
+            do
+            {
+                BlockPos blockPos1 = blockPos.below();
+                BlockState blockState = Mothership.this.level().getBlockState(blockPos1);
+                if (blockState.isFaceSturdy(Mothership.this.level(), blockPos1, Direction.UP))
+                {
+                    if (!Mothership.this.level().isEmptyBlock(blockPos))
+                    {
+                        BlockState blockState1 = Mothership.this.level().getBlockState(blockPos);
+                        VoxelShape voxelShape = blockState1.getCollisionShape(Mothership.this.level(), blockPos);
 
+                        if (!voxelShape.isEmpty()) { d0 = voxelShape.max(Direction.Axis.Y); }
+                    }
                     flag = true;
                     break;
                 }
 
-                blockpos = blockpos.below();
-            } while(blockpos.getY() >= Mth.floor(p_190876_5_) - 1);
+                blockPos = blockPos.below();
+            } while (blockPos.getY() >= Mth.floor(minY) - 1);
 
-            ServerLevel serverworld = (ServerLevel)Mothership.this.level();
+            ServerLevel serverWorld = (ServerLevel) Mothership.this.level();
 
-            for(int i = 0; i < 1; ++i) {
-                BlockPos blockpos2 = Mothership.this.blockPosition().offset(-2 +
-                        Mothership.this.random.nextInt(1), 1, -2 + Mothership.this.random.nextInt(1));
+            for (int i = 0; i < 1; ++i)
+            {
+                BlockPos blockPos2 = Mothership.this.blockPosition().offset(-2 + Mothership.this.random.nextInt(1), 1, -2 + Mothership.this.random.nextInt(1));
                 Celestroid corruptMinion = EntitiesSTLCON.CELESTROID.get().create(Mothership.this.level());
-                corruptMinion.moveTo(blockpos2, 0.0F, 0.0F);
-                corruptMinion.finalizeSpawn(serverworld, Mothership.this.level().getCurrentDifficultyAt(blockpos),
-                        MobSpawnType.MOB_SUMMONED, (SpawnGroupData)null, (CompoundTag)null);
-                serverworld.addFreshEntityWithPassengers(corruptMinion);
+                corruptMinion.moveTo(blockPos2, 0.0F, 0.0F);
+
+                corruptMinion.finalizeSpawn(serverWorld, Mothership.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, (SpawnGroupData) null, (CompoundTag) null);
+                serverWorld.addFreshEntityWithPassengers(corruptMinion);
             }
-
         }
-
-        protected SoundEvent getSpellPrepareSound() {
-            return SoundEvents.BEACON_ACTIVATE;
-        }
-
-        protected Mothership.SpellType getSpell() {
-            return SpellType.NONE;
-        }
+        protected SoundEvent getSpellPrepareSound() { return SoundEvents.BEACON_ACTIVATE; }
+        protected SpellType getSpell() { return SpellType.NONE; }
     }
 }

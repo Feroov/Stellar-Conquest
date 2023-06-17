@@ -15,7 +15,5 @@ public class ModParticles
     public static final RegistryObject<SimpleParticleType> HEART_PARTICLES = PARTICLE_TYPES.register("heart_particles", () -> new SimpleParticleType(true));
     public static final RegistryObject<SimpleParticleType> XENOSPHERE_PORTAL_PARTICLES = PARTICLE_TYPES.register("xenosphere_portal_particles", () -> new SimpleParticleType(true));
 
-    public static void register(IEventBus eventBus) {
-        PARTICLE_TYPES.register(eventBus);
-    }
+    public static void register(IEventBus eventBus) { PARTICLE_TYPES.register(eventBus); }
 }

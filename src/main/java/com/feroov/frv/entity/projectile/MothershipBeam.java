@@ -65,13 +65,7 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
             {
                 LivingEntity livingentity = (LivingEntity)entity1;
                 flag = entity.hurt(this.damageSources().thrown(this, livingentity), 15.0F);
-                if (flag)
-                {
-                    if (entity.isAlive())
-                    {
-                        this.doEnchantDamageEffects(livingentity, entity);
-                    }
-                }
+                if (flag)  { if (entity.isAlive()) { this.doEnchantDamageEffects(livingentity, entity); } }
             }
             this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
             this.level().addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
@@ -96,13 +90,9 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
         this.discard();
     }
 
-
     @Override
     public boolean isOnFire() { return false; }
 
     @Override
-    protected ParticleOptions getTrailParticle()
-    {
-        return ParticleTypes.SONIC_BOOM;
-    }
+    protected ParticleOptions getTrailParticle()  { return ParticleTypes.SONIC_BOOM; }
 }
