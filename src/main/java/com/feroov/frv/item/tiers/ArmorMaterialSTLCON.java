@@ -19,7 +19,6 @@ public enum ArmorMaterialSTLCON implements ArmorMaterial
 
     ;
 
-
     final String textureLocation, name;
     final SoundEvent equipSound;
     final Ingredient repairIngredient;
@@ -30,18 +29,22 @@ public enum ArmorMaterialSTLCON implements ArmorMaterial
     {
         this(null, null, headArmor, chestArmor, legsArmor, feetArmor, toughness, durability, enchantability, null, null);
     }
+
     ArmorMaterialSTLCON(int headArmor, int chestArmor, int legsArmor, int feetArmor, float toughness, int durability, int enchantability, @Nullable SoundEvent equipSound)
     {
         this(null, null, headArmor, chestArmor, legsArmor, feetArmor, toughness, durability, enchantability, equipSound, null);
     }
+
     ArmorMaterialSTLCON(int headArmor, int chestArmor, int legsArmor, int feetArmor, float toughness, int durability, int enchantability, @Nullable String repairIngredient)
     {
         this(null, null, headArmor, chestArmor, legsArmor, feetArmor, toughness, durability, enchantability, null, repairIngredient);
     }
+
     ArmorMaterialSTLCON(int headArmor, int chestArmor, int legsArmor, int feetArmor, float toughness, int durability, int enchantability, @Nullable SoundEvent equipSound, @Nullable String repairIngredient)
     {
         this(null, null, headArmor, chestArmor, legsArmor, feetArmor, toughness, durability, enchantability, equipSound, repairIngredient);
     }
+
     ArmorMaterialSTLCON(@Nullable String customTextureLocation, @Nullable String name, int headArmor, int chestArmor, int legsArmor, int feetArmor, float toughness, int durability, int enchantability, @Nullable SoundEvent equipSound, @Nullable String repairIngredient)
     {
         String nonnullName = name == null ? toString().toLowerCase() : name;
@@ -67,8 +70,10 @@ public enum ArmorMaterialSTLCON implements ArmorMaterial
     @Override public String getName() {return name;}
     @Override public float getToughness() {return toughness;}
     @Override public float getKnockbackResistance() {return 0;}
-    @Override public int getDefenseForType(ArmorItem.Type type) {
-        return switch(type) {
+    @Override public int getDefenseForType(ArmorItem.Type type)
+    {
+        return switch(type)
+        {
             case HELMET -> headArmor;
             case CHESTPLATE -> chestArmor;
             case LEGGINGS -> legsArmor;

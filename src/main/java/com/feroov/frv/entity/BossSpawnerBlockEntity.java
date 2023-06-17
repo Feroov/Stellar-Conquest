@@ -18,7 +18,6 @@ public abstract class BossSpawnerBlockEntity<T extends Mob> extends BlockEntity
 {
 
     protected static final int SHORT_RANGE = 15, LONG_RANGE = 80;
-
     protected final EntityType<T> entityType;
     protected boolean spawnedBoss = false;
 
@@ -28,14 +27,15 @@ public abstract class BossSpawnerBlockEntity<T extends Mob> extends BlockEntity
         this.entityType = entityType;
     }
 
-    public boolean anyPlayerInRange() {
+    public boolean anyPlayerInRange()
+    {
         return this.getLevel().hasNearbyAlivePlayer(this.getBlockPos().getX() + 0.5D, this.getBlockPos().getY()
                 + 0.5D, this.getBlockPos().getZ() + 0.5D, this.getRange());
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, BossSpawnerBlockEntity<?> te)
+    public static void tick(Level level, BlockPos pos, BlockState state, BossSpawnerBlockEntity<?> bossSpawnerBlockEntity)
     {
-        if (te.spawnedBoss || !te.anyPlayerInRange())
+        if (bossSpawnerBlockEntity.spawnedBoss || !bossSpawnerBlockEntity.anyPlayerInRange())
         {
             return;
         }
@@ -45,15 +45,16 @@ public abstract class BossSpawnerBlockEntity<T extends Mob> extends BlockEntity
             double rx = (pos.getX() - 0.2F) + (level.getRandom().nextFloat() * 1.25F);
             double ry = (pos.getY() - 0.2F) + (level.getRandom().nextFloat() * 1.25F);
             double rz = (pos.getZ() - 0.2F) + (level.getRandom().nextFloat() * 1.25F);
-            level.addParticle(te.getSpawnerParticle(), rx, ry, rz, 0.0D, 0.0D, 0.0D);
-        } else
+            level.addParticle(bossSpawnerBlockEntity.getSpawnerParticle(), rx, ry, rz, 0.0D, 0.0D, 0.0D);
+        }
+        else
         {
             if (level.getDifficulty() != Difficulty.PEACEFUL)
             {
-                if (te.spawnBoss((ServerLevel) level))
+                if (bossSpawnerBlockEntity.spawnBoss((ServerLevel) level))
                 {
                     level.destroyBlock(pos, false);
-                    te.spawnedBoss = true;
+                    bossSpawnerBlockEntity.spawnedBoss = true;
                 }
             }
         }
@@ -62,14 +63,14 @@ public abstract class BossSpawnerBlockEntity<T extends Mob> extends BlockEntity
     protected boolean spawnBoss(ServerLevelAccessor accessor)
     {
 
-        T myCreature = makeMyCreature();
-        myCreature.moveTo(this.getBlockPos().below(), accessor.getLevel().getRandom().nextFloat() * 360F, 0.0F);
-        ForgeEventFactory.onFinalizeSpawn(myCreature, accessor, accessor.getCurrentDifficultyAt(this.getBlockPos()),
+        T entity = makeMyCreature();
+        entity.moveTo(this.getBlockPos().below(), accessor.getLevel().getRandom().nextFloat() * 360F, 0.0F);
+        ForgeEventFactory.onFinalizeSpawn(entity, accessor, accessor.getCurrentDifficultyAt(this.getBlockPos()),
                 MobSpawnType.SPAWNER, null, null);
 
-        initializeCreature(myCreature);
+        initializeCreature(entity);
 
-        return accessor.addFreshEntity(myCreature);
+        return accessor.addFreshEntity(entity);
     }
 
     public abstract ParticleOptions getSpawnerParticle();

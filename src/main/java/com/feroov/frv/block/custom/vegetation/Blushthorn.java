@@ -15,15 +15,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class Blushthorn extends PlantBlocksSTLCON
 {
-
     private static final VoxelShape BLUSH_SHAPE = Block.box(3, 0, 3, 13, 12, 13);
 
-
-    public Blushthorn(Properties properties)
-    {
-        super(properties);
-    }
-
+    public Blushthorn(Properties properties) { super(properties); }
 
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context)

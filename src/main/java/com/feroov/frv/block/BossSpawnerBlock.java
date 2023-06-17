@@ -23,6 +23,7 @@ public class BossSpawnerBlock extends BaseEntityBlock
 {
     private static final VoxelShape SHAPE = Block.box(-4, -4, -4, 10, 10, 10);
     private final BossVariant boss;
+
     public BossSpawnerBlock(BlockBehaviour.Properties props, BossVariant variant)
     {
         super(props);

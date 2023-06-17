@@ -47,11 +47,13 @@ public class BlocksSTLCON
     // ---------------------------------------------------------------------------------------------------
 
 
+
     // ------------------------------------------ Spawner Blocks ------------------------------------------
     public static final RegistryObject<Block> MOTHERSHIP_SPAWNER = registerBlock("mothership_boss_spawner",
             () -> new BossSpawnerBlock(BlockBehaviour.Properties.copy(STONE).strength(-1.0F, 3600000.8F)
                     .noOcclusion().noLootTable(), BossVariant.MOTHERSHIP));
     // ---------------------------------------------------------------------------------------------------
+
 
 
     // ------------------------------------------ General Blocks ------------------------------------------
@@ -170,6 +172,7 @@ public class BlocksSTLCON
             () -> new FlowerPotBlock(() -> ((FlowerPotBlock) Blocks.FLOWER_POT), BlocksSTLCON.XENOS_SAPLING,
                     BlockBehaviour.Properties.copy(Blocks.POTTED_ORANGE_TULIP)));
     // ---------------------------------------------------------------------------------------------------
+
 
 
     private static ButtonBlock woodenButton(BlockSetType p_273357_) {return new ButtonBlock(BlockBehaviour.Properties.copy(OAK_BUTTON).noCollission().strength(0.5F), p_273357_, 30, true);}
