@@ -18,12 +18,8 @@ public class MothershipSpawnerBlockEntity extends BossSpawnerBlockEntity<Mothers
     }
 
     @Override
-    protected int getRange() {
-        return LONG_RANGE;
-    }
+    protected int getRange() { return LONG_RANGE; }
 
     @Override
-    public ParticleOptions getSpawnerParticle() {
-        return ParticleTypes.CRIT;
-    }
+    public ParticleOptions getSpawnerParticle() { return ParticleTypes.CRIT; }
 }

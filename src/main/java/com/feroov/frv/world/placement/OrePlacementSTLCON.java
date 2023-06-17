@@ -6,9 +6,9 @@ import java.util.List;
 
 public class OrePlacementSTLCON
 {
-    public static List<PlacementModifier> orePlacement(PlacementModifier p_195347_, PlacementModifier p_195348_)
+    public static List<PlacementModifier> orePlacement(PlacementModifier placementModifier, PlacementModifier placementModifier1)
     {
-        return List.of(p_195347_, InSquarePlacement.spread(), p_195348_, BiomeFilter.biome());
+        return List.of(placementModifier, InSquarePlacement.spread(), placementModifier1, BiomeFilter.biome());
     }
 
     public static List<PlacementModifier> commonOrePlacement(int p_195344_, PlacementModifier p_195345_)

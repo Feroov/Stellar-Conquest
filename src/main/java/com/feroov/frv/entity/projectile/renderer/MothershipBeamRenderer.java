@@ -12,7 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-
 public class MothershipBeamRenderer extends GeoEntityRenderer<MothershipBeam>
 {
     public MothershipBeamRenderer(EntityRendererProvider.Context renderManager)
@@ -29,7 +28,8 @@ public class MothershipBeamRenderer extends GeoEntityRenderer<MothershipBeam>
     @Override
     public void preRender(PoseStack poseStack, MothershipBeam animatable, BakedGeoModel model,
                           MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick,
-                          int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+                          int packedLight, int packedOverlay, float red, float green, float blue, float alpha)
+    {
         super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay,
                 red, green, blue, alpha);
         poseStack.scale(2.5F, 2.5F, 2.5F);

@@ -44,7 +44,5 @@ public class MothershipRenderer extends GeoEntityRenderer<Mothership>
 
 
     @Override
-    protected int getBlockLightLevel(@NotNull Mothership entity, @NotNull BlockPos blockPos) {
-        return 15;
-    }
+    protected int getBlockLightLevel(@NotNull Mothership entity, @NotNull BlockPos blockPos) { return 15; }
 }
