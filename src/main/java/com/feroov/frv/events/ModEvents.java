@@ -5,6 +5,8 @@ import com.feroov.frv.STLCON;
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.entity.monster.Celestroid;
 import com.feroov.frv.entity.monster.Mothership;
+import com.feroov.frv.entity.monster.Xenaptor;
+import com.feroov.frv.entity.monster.renderer.XenaptorRenderer;
 import com.feroov.frv.entity.passive.Wispxen;
 import com.feroov.frv.entity.passive.Xeron;
 import com.feroov.frv.entity.neutral.XeronGuard;
@@ -21,8 +23,10 @@ import com.feroov.frv.entity.projectile.renderer.RaygunBeamRenderer;
 import com.feroov.frv.particles.HeartParticles;
 import com.feroov.frv.particles.XenospherePortalParticles;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.ambient.Bat;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -33,10 +37,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = STLCON.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class ClientModEvents
+public class ModEvents
 {
 
-    public ClientModEvents(){}
+    public ModEvents(){}
 
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event)
@@ -47,6 +51,7 @@ public class ClientModEvents
         event.put(EntitiesSTLCON.XERON_GUARD.get(), XeronGuard.setAttributes());
         event.put(EntitiesSTLCON.WISPXEN.get(), Wispxen.setAttributes());
         event.put(EntitiesSTLCON.ZEPHXEN.get(), Zephxen.setAttributes());
+        event.put(EntitiesSTLCON.XENAPTOR.get(), Xenaptor.setAttributes());
     }
 
     @SubscribeEvent
@@ -58,6 +63,7 @@ public class ClientModEvents
         event.registerEntityRenderer(EntitiesSTLCON.XERON_GUARD.get(), XeronGuardRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.WISPXEN.get(), WispxenRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.ZEPHXEN.get(), ZephxenRenderer::new);
+        event.registerEntityRenderer(EntitiesSTLCON.XENAPTOR.get(), XenaptorRenderer::new);
 
         event.registerEntityRenderer(EntitiesSTLCON.RAYGUN_BEAM.get(), RaygunBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_BEAM.get(), CelestroidBeamRenderer::new);
@@ -74,6 +80,9 @@ public class ClientModEvents
                 Mob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
         event.register(EntitiesSTLCON.ZEPHXEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Mob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+
+        event.register(EntitiesSTLCON.XENAPTOR.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE,
                 Mob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
     }
 

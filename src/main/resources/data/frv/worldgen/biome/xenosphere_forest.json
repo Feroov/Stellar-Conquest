@@ -17,9 +17,17 @@
     "creature": [
       {
         "type": "frv:wispxen",
-        "maxCount": 6,
-        "minCount": 4,
+        "maxCount": 3,
+        "minCount": 2,
         "weight": 20
+      }
+    ],
+    "monster": [
+      {
+        "type": "frv:xenaptor",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 10
       }
     ]
   },

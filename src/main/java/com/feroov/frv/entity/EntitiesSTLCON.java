@@ -3,6 +3,7 @@ package com.feroov.frv.entity;
 import com.feroov.frv.STLCON;
 import com.feroov.frv.entity.monster.Celestroid;
 import com.feroov.frv.entity.monster.Mothership;
+import com.feroov.frv.entity.monster.Xenaptor;
 import com.feroov.frv.entity.passive.Wispxen;
 import com.feroov.frv.entity.passive.Xeron;
 import com.feroov.frv.entity.neutral.XeronGuard;
@@ -36,6 +37,12 @@ public class EntitiesSTLCON
                     () -> EntityType.Builder.of(Mothership::new, MobCategory.MONSTER)
                             .sized(8.0f, 8.0f).canSpawnFarFromPlayer()
                             .build(new ResourceLocation(STLCON.MOD_ID, "mothership").toString()));
+
+    public static final RegistryObject<EntityType<Xenaptor>> XENAPTOR =
+            ENTITY_TYPES.register("xenaptor",
+                    () -> EntityType.Builder.of(Xenaptor::new, MobCategory.MONSTER)
+                            .sized(1.4f, 0.8f).canSpawnFarFromPlayer()
+                            .build(new ResourceLocation(STLCON.MOD_ID, "xenaptor").toString()));
 
     // Passive
     public static final RegistryObject<EntityType<Xeron>> XERON =

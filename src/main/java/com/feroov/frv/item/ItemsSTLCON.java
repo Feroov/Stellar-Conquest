@@ -107,6 +107,9 @@ public class ItemsSTLCON
 
     public static final RegistryObject<Item> ZEPHXEN_SPAWN_EGG = ITEMS.register("zephxen_spawn_egg",
             () -> new ForgeSpawnEggItem(EntitiesSTLCON.ZEPHXEN, 0x0031AF, 0XFFFFFF, new Item.Properties()));
+
+    public static final RegistryObject<Item> XENAPTOR_SPAWN_EGG = ITEMS.register("xenaptor_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.XENAPTOR, 0x004977, 0XF56423, new Item.Properties()));
     // ------------------------------------------------------------------------------------------------
 
 

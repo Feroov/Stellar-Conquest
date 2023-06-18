@@ -13,6 +13,7 @@ import com.feroov.frv.world.dimension.POIRegistry;
 import com.feroov.frv.world.feature.FeatureModifiers;
 import com.feroov.frv.world.placement.PlacementRegistrySTLCON;
 import com.feroov.frv.world.structure.StructuresSTLCON;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.common.MinecraftForge;
@@ -21,6 +22,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import java.util.Locale;
 
 @Mod(STLCON.MOD_ID)
 public class STLCON
@@ -59,4 +62,9 @@ public class STLCON
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) { RangedItems.addRanged(); }
+
+    public static ResourceLocation prefix(String name) {
+        return new ResourceLocation(MOD_ID, name.toLowerCase(Locale.ROOT));
+    }
+
 }
