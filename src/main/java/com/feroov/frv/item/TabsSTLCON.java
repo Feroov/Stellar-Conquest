@@ -5,6 +5,7 @@ import com.feroov.frv.block.BlocksSTLCON;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -14,6 +15,7 @@ public class TabsSTLCON
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, STLCON.MOD_ID);
 
     public static final RegistryObject<CreativeModeTab> STLCON_GEAR = TABS.register("stlcon_gear", () -> CreativeModeTab.builder()
+            .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
             .title(Component.translatable("creativemodetab.stlcon_gear"))
             .icon(() -> new ItemStack(ItemsSTLCON.COSMIC_RAY_GUN.get()))
             .displayItems((enabledFeatures, event) -> {
@@ -27,6 +29,7 @@ public class TabsSTLCON
             }).build());
 
     public static final RegistryObject<CreativeModeTab> STLCON_ITEMS = TABS.register("stlcon_items", () -> CreativeModeTab.builder()
+            .withTabsBefore(STLCON_GEAR.getKey())
             .title(Component.translatable("creativemodetab.stlcon_items"))
             .icon(() -> new ItemStack(ItemsSTLCON.ASTRALITE_INGOT.get()))
             .displayItems((enabledFeatures, event) -> {
@@ -51,6 +54,7 @@ public class TabsSTLCON
             }).build());
 
     public static final RegistryObject<CreativeModeTab> STLCON_BLOCKS = TABS.register("stlcon_blocks", () -> CreativeModeTab.builder()
+            .withTabsBefore(STLCON_ITEMS.getKey())
             .title(Component.translatable("creativemodetab.stlcon_blocks"))
             .icon(() -> new ItemStack(BlocksSTLCON.XENOFLUX.get()))
             .displayItems((enabledFeatures, event) -> {
