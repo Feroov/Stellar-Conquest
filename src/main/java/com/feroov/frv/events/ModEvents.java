@@ -20,6 +20,7 @@ import com.feroov.frv.entity.passive.renderer.ZephxenRenderer;
 import com.feroov.frv.entity.projectile.renderer.CelestroidBeamRenderer;
 import com.feroov.frv.entity.projectile.renderer.MothershipBeamRenderer;
 import com.feroov.frv.entity.projectile.renderer.RaygunBeamRenderer;
+import com.feroov.frv.particles.CosmicRayGunParticles;
 import com.feroov.frv.particles.HeartParticles;
 import com.feroov.frv.particles.XenospherePortalParticles;
 import net.minecraft.client.Minecraft;
@@ -89,5 +90,6 @@ public class ModEvents
     {
         Minecraft.getInstance().particleEngine.register(ModParticles.HEART_PARTICLES.get(), HeartParticles.Provider::new);
         Minecraft.getInstance().particleEngine.register(ModParticles.XENOSPHERE_PORTAL_PARTICLES.get(), XenospherePortalParticles.Provider::new);
+        Minecraft.getInstance().particleEngine.register(ModParticles.RAYGUN_PARTICLES.get(), CosmicRayGunParticles.Provider::new);
     }
 }
