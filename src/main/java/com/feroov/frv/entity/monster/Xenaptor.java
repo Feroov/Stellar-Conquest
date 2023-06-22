@@ -8,6 +8,8 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -189,6 +191,20 @@ public class Xenaptor extends Monster implements GeoEntity
             animCounter = 0;
             entity.setAttacking(false);
             super.stop();
+        }
+    }
+
+    @Override
+    public boolean doHurtTarget(Entity entityIn)
+    {
+        if (!super.doHurtTarget(entityIn))  { return false; }
+        else
+        {
+            if (entityIn instanceof LivingEntity)
+            {
+                ((LivingEntity)entityIn).addEffect(new MobEffectInstance(MobEffects.POISON, 100));
+            }
+            return true;
         }
     }
 }
