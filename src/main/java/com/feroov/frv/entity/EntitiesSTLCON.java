@@ -41,7 +41,7 @@ public class EntitiesSTLCON
     public static final RegistryObject<EntityType<Xenaptor>> XENAPTOR =
             ENTITY_TYPES.register("xenaptor",
                     () -> EntityType.Builder.of(Xenaptor::new, MobCategory.MONSTER)
-                            .sized(1.4f, 0.8f).canSpawnFarFromPlayer()
+                            .sized(1.2f, 0.8f).canSpawnFarFromPlayer()
                             .build(new ResourceLocation(STLCON.MOD_ID, "xenaptor").toString()));
 
     // Passive

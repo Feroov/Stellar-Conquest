@@ -19,7 +19,7 @@ public class XenaptorRenderer extends GeoEntityRenderer<Xenaptor>
     public XenaptorRenderer(EntityRendererProvider.Context renderManager)
     {
         super(renderManager, new XenaptorModel());
-        this.shadowRadius = 0.58F;
+        this.shadowRadius = 0.78F;
     }
 
     @Override

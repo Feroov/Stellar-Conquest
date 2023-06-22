@@ -1,6 +1,7 @@
 package com.feroov.frv.entity.monster;
 
 import com.feroov.frv.entity.neutral.XeronGuard;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -41,10 +43,11 @@ public class Xenaptor extends Monster implements GeoEntity
     {
         return TamableAnimal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.32D)
+                .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.FOLLOW_RANGE, 25.0D)
                 .add(Attributes.ATTACK_DAMAGE, 1.5D).build();
     }
+
 
     @Override
     protected void registerGoals()
@@ -53,10 +56,10 @@ public class Xenaptor extends Monster implements GeoEntity
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new XenaptorMeleeAttack(this, 0.95D, true));
         this.goalSelector.addGoal(1, new LookAtPlayerGoal(this, Mob.class, 25.0F));
-        this.goalSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.goalSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.goalSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, XeronGuard.class, true));
-        this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
-        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(4, new MoveTowardsRestrictionGoal(this, 0.3D));
+        this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 0.77D));
     }
 
     @Override
@@ -80,9 +83,14 @@ public class Xenaptor extends Monster implements GeoEntity
         return null;
     }
 
+    @Override
+    protected void playStepSound(BlockPos blockPos, BlockState blockState)
+    {
+        this.playSound(SoundEvents.SPIDER_STEP, 0.15F, 1.6F);
+    }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 0.2F; }
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 0.5F; }
 
 
     @Override
