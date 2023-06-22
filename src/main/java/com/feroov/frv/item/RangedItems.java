@@ -10,7 +10,10 @@ import net.minecraft.world.item.Item;
 public class RangedItems
 {
 
-    public static void addRanged()  { makeRanged(ItemsSTLCON.COSMIC_RAY_GUN.get()); }
+    public static void addRanged()
+    {
+        makeRanged(ItemsSTLCON.COSMIC_RAY_GUN.get());
+    }
 
     private static void makeRanged(Item item)
     {

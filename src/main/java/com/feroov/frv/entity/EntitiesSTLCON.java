@@ -86,5 +86,6 @@ public class EntitiesSTLCON
                     .updateInterval(10)
                     .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "mothership_beam").toString()));
 
+
     public static void register(IEventBus eventBus)  { ENTITY_TYPES.register(eventBus); }
 }
