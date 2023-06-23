@@ -13,6 +13,13 @@ public class ConsumablesSTLCON
             .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 400 ,1), 1.0f)
             .build();
 
+    public static final FoodProperties TOXIC_RESILIENCE = (new FoodProperties.Builder())
+            .nutrition(1)
+            .saturationMod(1.5F)
+            .effect(() -> new MobEffectInstance(MobEffects.POISON, 200 ,2), 1.0f)
+            .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300 ,2), 1.0f)
+            .build();
+
     public static final FoodProperties LUMIBLOOM = (new FoodProperties.Builder())
             .nutrition(4)
             .saturationMod(0.8F)
