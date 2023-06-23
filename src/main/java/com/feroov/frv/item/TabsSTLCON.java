@@ -38,12 +38,14 @@ public class TabsSTLCON
                 event.accept(ItemsSTLCON.ASTRALITE_INGOT.get());
                 event.accept(ItemsSTLCON.XENOS_EYE.get());
                 event.accept(ItemsSTLCON.BLUSHTHORN_NECTAR_BOTTLE.get());
+                event.accept(ItemsSTLCON.TOXIC_RESILIENCE.get());
                 event.accept(ItemsSTLCON.LUMIBLOOM_SEEDS.get());
                 event.accept(ItemsSTLCON.LUMIBLOOM.get());
                 event.accept(ItemsSTLCON.WISPXENDUST.get());
-                event.accept(ItemsSTLCON.RAYGUN_HANDLE.get());
                 event.accept(ItemsSTLCON.RAYGUN_FRAME.get());
+                event.accept(ItemsSTLCON.RAYGUN_HANDLE.get());
                 event.accept(ItemsSTLCON.RAYGUN_ENERGY.get());
+                event.accept(ItemsSTLCON.XENAPTOR_ICHOR.get());
                 event.accept(ItemsSTLCON.XERON_SPAWN_EGG.get());
                 event.accept(ItemsSTLCON.XERON_GUARD_SPAWN_EGG.get());
                 event.accept(ItemsSTLCON.WISPXEN_SPAWN_EGG.get());

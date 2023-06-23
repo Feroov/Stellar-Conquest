@@ -4,14 +4,10 @@ import com.feroov.frv.entity.projectile.RaygunBeam;
 import com.feroov.frv.events.ModParticles;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Camera;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -33,7 +29,6 @@ public class CosmicRayGun extends Item
 {
     private static final int CHARGE_TIME = 20;
     private static final int COOLDOWN_TIME = 20;
-    private static final float SHAKE_INTENSITY = 0.5F;
     private static final Random random = new Random();
 
     public CosmicRayGun()
@@ -57,7 +52,7 @@ public class CosmicRayGun extends Item
     {
         if (!level.isClientSide && shooter.getUseItemRemainingTicks() <= 0)
         {
-            SoundEvent[] soundEvents = {SoundEvents.BEACON_ACTIVATE};
+            SoundEvent[] soundEvents = {SoundEvents.BEACON_ACTIVATE, SoundEvents.BEACON_POWER_SELECT};
             SoundEvent soundEvent = soundEvents[random.nextInt(soundEvents.length)];
             level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(),
                     soundEvent, SoundSource.PLAYERS, 1.0F, getRandomPitch());
@@ -112,10 +107,6 @@ public class CosmicRayGun extends Item
                         double particleRadius = 0.5D;
                         serverLevel.sendParticles(particleOptions, x, y, z, particleCount, speedX, speedY, speedZ, particleRadius);
                     }
-
-                    float knockbackStrength = 1.0f; // Adjust the knockback strength as needed
-                    player.push(-Math.sin(Math.toRadians(player.getYRot())) * knockbackStrength,
-                            0.1, Math.cos(Math.toRadians(player.getYRot())) * knockbackStrength);
                 }
             }
         }
