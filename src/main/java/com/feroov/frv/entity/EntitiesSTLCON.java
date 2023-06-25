@@ -2,6 +2,7 @@ package com.feroov.frv.entity;
 
 import com.feroov.frv.STLCON;
 import com.feroov.frv.entity.monster.Celestroid;
+import com.feroov.frv.entity.monster.MirrorbornSlime;
 import com.feroov.frv.entity.monster.Mothership;
 import com.feroov.frv.entity.monster.Xenaptor;
 import com.feroov.frv.entity.passive.Wispxen;
@@ -43,6 +44,12 @@ public class EntitiesSTLCON
                     () -> EntityType.Builder.of(Xenaptor::new, MobCategory.MONSTER)
                             .sized(1.2f, 0.8f).canSpawnFarFromPlayer()
                             .build(new ResourceLocation(STLCON.MOD_ID, "xenaptor").toString()));
+
+    public static final RegistryObject<EntityType<MirrorbornSlime>> MIRRORBORN_SLIME =
+            ENTITY_TYPES.register("mirrorborn_slime",
+                    () -> EntityType.Builder.of(MirrorbornSlime::new, MobCategory.CREATURE)
+                            .sized(0.50f, 0.50f).canSpawnFarFromPlayer()
+                            .build(new ResourceLocation(STLCON.MOD_ID, "mirrorborn_slime").toString()));
 
     // Passive
     public static final RegistryObject<EntityType<Xeron>> XERON =

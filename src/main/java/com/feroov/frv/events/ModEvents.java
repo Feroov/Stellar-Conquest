@@ -4,8 +4,10 @@ package com.feroov.frv.events;
 import com.feroov.frv.STLCON;
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.entity.monster.Celestroid;
+import com.feroov.frv.entity.monster.MirrorbornSlime;
 import com.feroov.frv.entity.monster.Mothership;
 import com.feroov.frv.entity.monster.Xenaptor;
+import com.feroov.frv.entity.monster.renderer.MirrorbornSlimeRenderer;
 import com.feroov.frv.entity.monster.renderer.XenaptorRenderer;
 import com.feroov.frv.entity.passive.Wispxen;
 import com.feroov.frv.entity.passive.Xeron;
@@ -51,6 +53,7 @@ public class ModEvents
         event.put(EntitiesSTLCON.WISPXEN.get(), Wispxen.setAttributes());
         event.put(EntitiesSTLCON.ZEPHXEN.get(), Zephxen.setAttributes());
         event.put(EntitiesSTLCON.XENAPTOR.get(), Xenaptor.setAttributes());
+        event.put(EntitiesSTLCON.MIRRORBORN_SLIME.get(), MirrorbornSlime.setAttributes());
     }
 
     @SubscribeEvent
@@ -63,6 +66,7 @@ public class ModEvents
         event.registerEntityRenderer(EntitiesSTLCON.WISPXEN.get(), WispxenRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.ZEPHXEN.get(), ZephxenRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.XENAPTOR.get(), XenaptorRenderer::new);
+        event.registerEntityRenderer(EntitiesSTLCON.MIRRORBORN_SLIME.get(), MirrorbornSlimeRenderer::new);
 
         event.registerEntityRenderer(EntitiesSTLCON.RAYGUN_BEAM.get(), RaygunBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_BEAM.get(), CelestroidBeamRenderer::new);
