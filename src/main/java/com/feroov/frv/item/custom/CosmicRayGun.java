@@ -128,10 +128,10 @@ public class CosmicRayGun extends Item
             double z = shooter.getZ() + offsetZ;
 
             ParticleOptions particleOptions = ModParticles.RAYGUN_PARTICLES.get();
-            int particleCount = 2; // Adjust the particle count as needed
-            double speedX = offsetX * 1.1; // Adjust the speed in x-direction
-            double speedY = offsetY * 1.1; // Adjust the speed in y-direction
-            double speedZ = offsetZ * 1.1; // Adjust the speed in z-direction
+            int particleCount = 2;
+            double speedX = offsetX * 1.1;
+            double speedY = offsetY * 1.1;
+            double speedZ = offsetZ * 1.1;
             double particleRadius = 0.5D;
 
             serverLevel.sendParticles(particleOptions, x, y, z, particleCount, speedX, speedY, speedZ, particleRadius);
