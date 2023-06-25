@@ -7,6 +7,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -38,7 +39,7 @@ public class Xenaptor extends Monster implements GeoEntity
     public Xenaptor(EntityType<? extends Monster> entityType, Level level)
     {
         super(entityType, level);
-        this.xpReward = 30;
+        this.xpReward = 20;
     }
 
     public static AttributeSupplier setAttributes()
@@ -207,4 +208,7 @@ public class Xenaptor extends Monster implements GeoEntity
             return true;
         }
     }
+
+    @Override
+    protected boolean shouldDespawnInPeaceful() { return true; }
 }
