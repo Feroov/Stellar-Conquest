@@ -9,5 +9,6 @@
   "zephxen_hurt": {"sounds": [{"name": "frv:zephxen_hurt1"}, {"name": "frv:zephxen_hurt2"}], "subtitle": "frv.zephxen_hurt"},
   "zephxen_death": {"sounds": [{"name": "frv:zephxen_death"}], "subtitle": "frv.zephxen_death"},
 
-  "xenosphere_ambience": { "sounds": [{"name": "frv:xenosphere_ambience"}], "subtitle": "frv.xenosphere_ambience"}
+  "xenosphere_ambience": { "sounds": [{"name": "frv:xenosphere_ambience"}], "subtitle": "frv.xenosphere_ambience"},
+  "xenosphere_forest_ambience": { "sounds": [{"name": "frv:xenosphere_forest_ambience"}], "subtitle": "frv.xenosphere_forest_ambience"}
 }

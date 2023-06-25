@@ -23,6 +23,7 @@ public class SoundEventsSTLCON
     public static final RegistryObject<SoundEvent> ZEPHXEN_DEATH = SOUND_EVENTS.register("zephxen_death", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "zephxen_death")));
 
     public static final RegistryObject<SoundEvent> XENOSPHERE_AMBIENCE = SOUND_EVENTS.register("xenosphere_ambience", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "xenosphere_ambience")));
+    public static final RegistryObject<SoundEvent> XENOSPHERE_FOREST_AMBIENCE = SOUND_EVENTS.register("xenosphere_forest_ambience", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "xenosphere_forest_ambience")));
 
 
     public static void register(IEventBus eventBus) { SOUND_EVENTS.register(eventBus); }
