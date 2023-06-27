@@ -24,7 +24,7 @@ public class MirrorbornSlimeRenderer extends MobRenderer<MirrorbornSlime, SlimeM
 
     @Nonnull
     @Override
-    public ResourceLocation getTextureLocation(@Nonnull MirrorbornSlime swet)
+    public ResourceLocation getTextureLocation(@Nonnull MirrorbornSlime mirrorbornSlime)
     {
         return TEXTURE;
     }

@@ -1,5 +1,7 @@
 package com.feroov.frv.entity.monster;
 
+import com.feroov.frv.entity.EntitiesSTLCON;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -20,6 +22,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class MirrorbornSlime extends Animal
 {
@@ -57,7 +60,7 @@ public class MirrorbornSlime extends Animal
     {
         super.registerGoals();
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.15D, true));
+        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.65D, true));
         this.goalSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Mob.class, 25.0F));
         this.goalSelector.addGoal(4, new MoveTowardsRestrictionGoal(this, 0.3D));
@@ -291,10 +294,14 @@ public class MirrorbornSlime extends Animal
     @Override
     public boolean doHurtTarget(Entity entityIn)
     {
+        this.playSound(SoundEvents.SLIME_ATTACK, 1.0F, 1.4F);
         if (!this.level().isClientSide && spawnCount <= MAX_SPAWN_LIMIT)
         {
             boolean shouldSpawn = false;
-            if (spawnCount == 1) { shouldSpawn = true; }
+            if (spawnCount == 1)
+            {
+                shouldSpawn = true;
+            }
             else
             {
                 double spawnProbability = 1.0 / (spawnCount - 1);
@@ -309,11 +316,69 @@ public class MirrorbornSlime extends Animal
                 {
                     mirrorbornSlime.copyPosition(this);
                     this.level().addFreshEntity(mirrorbornSlime);
+
+                    if (spawnCount >= MAX_SPAWN_LIMIT)
+                    {
+                        mergeSlimes();
+                    }
                 }
             }
         }
         return super.doHurtTarget(entityIn);
     }
+
+    private void mergeSlimes()
+    {
+        int mergeRadius = 2;
+        int mergeThreshold = 20;
+
+        int slimeCount = 0;
+        List<MirrorbornSlime> nearbySlimes = this.level().getEntitiesOfClass(MirrorbornSlime.class,
+                this.getBoundingBox().inflate(mergeRadius));
+
+        for (MirrorbornSlime slime : nearbySlimes)
+        {
+            slimeCount++;
+            if (slimeCount >= mergeThreshold)
+            {
+                break;
+            }
+        }
+
+        if (slimeCount >= mergeThreshold)
+        {
+            for (MirrorbornSlime slime : nearbySlimes)
+            {
+                slime.discard();
+                slime.playSound(SoundEvents.SLIME_SQUISH, 1.0F, 0.4F);
+
+                if (this.level() instanceof ServerLevel)
+                {
+                    double spread = 0.5;
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        double offsetX = this.random.nextGaussian() * spread;
+                        double offsetY = this.random.nextGaussian() * spread;
+                        double offsetZ = this.random.nextGaussian() * spread;
+
+                        ((ServerLevel) this.level()).sendParticles(ParticleTypes.EXPLOSION,
+                                this.getX() + offsetX, this.getY() + this.getEyeHeight() / 2 + offsetY,
+                                this.getZ() + offsetZ, 1, 0.0, 0.0, 0.0, 0.0);
+                    }
+                }
+            }
+
+            MergedMirrorborn mergedSlime = EntitiesSTLCON.MERGED_MIRRORBORN_SLIME.get().create(this.level());
+            if (mergedSlime != null)
+            {
+                Vec3 centerPos = this.position();
+                mergedSlime.absMoveTo(centerPos.x, centerPos.y, centerPos.z);
+                this.level().addFreshEntity(mergedSlime);
+            }
+        }
+    }
+
 
     @Override
     public int getExperienceReward() { return 0; }
