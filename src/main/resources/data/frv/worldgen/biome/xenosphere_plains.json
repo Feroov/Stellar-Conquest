@@ -20,7 +20,13 @@
         "type": "frv:zephxen",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 1
+        "weight": 40
+      },
+      {
+        "type": "frv:mirrorborn_slime",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 100
       }
     ],
     "monster": [
@@ -28,7 +34,7 @@
         "type": "frv:xenaptor",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 10
+        "weight": 40
       }
     ]
   },
