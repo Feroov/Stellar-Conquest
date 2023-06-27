@@ -79,8 +79,8 @@ public class TabsSTLCON
                 event.accept(BlocksSTLCON.XENOS_TRAPDOOR.get());
                 event.accept(BlocksSTLCON.XENOS_BUTTON.get());
                 event.accept(BlocksSTLCON.XENOS_PRESSURE_PLATE.get());
-                event.accept(BlocksSTLCON.XENOS_LEAVES.get());
                 event.accept(BlocksSTLCON.XENOFLUX.get());
+                event.accept(BlocksSTLCON.XENOS_LEAVES.get());
                 event.accept(BlocksSTLCON.GLOWXEN.get());
                 event.accept(BlocksSTLCON.XENOSTONE.get());
                 event.accept(BlocksSTLCON.XENOCOBBLESTONE.get());
