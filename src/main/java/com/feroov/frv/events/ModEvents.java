@@ -75,6 +75,9 @@ public class ModEvents
         event.register(EntitiesSTLCON.XERON.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE,
                 Mob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
+        event.register(EntitiesSTLCON.MIRRORBORN_SLIME.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE,
+                Mob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
+
         event.register(EntitiesSTLCON.WISPXEN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.WORLD_SURFACE,
                 Mob::checkMobSpawnRules, SpawnPlacementRegisterEvent.Operation.REPLACE);
 
