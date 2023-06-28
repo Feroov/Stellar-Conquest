@@ -1,6 +1,7 @@
 package com.feroov.frv.item.tiers;
 
 import com.feroov.frv.block.BlocksSTLCON;
+import com.feroov.frv.item.ItemsSTLCON;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.ForgeTier;
@@ -11,6 +12,7 @@ public class TiersSTLCON
     public static final ForgeTier ADMIN = new ForgeTier(999,999999,999f,9999f,10, Tags.Blocks.NEEDS_GOLD_TOOL, () -> Ingredient.of(Blocks.BEDROCK));
 
     public static final ForgeTier XENOSTONE = new ForgeTier(1,181,4.4f,1.5f,5, Tags.Blocks.NEEDS_GOLD_TOOL, () -> Ingredient.of(BlocksSTLCON.XENOCOBBLESTONE.get()));
+    public static final ForgeTier XENITE = new ForgeTier(2,443,7.0f,2.0f,5, Tags.Blocks.NEEDS_GOLD_TOOL, () -> Ingredient.of(ItemsSTLCON.XENITE_INGOT.get()));
 
 
     // Vanilla tiers
