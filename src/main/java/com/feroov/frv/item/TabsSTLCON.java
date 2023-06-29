@@ -31,6 +31,11 @@ public class TabsSTLCON
                 event.accept(ItemsSTLCON.XENITE_AXE.get());
                 event.accept(ItemsSTLCON.XENITE_SHOVEL.get());
                 event.accept(ItemsSTLCON.XENITE_HOE.get());
+                event.accept(ItemsSTLCON.ASTRALITE_SWORD.get());
+                event.accept(ItemsSTLCON.ASTRALITE_PICKAXE.get());
+                event.accept(ItemsSTLCON.ASTRALITE_AXE.get());
+                event.accept(ItemsSTLCON.ASTRALITE_SHOVEL.get());
+                event.accept(ItemsSTLCON.ASTRALITE_HOE.get());
             }).build());
 
     public static final RegistryObject<CreativeModeTab> STLCON_ITEMS = TABS.register("stlcon_items", () -> CreativeModeTab.builder()

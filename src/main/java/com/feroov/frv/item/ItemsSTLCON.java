@@ -54,6 +54,12 @@ public class ItemsSTLCON
     public static final RegistryObject<Item> XENITE_AXE = ITEMS.register("xenite_axe", () -> new AxeItem(TiersSTLCON.XENITE, 6F, -3.2f, new Item.Properties()));
     public static final RegistryObject<Item> XENITE_SHOVEL = ITEMS.register("xenite_shovel", () -> new ShovelItem(TiersSTLCON.XENITE, 2.0F, -3.0f, new Item.Properties()));
     public static final RegistryObject<Item> XENITE_HOE = ITEMS.register("xenite_hoe", () -> new HoeItemSTLCON(TiersSTLCON.XENITE, -1.0F, -2.0F, new Item.Properties()));
+
+    public static final RegistryObject<Item> ASTRALITE_SWORD = ITEMS.register("astralite_sword", () -> new SwordItem(TiersSTLCON.ASTRALITE, 3, -2.4F, new Item.Properties()));
+    public static final RegistryObject<Item> ASTRALITE_PICKAXE = ITEMS.register("astralite_pickaxe", () -> new PickaxeItem(TiersSTLCON.ASTRALITE, 1, -2.8f, new Item.Properties()));
+    public static final RegistryObject<Item> ASTRALITE_AXE = ITEMS.register("astralite_axe", () -> new AxeItem(TiersSTLCON.ASTRALITE, 6F, -3.2f, new Item.Properties()));
+    public static final RegistryObject<Item> ASTRALITE_SHOVEL = ITEMS.register("astralite_shovel", () -> new ShovelItem(TiersSTLCON.ASTRALITE, 2.0F, -3.0f, new Item.Properties()));
+    public static final RegistryObject<Item> ASTRALITE_HOE = ITEMS.register("astralite_hoe", () -> new HoeItemSTLCON(TiersSTLCON.ASTRALITE, -1.0F, -4.0F, new Item.Properties()));
     // ------------------------------------------------------------------------------------------------
 
 

@@ -13,6 +13,7 @@ public class TiersSTLCON
 
     public static final ForgeTier XENOSTONE = new ForgeTier(1,181,4.4f,1.5f,5, Tags.Blocks.NEEDS_GOLD_TOOL, () -> Ingredient.of(BlocksSTLCON.XENOCOBBLESTONE.get()));
     public static final ForgeTier XENITE = new ForgeTier(2,443,7.0f,2.0f,5, Tags.Blocks.NEEDS_GOLD_TOOL, () -> Ingredient.of(ItemsSTLCON.XENITE_INGOT.get()));
+    public static final ForgeTier ASTRALITE = new ForgeTier(3,1820,8.5f,3.0f,5, Tags.Blocks.NEEDS_GOLD_TOOL, () -> Ingredient.of(ItemsSTLCON.ASTRALITE_INGOT.get()));
 
 
     // Vanilla tiers
