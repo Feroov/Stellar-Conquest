@@ -20,6 +20,7 @@ public class TabsSTLCON
             .icon(() -> new ItemStack(ItemsSTLCON.COSMIC_RAY_GUN.get()))
             .displayItems((enabledFeatures, event) -> {
                 event.accept(ItemsSTLCON.ADMIN_SWORD.get());
+                event.accept(ItemsSTLCON.BOUNCYBONK.get());
                 event.accept(ItemsSTLCON.COSMIC_RAY_GUN.get());
                 event.accept(ItemsSTLCON.XENOSTONE_SWORD.get());
                 event.accept(ItemsSTLCON.XENOSTONE_PICKAXE.get());
