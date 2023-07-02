@@ -9,9 +9,11 @@ import com.feroov.frv.item.custom.XenosEye;
 import com.feroov.frv.item.custom.misc.BushthornNectar;
 import com.feroov.frv.item.custom.misc.ToxicResilience;
 import com.feroov.frv.item.custom.tools.HoeItemSTLCON;
+import com.feroov.frv.item.tiers.ArmorMaterialSTLCON;
 import com.feroov.frv.item.tiers.TiersSTLCON;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -67,11 +69,11 @@ public class ItemsSTLCON
 
     
     // ----------------------------------------- Armor ------------------------------------------------
-//    public static final RegistryObject<Item> XENOSTONE_HELMET = ITEMS.register("xenostone_helmet", () -> new ArmorItem(ModArmorMaterial.XENOSTONE, EquipmentSlot.HEAD, new Item.Properties()));
-//    public static final RegistryObject<Item> XENOSTONE_CHESTPLATE = ITEMS.register("xenostone_chestplate", () -> new ArmorItem(ModArmorMaterial.XENOSTONE, EquipmentSlot.CHEST, new Item.Properties()));
-//    public static final RegistryObject<Item> XENOSTONE_LEGGINGS = ITEMS.register("xenostone_leggings", () -> new ArmorItem(ModArmorMaterial.XENOSTONE, EquipmentSlot.LEGS, new Item.Properties()));
-//    public static final RegistryObject<Item> XENOSTONE_BOOTS = ITEMS.register("xenostone_boots", () -> new ArmorItem(ModArmorMaterial.XENOSTONE, EquipmentSlot.FEET, new Item.Properties()));
-    // ------------------------------------------------------------------------------------------------
+    public static final RegistryObject<Item> XENITE_HELMET = ITEMS.register("xenite_helmet", () -> new ArmorItem(ArmorMaterialSTLCON.XENITE, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> XENITE_CHESTPLATE = ITEMS.register("xenite_chestplate", () -> new ArmorItem(ArmorMaterialSTLCON.XENITE, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final RegistryObject<Item> XENITE_LEGGINGS = ITEMS.register("xenite_leggings", () -> new ArmorItem(ArmorMaterialSTLCON.XENITE, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final RegistryObject<Item> XENITE_BOOTS = ITEMS.register("xenite_boots", () -> new ArmorItem(ArmorMaterialSTLCON.XENITE, ArmorItem.Type.BOOTS, new Item.Properties()));
+    //------------------------------------------------------------------------------------------------
     
     
     
