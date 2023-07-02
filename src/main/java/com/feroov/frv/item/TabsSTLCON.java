@@ -22,16 +22,23 @@ public class TabsSTLCON
                 event.accept(ItemsSTLCON.ADMIN_SWORD.get());
                 event.accept(ItemsSTLCON.BOUNCYBONK.get());
                 event.accept(ItemsSTLCON.COSMIC_RAY_GUN.get());
+
                 event.accept(ItemsSTLCON.XENOSTONE_SWORD.get());
                 event.accept(ItemsSTLCON.XENOSTONE_PICKAXE.get());
                 event.accept(ItemsSTLCON.XENOSTONE_AXE.get());
                 event.accept(ItemsSTLCON.XENOSTONE_SHOVEL.get());
                 event.accept(ItemsSTLCON.XENOSTONE_HOE.get());
+
                 event.accept(ItemsSTLCON.XENITE_SWORD.get());
                 event.accept(ItemsSTLCON.XENITE_PICKAXE.get());
                 event.accept(ItemsSTLCON.XENITE_AXE.get());
                 event.accept(ItemsSTLCON.XENITE_SHOVEL.get());
                 event.accept(ItemsSTLCON.XENITE_HOE.get());
+                event.accept(ItemsSTLCON.XENITE_HELMET.get());
+                event.accept(ItemsSTLCON.XENITE_CHESTPLATE.get());
+                event.accept(ItemsSTLCON.XENITE_LEGGINGS.get());
+                event.accept(ItemsSTLCON.XENITE_BOOTS.get());
+
                 event.accept(ItemsSTLCON.ASTRALITE_SWORD.get());
                 event.accept(ItemsSTLCON.ASTRALITE_PICKAXE.get());
                 event.accept(ItemsSTLCON.ASTRALITE_AXE.get());
@@ -47,6 +54,7 @@ public class TabsSTLCON
                 event.accept(ItemsSTLCON.USKIUM.get());
                 event.accept(ItemsSTLCON.XENITE_INGOT.get());
                 event.accept(ItemsSTLCON.ASTRALITE_INGOT.get());
+
                 event.accept(ItemsSTLCON.XENOS_EYE.get());
                 event.accept(ItemsSTLCON.BLUSHTHORN_NECTAR_BOTTLE.get());
                 event.accept(ItemsSTLCON.TOXIC_RESILIENCE.get());
@@ -57,6 +65,7 @@ public class TabsSTLCON
                 event.accept(ItemsSTLCON.RAYGUN_HANDLE.get());
                 event.accept(ItemsSTLCON.RAYGUN_ENERGY.get());
                 event.accept(ItemsSTLCON.XENAPTOR_ICHOR.get());
+
                 event.accept(ItemsSTLCON.XERON_SPAWN_EGG.get());
                 event.accept(ItemsSTLCON.XERON_GUARD_SPAWN_EGG.get());
                 event.accept(ItemsSTLCON.WISPXEN_SPAWN_EGG.get());
@@ -93,8 +102,10 @@ public class TabsSTLCON
                 event.accept(BlocksSTLCON.XENOFLUX.get());
                 event.accept(BlocksSTLCON.XENOS_LEAVES.get());
                 event.accept(BlocksSTLCON.GLOWXEN.get());
+
                 event.accept(BlocksSTLCON.XENOSTONE.get());
                 event.accept(BlocksSTLCON.XENOCOBBLESTONE.get());
+
                 event.accept(BlocksSTLCON.USKIUM_ORE.get());
                 event.accept(BlocksSTLCON.XENITE_ORE.get());
                 event.accept(BlocksSTLCON.ASTRALITE_ORE.get());
