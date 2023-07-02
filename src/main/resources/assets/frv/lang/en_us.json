@@ -37,6 +37,11 @@
   "item.frv.astralite_shovel": "\u00A7eAstralite Shovel",
   "item.frv.astralite_hoe": "\u00A7eAstralite Hoe",
 
+  "item.frv.xenite_helmet": "Xenite Helmet",
+  "item.frv.xenite_chestplate": "Xenite Chestplate",
+  "item.frv.xenite_leggings": "Xenite Leggings",
+  "item.frv.xenite_boots": "Xenite Boots",
+
 
   "block.frv.xenosphere_portal": "§b§kco§r§bXenosphere Teleporter§b§kco",
   "block.frv.xenoflux": "\u00A7eXenoflux",
