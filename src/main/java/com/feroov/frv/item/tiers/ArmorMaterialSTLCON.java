@@ -10,12 +10,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 
-import static net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_GENERIC;
-import static net.minecraft.sounds.SoundEvents.ARMOR_EQUIP_IRON;
+import static net.minecraft.sounds.SoundEvents.*;
 
 public enum ArmorMaterialSTLCON implements ArmorMaterial
 {
     XENITE(3,6,5,2,0F,350,10, ARMOR_EQUIP_IRON,"xenite_ingot"),
+    ASTRALITE(4,9,7,4,2.5F,650,10, ARMOR_EQUIP_DIAMOND,"astralite_ingot"),
 
     ;
 
