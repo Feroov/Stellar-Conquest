@@ -73,6 +73,11 @@ public class ItemsSTLCON
     public static final RegistryObject<Item> XENITE_CHESTPLATE = ITEMS.register("xenite_chestplate", () -> new ArmorItem(ArmorMaterialSTLCON.XENITE, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
     public static final RegistryObject<Item> XENITE_LEGGINGS = ITEMS.register("xenite_leggings", () -> new ArmorItem(ArmorMaterialSTLCON.XENITE, ArmorItem.Type.LEGGINGS, new Item.Properties()));
     public static final RegistryObject<Item> XENITE_BOOTS = ITEMS.register("xenite_boots", () -> new ArmorItem(ArmorMaterialSTLCON.XENITE, ArmorItem.Type.BOOTS, new Item.Properties()));
+
+    public static final RegistryObject<Item> ASTRALITE_HELMET = ITEMS.register("astralite_helmet", () -> new ArmorItem(ArmorMaterialSTLCON.ASTRALITE, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> ASTRALITE_CHESTPLATE = ITEMS.register("astralite_chestplate", () -> new ArmorItem(ArmorMaterialSTLCON.ASTRALITE, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final RegistryObject<Item> ASTRALITE_LEGGINGS = ITEMS.register("astralite_leggings", () -> new ArmorItem(ArmorMaterialSTLCON.ASTRALITE, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final RegistryObject<Item> ASTRALITE_BOOTS = ITEMS.register("astralite_boots", () -> new ArmorItem(ArmorMaterialSTLCON.ASTRALITE, ArmorItem.Type.BOOTS, new Item.Properties()));
     //------------------------------------------------------------------------------------------------
     
     
