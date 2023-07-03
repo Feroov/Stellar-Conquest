@@ -41,6 +41,10 @@
   "item.frv.xenite_chestplate": "Xenite Chestplate",
   "item.frv.xenite_leggings": "Xenite Leggings",
   "item.frv.xenite_boots": "Xenite Boots",
+  "item.frv.astralite_helmet": "\u00A7eAstralite Helmet",
+  "item.frv.astralite_chestplate": "\u00A7eAstralite Chestplate",
+  "item.frv.astralite_leggings": "\u00A7eAstralite Leggings",
+  "item.frv.astralite_boots": "\u00A7eAstralite Boots",
 
 
   "block.frv.xenosphere_portal": "§b§kco§r§bXenosphere Teleporter§b§kco",
