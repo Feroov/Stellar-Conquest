@@ -85,6 +85,7 @@ public class ItemsSTLCON
     // ------------------------------------------ Materials ------------------------------------------
     public static final RegistryObject<Item> XENOS_EYE = ITEMS.register("xenos_eye", () -> new XenosEye((new Item.Properties())));
     public static final RegistryObject<Item> XENAPTOR_ICHOR = ITEMS.register("xenaptor_ichor", () -> new Item((new Item.Properties())));
+    public static final RegistryObject<Item> MIRRORBORN_SLIME = ITEMS.register("mirrorborn_slime", () -> new Item((new Item.Properties())));
     public static final RegistryObject<Item> RAYGUN_HANDLE = ITEMS.register("raygun_handle", () -> new Item((new Item.Properties().stacksTo(1))));
     public static final RegistryObject<Item> RAYGUN_FRAME = ITEMS.register("raygun_frame", () -> new Item((new Item.Properties().stacksTo(1))));
     public static final RegistryObject<Item> RAYGUN_ENERGY = ITEMS.register("raygun_energy", () -> new Item((new Item.Properties().stacksTo(1))));
