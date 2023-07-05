@@ -69,6 +69,7 @@ public class TabsSTLCON
                 event.accept(ItemsSTLCON.RAYGUN_HANDLE.get());
                 event.accept(ItemsSTLCON.RAYGUN_ENERGY.get());
                 event.accept(ItemsSTLCON.XENAPTOR_ICHOR.get());
+                event.accept(ItemsSTLCON.MIRRORBORN_SLIME.get());
 
                 event.accept(ItemsSTLCON.XERON_SPAWN_EGG.get());
                 event.accept(ItemsSTLCON.XERON_GUARD_SPAWN_EGG.get());
