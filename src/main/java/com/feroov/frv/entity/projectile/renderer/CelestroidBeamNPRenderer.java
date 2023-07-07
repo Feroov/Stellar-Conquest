@@ -1,0 +1,40 @@
+package com.feroov.frv.entity.projectile.renderer;
+
+import com.feroov.frv.STLCON;
+import com.feroov.frv.entity.projectile.CelestroidBeamNP;
+import com.feroov.frv.entity.projectile.model.CelestroidBeamNPModel;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
+
+public class CelestroidBeamNPRenderer extends GeoEntityRenderer<CelestroidBeamNP>
+{
+    public CelestroidBeamNPRenderer(EntityRendererProvider.Context renderManager)
+    {
+        super(renderManager, new CelestroidBeamNPModel());
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(CelestroidBeamNP animatable)
+    {
+        return new ResourceLocation(STLCON.MOD_ID, "textures/entity/projectile/raygun_beam.png");
+    }
+
+    @Override
+    public void preRender(PoseStack poseStack, CelestroidBeamNP animatable, BakedGeoModel model,
+                          MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick,
+                          int packedLight, int packedOverlay, float red, float green, float blue, float alpha)
+    {
+        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay,
+                red, green, blue, alpha);
+        poseStack.scale(0.5F, 0.5F, 0.5F);
+    }
+
+    @Override
+    protected int getBlockLightLevel(CelestroidBeamNP entity, BlockPos blockPos) { return 15; }
+}
