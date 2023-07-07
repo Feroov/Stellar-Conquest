@@ -20,7 +20,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -476,7 +475,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
             for (int i = 0; i < 1; ++i)
             {
                 BlockPos blockPos2 = Mothership.this.blockPosition().offset(-2 + Mothership.this.random.nextInt(1), 1, -2 + Mothership.this.random.nextInt(1));
-                Celestroid corruptMinion = EntitiesSTLCON.CELESTROID.get().create(Mothership.this.level());
+                CelestroidShip corruptMinion = EntitiesSTLCON.CELESTROID_SHIP.get().create(Mothership.this.level());
                 corruptMinion.moveTo(blockPos2, 0.0F, 0.0F);
 
                 corruptMinion.finalizeSpawn(serverWorld, Mothership.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, (SpawnGroupData) null, (CompoundTag) null);
