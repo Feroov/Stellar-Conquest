@@ -7,6 +7,7 @@ import com.feroov.frv.entity.passive.Xeron;
 import com.feroov.frv.entity.neutral.XeronGuard;
 import com.feroov.frv.entity.passive.Zephxen;
 import com.feroov.frv.entity.projectile.CelestroidBeam;
+import com.feroov.frv.entity.projectile.CelestroidBeamNP;
 import com.feroov.frv.entity.projectile.MothershipBeam;
 import com.feroov.frv.entity.projectile.RaygunBeam;
 import net.minecraft.resources.ResourceLocation;
@@ -23,12 +24,17 @@ public class EntitiesSTLCON
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, STLCON.MOD_ID);
 
     // Monster Entities
+    public static final RegistryObject<EntityType<CelestroidShip>> CELESTROID_SHIP =
+            ENTITY_TYPES.register("celestroid_ship",
+                    () -> EntityType.Builder.of(CelestroidShip::new, MobCategory.CREATURE)
+                            .sized(3.0f, 3.0f).canSpawnFarFromPlayer()
+                            .build(new ResourceLocation(STLCON.MOD_ID, "celestroid_ship").toString()));
+
     public static final RegistryObject<EntityType<Celestroid>> CELESTROID =
             ENTITY_TYPES.register("celestroid",
                     () -> EntityType.Builder.of(Celestroid::new, MobCategory.CREATURE)
-                            .sized(3.0f, 3.0f).canSpawnFarFromPlayer()
+                            .sized(0.5f, 1.2f).canSpawnFarFromPlayer()
                             .build(new ResourceLocation(STLCON.MOD_ID, "celestroid").toString()));
-
 
     public static final RegistryObject<EntityType<Mothership>> MOTHERSHIP =
             ENTITY_TYPES.register("mothership",
@@ -90,6 +96,11 @@ public class EntitiesSTLCON
             () -> EntityType.Builder.<CelestroidBeam>of(CelestroidBeam::new, MobCategory.MISC).sized(1.0F, 1.0F)
                     .updateInterval(10)
                     .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "celestroid_beam").toString()));
+
+    public static final RegistryObject<EntityType<CelestroidBeamNP>> CELESTROID_BEAM_NP = ENTITY_TYPES.register("celestroid_beam_np",
+            () -> EntityType.Builder.<CelestroidBeamNP>of(CelestroidBeamNP::new, MobCategory.MISC).sized(0.7F, 0.7F)
+                    .updateInterval(10)
+                    .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "celestroid_beam_np").toString()));
 
     public static final RegistryObject<EntityType<MothershipBeam>> MOTHERSHIP_BEAM = ENTITY_TYPES.register("mothership_beam",
             () -> EntityType.Builder.<MothershipBeam>of(MothershipBeam::new, MobCategory.MISC).sized(3.0F, 3.0F)

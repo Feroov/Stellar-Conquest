@@ -13,6 +13,7 @@ import com.feroov.frv.entity.passive.Zephxen;
 import com.feroov.frv.entity.passive.renderer.WispxenRenderer;
 import com.feroov.frv.entity.passive.renderer.XeronRenderer;
 import com.feroov.frv.entity.passive.renderer.ZephxenRenderer;
+import com.feroov.frv.entity.projectile.renderer.CelestroidBeamNPRenderer;
 import com.feroov.frv.entity.projectile.renderer.CelestroidBeamRenderer;
 import com.feroov.frv.entity.projectile.renderer.MothershipBeamRenderer;
 import com.feroov.frv.entity.projectile.renderer.RaygunBeamRenderer;
@@ -40,6 +41,7 @@ public class ModEvents
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event)
     {
+        event.put(EntitiesSTLCON.CELESTROID_SHIP.get(), CelestroidShip.setAttributes());
         event.put(EntitiesSTLCON.CELESTROID.get(), Celestroid.setAttributes());
         event.put(EntitiesSTLCON.MOTHERSHIP.get(), Mothership.setAttributes());
         event.put(EntitiesSTLCON.XERON.get(), Xeron.setAttributes());
@@ -54,6 +56,7 @@ public class ModEvents
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event)
     {
+        event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_SHIP.get(), CelestroidShipRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID.get(), CelestroidRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.MOTHERSHIP.get(), MothershipRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.XERON.get(), XeronRenderer::new);
@@ -66,6 +69,7 @@ public class ModEvents
 
         event.registerEntityRenderer(EntitiesSTLCON.RAYGUN_BEAM.get(), RaygunBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_BEAM.get(), CelestroidBeamRenderer::new);
+        event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_BEAM_NP.get(), CelestroidBeamNPRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.MOTHERSHIP_BEAM.get(), MothershipBeamRenderer::new);
     }
 
