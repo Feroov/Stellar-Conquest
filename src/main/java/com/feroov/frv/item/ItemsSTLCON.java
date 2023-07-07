@@ -13,7 +13,6 @@ import com.feroov.frv.item.tiers.ArmorMaterialSTLCON;
 import com.feroov.frv.item.tiers.TiersSTLCON;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -116,8 +115,11 @@ public class ItemsSTLCON
 
 
     // ------------------------------------------ Spawn Eggs-------------------------------------------
+    public static final RegistryObject<Item> CELESTROID_SHIP_SPAWN_EGG = ITEMS.register("celestroid_ship_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.CELESTROID_SHIP,  0xFFFFFF, 0x004977, new Item.Properties()));
+
     public static final RegistryObject<Item> CELESTROID_SPAWN_EGG = ITEMS.register("celestroid_spawn_egg",
-            () -> new ForgeSpawnEggItem(EntitiesSTLCON.CELESTROID,  0xFFFFFF, 0x004977, new Item.Properties()));
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.CELESTROID,  0x0E4060, 0x004977, new Item.Properties()));
 
     public static final RegistryObject<Item> MOTHERSHIP_SPAWN_EGG = ITEMS.register("mothership_spawn_egg",
             () -> new ForgeSpawnEggItem(EntitiesSTLCON.MOTHERSHIP, 0x454545, 0x004977, new Item.Properties()));
