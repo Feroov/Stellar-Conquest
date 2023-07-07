@@ -1,40 +1,40 @@
 package com.feroov.frv.entity.ai;
 
-import com.feroov.frv.entity.monster.Celestroid;
+import com.feroov.frv.entity.monster.CelestroidShip;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 
-public class CelestroidAttackGoal extends Goal
+public class CelestroidShipAttackGoal extends Goal
 {
-    private final Celestroid celestroid;
+    private final CelestroidShip celestroidShip;
     public int attackTimer;
     public int prevAttackTimer;
 
-    public CelestroidAttackGoal(Celestroid celestroid) { this.celestroid = celestroid; }
+    public CelestroidShipAttackGoal(CelestroidShip celestroidShip) { this.celestroidShip = celestroidShip; }
 
     @Override
     public boolean canUse()
     {
-        return this.celestroid.getTarget() != null && celestroid.shouldAttack(celestroid.getTarget());
+        return this.celestroidShip.getTarget() != null && celestroidShip.shouldAttack(celestroidShip.getTarget());
     }
 
     @Override
     public void start() { this.attackTimer = this.prevAttackTimer = 0; }
 
     @Override
-    public void stop() { this.celestroid.setCharging(false); }
+    public void stop() { this.celestroidShip.setCharging(false); }
 
     @Override
     public void tick()
     {
-        LivingEntity target = this.celestroid.getTarget();
+        LivingEntity target = this.celestroidShip.getTarget();
 
-        if (target.distanceToSqr(this.celestroid) < 4096.0D && this.celestroid.getSensing().hasLineOfSight(target)) {
+        if (target.distanceToSqr(this.celestroidShip) < 4096.0D && this.celestroidShip.getSensing().hasLineOfSight(target)) {
             this.prevAttackTimer = attackTimer;
             ++this.attackTimer;
 
-            this.celestroid.getLookControl().setLookAt(target, 10F, this.celestroid.getMaxHeadXRot());
+            this.celestroidShip.getLookControl().setLookAt(target, 10F, this.celestroidShip.getMaxHeadXRot());
 
 //            if (this.attackTimer == 10) {
 //                celestroid.playSound(celestroid.getWarnSound(), 10.0F, celestroid.getVoicePitch());
@@ -42,10 +42,10 @@ public class CelestroidAttackGoal extends Goal
 
             if (this.attackTimer == 20)
             {
-                if (this.celestroid.shouldAttack(target))
+                if (this.celestroidShip.shouldAttack(target))
                 {
-                    this.celestroid.playSound(SoundEventsSTLCON.RAYGUN_SHOOT.get(), 7.0F, 1.0F);
-                    this.celestroid.shootRayBeam();
+                    this.celestroidShip.playSound(SoundEventsSTLCON.RAYGUN_SHOOT.get(), 7.0F, 1.0F);
+                    this.celestroidShip.shootRayBeam();
                     this.prevAttackTimer = attackTimer;
                 }
                 this.attackTimer = -20;
@@ -56,6 +56,6 @@ public class CelestroidAttackGoal extends Goal
             this.prevAttackTimer = attackTimer;
             --this.attackTimer;
         }
-        this.celestroid.setCharging(this.attackTimer > 5);
+        this.celestroidShip.setCharging(this.attackTimer > 5);
     }
 }

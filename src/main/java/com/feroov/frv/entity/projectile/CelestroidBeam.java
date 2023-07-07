@@ -2,6 +2,7 @@ package com.feroov.frv.entity.projectile;
 
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.entity.monster.Celestroid;
+import com.feroov.frv.entity.monster.CelestroidShip;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.Entity;
@@ -26,6 +27,11 @@ public class CelestroidBeam extends AbstractHurtingProjectile implements GeoEnti
     public CelestroidBeam(EntityType<? extends AbstractHurtingProjectile> entityType, Level level)
     {
         super(entityType, level);
+    }
+
+    public CelestroidBeam(Level level, CelestroidShip celestroidShip, double d2, double d3, double d4)
+    {
+        super(EntitiesSTLCON.CELESTROID_BEAM.get(), celestroidShip, d2, d3, d4, level);
     }
 
     public CelestroidBeam(Level level, Celestroid celestroid, double d2, double d3, double d4)
