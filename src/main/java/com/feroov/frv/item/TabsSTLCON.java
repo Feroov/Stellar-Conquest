@@ -75,6 +75,7 @@ public class TabsSTLCON
                 event.accept(ItemsSTLCON.XERON_GUARD_SPAWN_EGG.get());
                 event.accept(ItemsSTLCON.WISPXEN_SPAWN_EGG.get());
                 event.accept(ItemsSTLCON.ZEPHXEN_SPAWN_EGG.get());
+                event.accept(ItemsSTLCON.CELESTROID_SHIP_SPAWN_EGG.get());
                 event.accept(ItemsSTLCON.CELESTROID_SPAWN_EGG.get());
                 event.accept(ItemsSTLCON.MOTHERSHIP_SPAWN_EGG.get());
                 event.accept(ItemsSTLCON.XENAPTOR_SPAWN_EGG.get());

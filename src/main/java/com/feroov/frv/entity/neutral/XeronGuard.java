@@ -1,5 +1,6 @@
 package com.feroov.frv.entity.neutral;
 
+import com.feroov.frv.entity.monster.Celestroid;
 import com.feroov.frv.entity.monster.Xenaptor;
 import com.feroov.frv.entity.passive.Xeron;
 import com.feroov.frv.item.ItemsSTLCON;
@@ -83,6 +84,7 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
         this.targetSelector.addGoal(2, (new HurtByTargetGoal(this)).setAlertOthers());
         this.targetSelector.addGoal(2, new OwnerHurtTargetGoal(this));
         this.goalSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, true, this::isAngryAt));
+        this.goalSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Celestroid.class, true));
         this.goalSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Xenaptor.class, true));
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.73D));

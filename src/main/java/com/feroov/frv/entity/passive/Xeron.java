@@ -1,6 +1,7 @@
 package com.feroov.frv.entity.passive;
 
 import com.feroov.frv.block.BlocksSTLCON;
+import com.feroov.frv.entity.monster.Celestroid;
 import com.feroov.frv.entity.monster.Xenaptor;
 import com.feroov.frv.item.ItemsSTLCON;
 import com.feroov.frv.sound.SoundEventsSTLCON;
@@ -16,7 +17,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -69,6 +69,7 @@ public class Xeron extends Animal implements GeoEntity
         this.goalSelector.addGoal(7, new MoveTowardsRestrictionGoal(this, 0.73D));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Xenaptor.class, 6.0F, 1.0D, 1.2D));
+        this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Celestroid.class, 6.0F, 1.0D, 1.2D));
     }
 
     @Override
@@ -195,7 +196,5 @@ public class Xeron extends Animal implements GeoEntity
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob ageableMob) {
-        return null;
-    }
+    public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob ageableMob) { return null; }
 }
