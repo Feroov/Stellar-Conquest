@@ -3,6 +3,8 @@ package com.feroov.frv.events;
 
 import com.feroov.frv.STLCON;
 import com.feroov.frv.entity.EntitiesSTLCON;
+import com.feroov.frv.entity.misc.Stardusk;
+import com.feroov.frv.entity.misc.renderer.StarduskRenderer;
 import com.feroov.frv.entity.monster.*;
 import com.feroov.frv.entity.monster.renderer.*;
 import com.feroov.frv.entity.passive.Wispxen;
@@ -13,10 +15,7 @@ import com.feroov.frv.entity.passive.Zephxen;
 import com.feroov.frv.entity.passive.renderer.WispxenRenderer;
 import com.feroov.frv.entity.passive.renderer.XeronRenderer;
 import com.feroov.frv.entity.passive.renderer.ZephxenRenderer;
-import com.feroov.frv.entity.projectile.renderer.CelestroidBeamNPRenderer;
-import com.feroov.frv.entity.projectile.renderer.CelestroidBeamRenderer;
-import com.feroov.frv.entity.projectile.renderer.MothershipBeamRenderer;
-import com.feroov.frv.entity.projectile.renderer.RaygunBeamRenderer;
+import com.feroov.frv.entity.projectile.renderer.*;
 import com.feroov.frv.particles.CosmicRayGunParticles;
 import com.feroov.frv.particles.HeartParticles;
 import com.feroov.frv.particles.XenospherePortalParticles;
@@ -41,6 +40,7 @@ public class ModEvents
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event)
     {
+        event.put(EntitiesSTLCON.STARDUSK.get(), Stardusk.setAttributes());
         event.put(EntitiesSTLCON.CELESTROID_SHIP.get(), CelestroidShip.setAttributes());
         event.put(EntitiesSTLCON.CELESTROID.get(), Celestroid.setAttributes());
         event.put(EntitiesSTLCON.MOTHERSHIP.get(), Mothership.setAttributes());
@@ -56,6 +56,7 @@ public class ModEvents
     @SubscribeEvent
     public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event)
     {
+        event.registerEntityRenderer(EntitiesSTLCON.STARDUSK.get(), StarduskRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_SHIP.get(), CelestroidShipRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID.get(), CelestroidRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.MOTHERSHIP.get(), MothershipRenderer::new);
@@ -68,6 +69,7 @@ public class ModEvents
         event.registerEntityRenderer(EntitiesSTLCON.MERGED_MIRRORBORN_SLIME.get(), MergedMirrorbornRenderer::new);
 
         event.registerEntityRenderer(EntitiesSTLCON.RAYGUN_BEAM.get(), RaygunBeamRenderer::new);
+        event.registerEntityRenderer(EntitiesSTLCON.STARDUSK_BEAM.get(), StarduskBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_BEAM.get(), CelestroidBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_BEAM_NP.get(), CelestroidBeamNPRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.MOTHERSHIP_BEAM.get(), MothershipBeamRenderer::new);

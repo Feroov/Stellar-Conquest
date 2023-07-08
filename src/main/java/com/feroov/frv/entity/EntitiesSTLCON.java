@@ -1,15 +1,13 @@
 package com.feroov.frv.entity;
 
 import com.feroov.frv.STLCON;
+import com.feroov.frv.entity.misc.Stardusk;
 import com.feroov.frv.entity.monster.*;
 import com.feroov.frv.entity.passive.Wispxen;
 import com.feroov.frv.entity.passive.Xeron;
 import com.feroov.frv.entity.neutral.XeronGuard;
 import com.feroov.frv.entity.passive.Zephxen;
-import com.feroov.frv.entity.projectile.CelestroidBeam;
-import com.feroov.frv.entity.projectile.CelestroidBeamNP;
-import com.feroov.frv.entity.projectile.MothershipBeam;
-import com.feroov.frv.entity.projectile.RaygunBeam;
+import com.feroov.frv.entity.projectile.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -92,6 +90,11 @@ public class EntitiesSTLCON
                     .updateInterval(10)
                     .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "raygun_beam").toString()));
 
+    public static final RegistryObject<EntityType<StarduskBeam>> STARDUSK_BEAM = ENTITY_TYPES.register("stardusk_beam",
+            () -> EntityType.Builder.<StarduskBeam>of(StarduskBeam::new, MobCategory.MISC).sized(1.0F, 1.0F)
+                    .updateInterval(10)
+                    .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "stardusk_beam").toString()));
+
     public static final RegistryObject<EntityType<CelestroidBeam>> CELESTROID_BEAM = ENTITY_TYPES.register("celestroid_beam",
             () -> EntityType.Builder.<CelestroidBeam>of(CelestroidBeam::new, MobCategory.MISC).sized(1.0F, 1.0F)
                     .updateInterval(10)
@@ -107,6 +110,10 @@ public class EntitiesSTLCON
                     .updateInterval(10)
                     .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "mothership_beam").toString()));
 
+    // Misc
+    public static final RegistryObject<EntityType<Stardusk>> STARDUSK = ENTITY_TYPES.register("stardusk",
+            () -> EntityType.Builder.of(Stardusk::new, MobCategory.CREATURE).fireImmune()
+                    .sized(3.0f,3.0f).fireImmune().build("stardusk"));
 
     public static void register(IEventBus eventBus)  { ENTITY_TYPES.register(eventBus); }
 }
