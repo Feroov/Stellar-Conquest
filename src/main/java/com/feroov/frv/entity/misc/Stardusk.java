@@ -1,10 +1,9 @@
 package com.feroov.frv.entity.misc;
 
+import com.feroov.frv.entity.projectile.StarduskBeam;
 import com.feroov.frv.events.ModParticles;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.MapRenderer;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
@@ -24,12 +23,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.saveddata.maps.MapDecoration;
-import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -53,7 +48,15 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private int soundTimer = 0;
     private int soundDelay = 20;
+    private long lastShotTime = 0L;
+    private static final long COOLDOWN_DURATION = 3000L;
 
+    /**
+     * Creates a Stardusk entity.
+     *
+     * @param entityType The entity type.
+     * @param level      The level.
+     */
     public Stardusk(EntityType<? extends Animal> entityType, Level level)
     {
         super(entityType, level);
@@ -61,17 +64,31 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
         this.maxUpStep = 1.0F;
     }
 
+    /**
+     * Sets the attributes for the Stardusk entity.
+     *
+     * @return The attribute supplier.
+     */
     public static AttributeSupplier setAttributes()
     {
         return Animal.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 10.0D)
-                .add(Attributes.FLYING_SPEED, 1.32D)
+                .add(Attributes.FLYING_SPEED, 0.98D)
+                .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 100.0D).build();
     }
 
+    /**
+     * Registers the goals for the Stardusk entity.
+     */
     @Override
     protected void registerGoals()  { this.goalSelector.addGoal(0, new FloatGoal(this)); }
 
+    /**
+     * Registers the animation controllers for the Stardusk entity.
+     *
+     * @param controllerRegistrar The controller registrar.
+     */
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
@@ -110,9 +127,18 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
     @Override
     public int getExperienceReward() { return 0; }
 
+    /**
+     * Checks if the Stardusk entity can stand on the given fluid.
+     *
+     * @param fluidState The fluid state.
+     * @return True if the entity can stand on the fluid, false otherwise.
+     */
     @Override
     public boolean canStandOnFluid(FluidState fluidState) { return fluidState.is(FluidTags.WATER) && fluidState.is(FluidTags.LAVA); }
 
+    /**
+     * Ticks the death animation for the Stardusk entity.
+     */
     @Override
     protected void tickDeath()
     {
@@ -124,6 +150,13 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
         }
     }
 
+    /**
+     * Handles the interaction with the Stardusk entity.
+     *
+     * @param player The interacting player.
+     * @param hand   The interaction hand.
+     * @return The interaction result.
+     */
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand)
     {
@@ -132,7 +165,7 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
             player.startRiding(this);
             if (!this.level().isClientSide)
             {
-                MutableComponent msg = Component.literal("Spacebar to ascend, CTRL to descend!");
+                MutableComponent msg = Component.literal("Spacebar to ascend, CTRL to descend, right-click to shoot!");
                 player.level().players().forEach(p -> p.displayClientMessage(msg, true));
             }
             this.level().playLocalSound(this.getX(), this.getY(), this.getZ(),
@@ -140,10 +173,46 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
                     SoundSource.AMBIENT, 5.0f, 1.0f, false);
             return super.mobInteract(player, hand);
         }
+        else if (hand == InteractionHand.MAIN_HAND && this.getControllingPassenger() == player)
+        {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastShotTime >= COOLDOWN_DURATION)
+            {
+                level().playSound(null, player.getX(), player.getY(), player.getZ(),
+                        SoundEvents.BEACON_POWER_SELECT, SoundSource.PLAYERS, 1.0F, 7.0F);
 
+                if (!this.level().isClientSide)
+                {
+                    double pitch = Math.toRadians(player.getXRot());
+                    double yaw = Math.toRadians(player.getYRot());
+                    double dirX = -Math.sin(yaw) * Math.cos(pitch);
+                    double dirY = -Math.sin(pitch);
+                    double dirZ = Math.cos(yaw) * Math.cos(pitch);
+                    double x = player.getX() + dirX;
+                    double y = player.getEyeY() + dirY;
+                    double z = player.getZ() + dirZ;
+                    StarduskBeam arrow = new StarduskBeam(this.level(), player);
+                    arrow.shoot(dirX, dirY, dirZ, 3.0F, 3.0F); // Adjust the velocity as needed
+                    arrow.setPos(x, y, z);
+                    level().playSound(null, player.getX(), player.getY(), player.getZ(),
+                            SoundEventsSTLCON.RAYGUN_SHOOT.get(), SoundSource.PLAYERS, 2.0F,
+                            1.0F / (level().random.nextFloat() * 0.4F + 10.2F) + 0.25F);
+                    this.level().addFreshEntity(arrow);
+                }
+                lastShotTime = currentTime;
+                return InteractionResult.SUCCESS;
+            }
+        }
         return super.mobInteract(player, hand);
     }
 
+    /**
+     * Handles the damage taken by the Stardusk entity.
+     *
+     * @param source The damage source.
+     * @param amount The amount of damage.
+     * @return True if the damage was successfully applied, false otherwise.
+     */
     @Override
     public boolean hurt(DamageSource source, float amount)
     {
@@ -158,6 +227,9 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
         return super.hurt(source, amount);
     }
 
+    /**
+     * Ticks the entity logic for the Stardusk entity.
+     */
     @Override
     public void tick()
     {
@@ -175,7 +247,12 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
         }
     }
 
-
+    /**
+     * Positions the rider on the Stardusk entity.
+     *
+     * @param ridden   The ridden entity.
+     * @param pCallback The callback function.
+     */
     @Override
     protected void positionRider(Entity ridden, MoveFunction pCallback)
     {
@@ -198,11 +275,22 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
         }
     }
 
+    /**
+     * Handles the client setup for the Stardusk entity.
+     * (Had to be created this way instead of SubscribeEvent
+     * Due to crashes and errors!)
+     * @param event The client setup event.
+     */
     public static void clientSetup(FMLClientSetupEvent event)
     {
         MinecraftForge.EVENT_BUS.addListener(Stardusk::clientTickEvent);
     }
 
+    /**
+     * Retrieves the Stardusk entity instance.
+     *
+     * @return The Stardusk entity instance.
+     */
     private static Stardusk getStarduskInstance()
     {
         Minecraft mc = Minecraft.getInstance();
@@ -214,6 +302,13 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
         return null;
     }
 
+    /**
+     * Checks if the specified key is currently pressed.
+     *
+     * @param windowHandle The window handle.
+     * @param keyCode      The key code.
+     * @return True if the key is pressed, false otherwise.
+     */
     public static boolean isKeyDown(long windowHandle, int keyCode)
     {
         Minecraft minecraft = Minecraft.getInstance();
@@ -224,7 +319,12 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
         }
         return false;
     }
-
+    private boolean initialDelay = true;
+    /**
+     * Handles the travel logic for the Stardusk entity.
+     *
+     * @param movementInput The movement input vector.
+     */
     @Override
     public void travel(Vec3 movementInput)
     {
@@ -269,7 +369,9 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
         } else { super.travel(movementInput); }
     }
 
-
+    /**
+     * Handles the ascend and descend logic for the Stardusk entity.
+     */
     private void handleAscendDescendLogic()
     {
         long windowHandle = Minecraft.getInstance().getWindow().getWindow();
@@ -281,18 +383,30 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
         }
         else if (isKeyDown(windowHandle, GLFW.GLFW_KEY_LEFT_CONTROL))
         {
-            double descendSpeed = -0.3;
-            Vec3 motion = new Vec3(this.getDeltaMovement().x, descendSpeed, this.getDeltaMovement().z);
-            this.setDeltaMovement(motion);
+            if (this.onGround())
+            {
+                Vec3 motion = new Vec3(0, this.getDeltaMovement().y, 0);
+                this.setDeltaMovement(motion);
+            }
+            else
+            {
+                double descendSpeed = -0.3;
+                Vec3 motion = new Vec3(this.getDeltaMovement().x, descendSpeed, this.getDeltaMovement().z);
+                this.setDeltaMovement(motion);
+            }
         }
         else
         {
-            double hoverSpeed = 0.07;
             Vec3 motion = new Vec3(this.getDeltaMovement().x, 0, this.getDeltaMovement().z);
             this.setDeltaMovement(motion);
         }
     }
 
+    /**
+     * Handles the client tick event for the Stardusk entity.
+     *
+     * @param event The client tick event.
+     */
     public static void clientTickEvent(TickEvent.ClientTickEvent event)
     {
         if (event.phase == TickEvent.Phase.END && Minecraft.getInstance().level != null)
@@ -327,6 +441,9 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
     @Override
     public boolean isPushable()  { return false; }
 
+    /**
+     * Performs AI logic for the Stardusk entity (spawning particles).
+     */
     @Override
     public void aiStep()
     {
@@ -336,7 +453,7 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
             for (int i = 0; i < 4; ++i)
             {
                 this.level().addParticle(ModParticles.RAYGUN_PARTICLES.get(), this.getRandomX(0.5D),
-                        this.getRandomY() - 0.85D, this.getRandomZ(0.5D),
+                        this.getRandomY() - 1.45D, this.getRandomZ(0.5D),
                         (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2.0D);
             }
         }
