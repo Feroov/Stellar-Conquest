@@ -3,6 +3,7 @@ package com.feroov.frv;
 import com.feroov.frv.block.BlocksSTLCON;
 import com.feroov.frv.entity.BlockEntitiesSTLCON;
 import com.feroov.frv.entity.EntitiesSTLCON;
+import com.feroov.frv.entity.misc.Stardusk;
 import com.feroov.frv.events.ModParticles;
 import com.feroov.frv.item.ItemsSTLCON;
 import com.feroov.frv.item.RangedItems;
@@ -61,10 +62,7 @@ public class STLCON
         });
     }
 
-    private void doClientStuff(final FMLClientSetupEvent event) { RangedItems.addRanged(); }
+    private void doClientStuff(final FMLClientSetupEvent event) { RangedItems.addRanged(); Stardusk.clientSetup(event); }
 
-    public static ResourceLocation prefix(String name) {
-        return new ResourceLocation(MOD_ID, name.toLowerCase(Locale.ROOT));
-    }
-
+    public static ResourceLocation prefix(String name) { return new ResourceLocation(MOD_ID, name.toLowerCase(Locale.ROOT)); }
 }

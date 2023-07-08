@@ -80,6 +80,7 @@ public class TabsSTLCON
                 event.accept(ItemsSTLCON.MOTHERSHIP_SPAWN_EGG.get());
                 event.accept(ItemsSTLCON.XENAPTOR_SPAWN_EGG.get());
                 event.accept(ItemsSTLCON.MIRRORBORN_SLIME_SPAWN_EGG.get());
+                event.accept(ItemsSTLCON.STARDUSK_LINK.get());
             }).build());
 
     public static final RegistryObject<CreativeModeTab> STLCON_BLOCKS = TABS.register("stlcon_blocks", () -> CreativeModeTab.builder()
