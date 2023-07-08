@@ -21,6 +21,7 @@
   "item.frv.raygun_frame": "\u00A7eRaygun Frame",
   "item.frv.raygun_energy": "\u00A7eRaygun Energy",
   "item.frv.bouncybonk": "\u00A7eBouncy BONK",
+  "item.frv.stardusk_link": "\u00A7bStardusk Link",
 
   "item.frv.xenostone_sword": "Xenostone Sword",
   "item.frv.xenostone_pickaxe": "Xenostone Pickaxe",
@@ -92,6 +93,7 @@
   "advancements.frv.get_wispxen_dust.title": "Shiny useful dust!", "advancements.frv.get_wispxen_dust.description": "Wait for a baby Wispxen to grow!",
 
 
+  "entity.frv.stardusk": "Stardusk",
   "item.frv.celestroid_spawn_egg": "Celestroid Spawn Egg", "entity.frv.celestroid": "Celestroid",
   "item.frv.celestroid_ship_spawn_egg": "Celestroid Ship Spawn Egg", "entity.frv.celestroid_ship": "Celestroid Ship",
   "item.frv.wispxen_spawn_egg": "Wispxen Spawn Egg", "entity.frv.wispxen": "Wispxen",

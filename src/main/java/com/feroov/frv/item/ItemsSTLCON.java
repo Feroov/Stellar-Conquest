@@ -2,7 +2,9 @@ package com.feroov.frv.item;
 
 import com.feroov.frv.STLCON;
 import com.feroov.frv.block.BlocksSTLCON;
+import com.feroov.frv.block.STLCONPortalBlocks;
 import com.feroov.frv.entity.EntitiesSTLCON;
+import com.feroov.frv.events.ModParticles;
 import com.feroov.frv.item.custom.CosmicRayGun;
 import com.feroov.frv.item.custom.BouncyBonk;
 import com.feroov.frv.item.custom.XenosEye;
@@ -12,10 +14,24 @@ import com.feroov.frv.item.custom.tools.HoeItemSTLCON;
 import com.feroov.frv.item.tiers.ArmorMaterialSTLCON;
 import com.feroov.frv.item.tiers.TiersSTLCON;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -141,9 +157,9 @@ public class ItemsSTLCON
 
     public static final RegistryObject<Item> MIRRORBORN_SLIME_SPAWN_EGG = ITEMS.register("mirrorborn_slime_spawn_egg",
             () -> new ForgeSpawnEggItem(EntitiesSTLCON.MIRRORBORN_SLIME, 0xC8AE11, 0XE1BF19, new Item.Properties()));
+
+    public static final RegistryObject<Item> STARDUSK_LINK = ITEMS.register("stardusk_link", () -> new Item(new Item.Properties().stacksTo(1)) {@Override public InteractionResult useOn(UseOnContext context) {Level world = context.getLevel();BlockPos pos = context.getClickedPos();Player player = context.getPlayer();ItemStack stack = context.getItemInHand();if (world.isClientSide && player != null) {world.playSound(player, pos, SoundEvents.BEACON_POWER_SELECT, SoundSource.BLOCKS, 1.0f, 1.0f);}if (!world.isClientSide) {EntityType<?> entityType = EntitiesSTLCON.STARDUSK.get();Entity entity = entityType.create(world);if (entity != null) {entity.setPos(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5);world.addFreshEntity(entity);}} stack.shrink(1);return super.useOn(context);}});
     // ------------------------------------------------------------------------------------------------
-
-
 
 
     public static void register(IEventBus eventBus)
