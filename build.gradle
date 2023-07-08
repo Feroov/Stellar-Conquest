@@ -5,7 +5,7 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7.+'
 }
 
-version = '1.20-2.0'
+version = '1.20-3.0'
 group = 'com.feroov.frv'
 archivesBaseName = 'frv'
 
@@ -104,6 +104,7 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
     runtimeOnly(fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}"))
+    compileOnly group: 'org.lwjgl', name: 'lwjgl-glfw', version: '3.3.0'
 }
 
 mixin {
