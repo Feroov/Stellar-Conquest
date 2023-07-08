@@ -14,6 +14,9 @@ public class SoundEventsSTLCON
 
     public static final RegistryObject<SoundEvent> RAYGUN_SHOOT = SOUND_EVENTS.register("raygun_shoot", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "raygun_shoot")));
     public static final RegistryObject<SoundEvent> CELESTROID_AMBIENT = SOUND_EVENTS.register("celestroid_ambient", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "celestroid_ambient")));
+    public static final RegistryObject<SoundEvent> STARDUSK_AMBIENT = SOUND_EVENTS.register("stardusk_ambient", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "stardusk_ambient")));
+    public static final RegistryObject<SoundEvent> ENGINE_START = SOUND_EVENTS.register("engine_start", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "engine_start")));
+    public static final RegistryObject<SoundEvent> ENGINE_OFF = SOUND_EVENTS.register("engine_off", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "engine_off")));
 
     public static final RegistryObject<SoundEvent> XERON_AMBIENT = SOUND_EVENTS.register("xeron_ambient", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "xeron_ambient")));
     public static final RegistryObject<SoundEvent> XERON_HURT = SOUND_EVENTS.register("xeron_hurt", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "xeron_hurt")));
