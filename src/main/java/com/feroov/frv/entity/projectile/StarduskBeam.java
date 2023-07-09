@@ -40,7 +40,7 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
     public SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public static final EntityDataAccessor<Integer> PARTICLE = SynchedEntityData.defineId(StarduskBeam.class, EntityDataSerializers.INT);
-
+    private double explosionPower = 0.5;
 
     public StarduskBeam(EntityType<? extends StarduskBeam> entityType, Level world)
     {
@@ -105,6 +105,17 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
     }
 
 
+    @Override
+    protected void onHit(HitResult hitResult)
+    {
+        super.onHit(hitResult);
+        if (!this.level().isClientSide)
+        {
+            boolean flag = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level(), this.getOwner());
+            this.level().explode(this, this.getX(), this.getY(), this.getZ(), (float)this.explosionPower, flag, Level.ExplosionInteraction.MOB);
+            this.discard();
+        }
+    }
 
     @Override
     protected void onHitBlock(BlockHitResult blockHitResult)

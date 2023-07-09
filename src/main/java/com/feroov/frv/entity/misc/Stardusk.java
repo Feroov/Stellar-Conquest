@@ -3,9 +3,11 @@ package com.feroov.frv.entity.misc;
 import com.feroov.frv.entity.projectile.StarduskBeam;
 import com.feroov.frv.events.ModParticles;
 import com.feroov.frv.sound.SoundEventsSTLCON;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -26,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -50,6 +53,7 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
     private int soundDelay = 20;
     private long lastShotTime = 0L;
     private static final long COOLDOWN_DURATION = 3000L;
+    private static final ResourceLocation OVERLAY_TEXTURE = new ResourceLocation("frv:textures/gui/stardusk_overlay.png");
 
     /**
      * Creates a Stardusk entity.
@@ -61,7 +65,6 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
     {
         super(entityType, level);
         this.noCulling = true;
-        this.maxUpStep = 1.0F;
     }
 
     /**
@@ -284,6 +287,7 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
     public static void clientSetup(FMLClientSetupEvent event)
     {
         MinecraftForge.EVENT_BUS.addListener(Stardusk::clientTickEvent);
+        MinecraftForge.EVENT_BUS.addListener(Stardusk::onRenderGameOverlay);
     }
 
     /**
@@ -455,6 +459,28 @@ public class Stardusk extends Animal implements IModBusEvent, GeoEntity
                 this.level().addParticle(ModParticles.RAYGUN_PARTICLES.get(), this.getRandomX(0.5D),
                         this.getRandomY() - 1.45D, this.getRandomZ(0.5D),
                         (this.random.nextDouble() - 0.5D) * 2.0D, -this.random.nextDouble(), (this.random.nextDouble() - 0.5D) * 2.0D);
+            }
+        }
+    }
+
+    /**
+     * Renders the game overlay after other overlays have been rendered.
+     *
+     * @param event The render GUI overlay event.
+     */
+    public static void onRenderGameOverlay(RenderGuiOverlayEvent.Post event)
+    {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.player != null && minecraft.player.isPassenger() && minecraft.player.getVehicle() instanceof Stardusk)
+        {
+            if (minecraft.options.getCameraType().isFirstPerson())
+            {
+                RenderSystem.disableDepthTest();
+                minecraft.getTextureManager().bindForSetup(OVERLAY_TEXTURE);
+                event.getGuiGraphics().blit(OVERLAY_TEXTURE, 0, 0, 0, 0,
+                        event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight(),
+                        event.getWindow().getGuiScaledWidth(), event.getWindow().getGuiScaledHeight());
+                RenderSystem.enableDepthTest();
             }
         }
     }
