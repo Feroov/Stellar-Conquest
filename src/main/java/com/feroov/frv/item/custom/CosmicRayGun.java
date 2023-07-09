@@ -28,7 +28,7 @@ import java.util.Random;
 public class CosmicRayGun extends Item
 {
     private static final int CHARGE_TIME = 20;
-    private static final int COOLDOWN_TIME = 20;
+    private static final int COOLDOWN_TIME = 35;
     private static final Random random = new Random();
 
     public CosmicRayGun()

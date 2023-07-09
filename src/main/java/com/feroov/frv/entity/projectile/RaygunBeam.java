@@ -58,53 +58,31 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult)
     {
-        Entity entity = entityHitResult.getEntity();
-        if (entityHitResult.getType() != HitResult.Type.ENTITY || !entityHitResult.getEntity().is(entity))
+        Entity targetEntity = entityHitResult.getEntity();
+        Entity shooterEntity = this.getOwner();
+
+        if (shooterEntity instanceof LivingEntity && targetEntity instanceof LivingEntity)
         {
-            if (!this.level().isClientSide) { this.remove(RemovalReason.KILLED); }
-        }
+            LivingEntity shooter = (LivingEntity) shooterEntity;
+            LivingEntity target = (LivingEntity) targetEntity;
 
-        Entity entity1 = this.getOwner();
-        DamageSource damagesource;
-        if (entity1 == null) { damagesource = this.damageSources().arrow(this, this); }
-        else
-        {
-            damagesource = this.damageSources().arrow(this, entity1);
-            if (entity1 instanceof LivingEntity) { ((LivingEntity)entity1).setLastHurtMob(entity); }
-        }
+            DamageSource damageSource = this.damageSources().arrow(this, shooter);
+            float projectileDamage = 30.0F;
 
-
-        float projectiledamage = 30.0F;
-        if (entity.hurt(damagesource, projectiledamage))
-        {
-            this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-            this.level().addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-
-            if (entity instanceof LivingEntity)
+            if (target.hurt(damageSource, projectileDamage))
             {
-                LivingEntity livingentity = (LivingEntity) entity;
-                if (!this.level().isClientSide && entity1 instanceof LivingEntity)
-                {
-                    EnchantmentHelper.doPostHurtEffects(livingentity, entity1);
-                    EnchantmentHelper.doPostDamageEffects((LivingEntity) entity1, livingentity);
-                    this.remove(RemovalReason.KILLED);
-                }
-                this.doPostHurtEffects(livingentity);
-                if (entity1 != null && livingentity != entity1 && livingentity instanceof Player
-                        && entity1 instanceof ServerPlayer && !this.isSilent())
-                {
-                    ((ServerPlayer) entity1).connection
-                            .send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 14.0F));
-                }
                 this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
                 this.level().addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+
+                if (!this.level().isClientSide && shooter instanceof Player)
+                {
+                    EnchantmentHelper.doPostHurtEffects(target, shooter);
+                    EnchantmentHelper.doPostDamageEffects(shooter, target);
+                    this.remove(RemovalReason.KILLED);
+                }
             }
-
-
-        } else { if (!this.level().isClientSide) { this.remove(RemovalReason.KILLED); } }
+        }
     }
-
-
 
     @Override
     protected void onHitBlock(BlockHitResult blockHitResult)
