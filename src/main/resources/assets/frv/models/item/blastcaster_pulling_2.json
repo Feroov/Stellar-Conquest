@@ -1,0 +1,28 @@
+{
+  "parent": "item/bow",
+  "textures": {
+    "layer0": "frv:item/blastcaster_pulling_2"
+  },
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [0, -90, 30],
+      "translation": [-0.5, 0, -2],
+      "scale": [0.8, 0.8, 0.8]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [0, 90, -30],
+      "translation": [-0.5, 0, -2],
+      "scale": [0.8, 0.8, 0.8]
+    },
+    "firstperson_righthand": {
+      "rotation": [0, -100, 20],
+      "translation": [2, 4.6, 0.8],
+      "scale": [0.68, 0.68, 0.68]
+    },
+    "firstperson_lefthand": {
+      "rotation": [0, 100, -20],
+      "translation": [2, 4.6, 0.8],
+      "scale": [0.68, 0.68, 0.68]
+    }
+  }
+}

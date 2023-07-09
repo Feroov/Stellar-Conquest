@@ -69,6 +69,7 @@ public class ModEvents
         event.registerEntityRenderer(EntitiesSTLCON.MERGED_MIRRORBORN_SLIME.get(), MergedMirrorbornRenderer::new);
 
         event.registerEntityRenderer(EntitiesSTLCON.RAYGUN_BEAM.get(), RaygunBeamRenderer::new);
+        event.registerEntityRenderer(EntitiesSTLCON.BLAST_CASTER.get(), BlastcasterBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.STARDUSK_BEAM.get(), StarduskBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_BEAM.get(), CelestroidBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_BEAM_NP.get(), CelestroidBeamNPRenderer::new);

@@ -5,6 +5,7 @@ import com.feroov.frv.block.BlocksSTLCON;
 import com.feroov.frv.block.STLCONPortalBlocks;
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.events.ModParticles;
+import com.feroov.frv.item.custom.Blastcaster;
 import com.feroov.frv.item.custom.CosmicRayGun;
 import com.feroov.frv.item.custom.BouncyBonk;
 import com.feroov.frv.item.custom.XenosEye;
@@ -56,6 +57,7 @@ public class ItemsSTLCON
 
     // ------------------------------------ Special Weapons ------------------------------------------
     public static final RegistryObject<CosmicRayGun> COSMIC_RAY_GUN = ITEMS.register("raygun", CosmicRayGun::new);
+    public static final RegistryObject<Blastcaster> BLASTCASTER = ITEMS.register("blastcaster", Blastcaster::new);
     public static final RegistryObject<BouncyBonk> BOUNCYBONK = ITEMS.register("bouncybonk", BouncyBonk::new);
     // -----------------------------------------------------------------------------------------------
 

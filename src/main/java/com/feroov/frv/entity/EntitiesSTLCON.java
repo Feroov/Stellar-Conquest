@@ -25,7 +25,7 @@ public class EntitiesSTLCON
     public static final RegistryObject<EntityType<CelestroidShip>> CELESTROID_SHIP =
             ENTITY_TYPES.register("celestroid_ship",
                     () -> EntityType.Builder.of(CelestroidShip::new, MobCategory.CREATURE)
-                            .sized(3.0f, 3.0f).canSpawnFarFromPlayer()
+                            .sized(3.0f, 3.0f).canSpawnFarFromPlayer().fireImmune()
                             .build(new ResourceLocation(STLCON.MOD_ID, "celestroid_ship").toString()));
 
     public static final RegistryObject<EntityType<Celestroid>> CELESTROID =
@@ -37,7 +37,7 @@ public class EntitiesSTLCON
     public static final RegistryObject<EntityType<Mothership>> MOTHERSHIP =
             ENTITY_TYPES.register("mothership",
                     () -> EntityType.Builder.of(Mothership::new, MobCategory.MONSTER)
-                            .sized(8.0f, 8.0f).canSpawnFarFromPlayer()
+                            .sized(8.0f, 8.0f).canSpawnFarFromPlayer().fireImmune()
                             .build(new ResourceLocation(STLCON.MOD_ID, "mothership").toString()));
 
     public static final RegistryObject<EntityType<Xenaptor>> XENAPTOR =
@@ -90,9 +90,14 @@ public class EntitiesSTLCON
                     .updateInterval(10)
                     .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "raygun_beam").toString()));
 
+    public static final RegistryObject<EntityType<BlastcasterBeam>> BLAST_CASTER = ENTITY_TYPES.register("blastcaster_beam",
+            () -> EntityType.Builder.<BlastcasterBeam>of(BlastcasterBeam::new, MobCategory.MISC).sized(1.0F, 1.0F)
+                    .updateInterval(10)
+                    .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "blastcaster_beam").toString()));
+
     public static final RegistryObject<EntityType<StarduskBeam>> STARDUSK_BEAM = ENTITY_TYPES.register("stardusk_beam",
             () -> EntityType.Builder.<StarduskBeam>of(StarduskBeam::new, MobCategory.MISC).sized(1.0F, 1.0F)
-                    .updateInterval(10)
+                    .updateInterval(10).fireImmune()
                     .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "stardusk_beam").toString()));
 
     public static final RegistryObject<EntityType<CelestroidBeam>> CELESTROID_BEAM = ENTITY_TYPES.register("celestroid_beam",

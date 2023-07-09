@@ -1,5 +1,7 @@
 {
   "raygun_shoot": {"sounds": [{"name": "frv:raygun_shoot"}], "subtitle": "frv.raygun_shoot"},
+  "blastcaster_shoot": {"sounds": [{"name": "frv:blastcaster_shoot"}], "subtitle": "frv.blastcaster_shoot"},
+  "blastcaster_charge": {"sounds": [{"name": "frv:blastcaster_charge"}], "subtitle": "frv.blastcaster_charge"},
   "celestroid_ambient": {"sounds": [{"name": "frv:celestroid_ambient"}], "subtitle": "frv.celestroid_ambient"},
   "stardusk_ambient": {"sounds": [{"name": "frv:stardusk_ambient"}], "subtitle": "frv.stardusk_ambient"},
   "engine_start": {"sounds": [{"name": "frv:engine_start"}], "subtitle": "frv.engine_start"},

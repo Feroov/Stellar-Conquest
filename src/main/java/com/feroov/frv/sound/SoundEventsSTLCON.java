@@ -13,6 +13,9 @@ public class SoundEventsSTLCON
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, STLCON.MOD_ID);
 
     public static final RegistryObject<SoundEvent> RAYGUN_SHOOT = SOUND_EVENTS.register("raygun_shoot", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "raygun_shoot")));
+    public static final RegistryObject<SoundEvent> BLASTCASTER_SHOOT = SOUND_EVENTS.register("blastcaster_shoot", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "blastcaster_shoot")));
+    public static final RegistryObject<SoundEvent> BLASTCASTER_CHARGE = SOUND_EVENTS.register("blastcaster_charge", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "blastcaster_charge")));
+    public static final RegistryObject<SoundEvent> BLASTCASTER_CHARGE_TICK = SOUND_EVENTS.register("blastcaster_charge_tick", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "blastcaster_charge_tick")));
     public static final RegistryObject<SoundEvent> CELESTROID_AMBIENT = SOUND_EVENTS.register("celestroid_ambient", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "celestroid_ambient")));
     public static final RegistryObject<SoundEvent> STARDUSK_AMBIENT = SOUND_EVENTS.register("stardusk_ambient", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "stardusk_ambient")));
     public static final RegistryObject<SoundEvent> ENGINE_START = SOUND_EVENTS.register("engine_start", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "engine_start")));

@@ -13,6 +13,7 @@ public class RangedItems
     public static void addRanged()
     {
         makeRanged(ItemsSTLCON.COSMIC_RAY_GUN.get());
+        makeRanged(ItemsSTLCON.BLASTCASTER.get());
     }
 
     private static void makeRanged(Item item)

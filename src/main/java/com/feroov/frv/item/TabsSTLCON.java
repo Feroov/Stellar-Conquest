@@ -22,6 +22,7 @@ public class TabsSTLCON
                 event.accept(ItemsSTLCON.ADMIN_SWORD.get());
                 event.accept(ItemsSTLCON.BOUNCYBONK.get());
                 event.accept(ItemsSTLCON.COSMIC_RAY_GUN.get());
+                event.accept(ItemsSTLCON.BLASTCASTER.get());
 
                 event.accept(ItemsSTLCON.XENOSTONE_SWORD.get());
                 event.accept(ItemsSTLCON.XENOSTONE_PICKAXE.get());
