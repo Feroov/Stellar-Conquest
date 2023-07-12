@@ -43,6 +43,7 @@ public class ModEvents
         event.put(EntitiesSTLCON.STARDUSK.get(), Stardusk.setAttributes());
         event.put(EntitiesSTLCON.CELESTROID_SHIP.get(), CelestroidShip.setAttributes());
         event.put(EntitiesSTLCON.CELESTROID.get(), Celestroid.setAttributes());
+        event.put(EntitiesSTLCON.CELESTOBESE.get(), Celestobese.setAttributes());
         event.put(EntitiesSTLCON.MOTHERSHIP.get(), Mothership.setAttributes());
         event.put(EntitiesSTLCON.XERON.get(), Xeron.setAttributes());
         event.put(EntitiesSTLCON.XERON_GUARD.get(), XeronGuard.setAttributes());
@@ -59,6 +60,7 @@ public class ModEvents
         event.registerEntityRenderer(EntitiesSTLCON.STARDUSK.get(), StarduskRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_SHIP.get(), CelestroidShipRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID.get(), CelestroidRenderer::new);
+        event.registerEntityRenderer(EntitiesSTLCON.CELESTOBESE.get(), CelestobeseRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.MOTHERSHIP.get(), MothershipRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.XERON.get(), XeronRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.XERON_GUARD.get(), XeronGuardRenderer::new);
@@ -73,6 +75,7 @@ public class ModEvents
         event.registerEntityRenderer(EntitiesSTLCON.STARDUSK_BEAM.get(), StarduskBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_BEAM.get(), CelestroidBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.CELESTROID_BEAM_NP.get(), CelestroidBeamNPRenderer::new);
+        event.registerEntityRenderer(EntitiesSTLCON.CELESTOBESE_BEAM.get(), CelestobeseBeamRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.MOTHERSHIP_BEAM.get(), MothershipBeamRenderer::new);
     }
 

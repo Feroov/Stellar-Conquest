@@ -25,6 +25,7 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     private final int power = 2;
+    private int ticksInAir;
 
     public MothershipBeam(EntityType<? extends AbstractHurtingProjectile> entityType, Level level)
     {
@@ -97,6 +98,14 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
 
     @Override
     public boolean isOnFire() { return false; }
+
+    @Override
+    public void tick()
+    {
+        super.tick();
+        ++this.ticksInAir;
+        if (this.ticksInAir >= 140) { this.remove(RemovalReason.DISCARDED); }
+    }
 
     @Override
     protected ParticleOptions getTrailParticle()  { return ParticleTypes.SONIC_BOOM; }

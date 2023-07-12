@@ -3,14 +3,18 @@
 	"animations": {
 		"idle": {
 			"loop": true,
-			"animation_length": 0.5,
+			"animation_length": 1.2,
 			"bones": {
 				"beam": {
 					"rotation": {
-						"0.0": [0, 0, 0],
-						"0.5": [-360, 0, -360]
-					},
-					"position": [0, 0, 0]
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.2": {
+							"vector": [-360, 0, -360],
+							"easing": "linear"
+						}
+					}
 				}
 			}
 		}

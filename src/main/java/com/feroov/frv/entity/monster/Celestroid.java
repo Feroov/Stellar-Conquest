@@ -86,14 +86,14 @@ public class Celestroid extends Monster implements GeoEntity
     @Override
     protected SoundEvent getAmbientSound()
     {
-        this.playSound(SoundEventsSTLCON.XERON_AMBIENT.get(), 1.5F, 0.2F);
+        this.playSound(SoundEventsSTLCON.XERON_AMBIENT.get(), 1.5F, 0.8F);
         return null;
     }
 
     @Override
     protected SoundEvent getHurtSound(@Nonnull DamageSource damageSourceIn)
     {
-        this.playSound(SoundEventsSTLCON.XERON_HURT.get(), 1.5F, 0.2F);
+        this.playSound(SoundEventsSTLCON.XERON_HURT.get(), 1.5F, 0.8F);
         return null;
     }
 
@@ -232,7 +232,7 @@ public class Celestroid extends Monster implements GeoEntity
         private int strafingTime = -1;
 
         /**
-         * Constructs a CluckNorrisRangedAttackGoal for the Celestroid.
+         * Constructs a CelestroidRangedAttackGoal for the Celestroid.
          *
          * @param celestroid        The Celestroid entity.
          * @param speedIn           The speed modifier.
@@ -246,7 +246,7 @@ public class Celestroid extends Monster implements GeoEntity
         }
 
         /**
-         * Constructs a CluckNorrisRangedAttackGoal for the Celestroid with variable attack intervals.
+         * Constructs a CelestroidRangedAttackGoal for the Celestroid with variable attack intervals.
          *
          * @param celestroid        The Celestroid entity.
          * @param speedIn           The speed modifier.
@@ -374,7 +374,7 @@ public class Celestroid extends Monster implements GeoEntity
         private double pathedTargetX, pathedTargetY, pathedTargetZ;
 
         /**
-         * Constructs a CluckNorrisAttackGoal for the Celestroid.
+         * Constructs a CelestroidAttackGoal for the Celestroid.
          *
          * @param celestroid     The Celestroid entity.
          * @param speedIn        The speed modifier.

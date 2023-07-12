@@ -23,7 +23,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 public class CelestroidBeam extends AbstractHurtingProjectile implements GeoEntity
 {
-
+    private int ticksInAir;
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public CelestroidBeam(EntityType<? extends AbstractHurtingProjectile> entityType, Level level)
@@ -100,6 +100,14 @@ public class CelestroidBeam extends AbstractHurtingProjectile implements GeoEnti
 
         if (!this.level().isClientSide())
             this.remove(RemovalReason.DISCARDED);
+    }
+
+    @Override
+    public void tick()
+    {
+        super.tick();
+        ++this.ticksInAir;
+        if (this.ticksInAir >= 140) { this.remove(RemovalReason.DISCARDED); }
     }
 
     @Override

@@ -44,7 +44,6 @@ public class BlastcasterBeam extends AbstractArrow implements GeoEntity
     public SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public static final EntityDataAccessor<Integer> PARTICLE = SynchedEntityData.defineId(BlastcasterBeam.class, EntityDataSerializers.INT);
-    private int explosionPower = 1;
 
     public BlastcasterBeam(EntityType<? extends BlastcasterBeam> entityType, Level world)
     {
@@ -128,7 +127,16 @@ public class BlastcasterBeam extends AbstractArrow implements GeoEntity
 
         if (this.level().isClientSide())
         {
+            double offsetX = 0.1;
+            double offsetY = 0.1;
+            double offsetZ = 0.1;
             this.level().addParticle(ParticleTypes.HAPPY_VILLAGER, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+            this.level().addParticle(ParticleTypes.HAPPY_VILLAGER, true, this.getX() - offsetX, this.getY(), this.getZ(), 0, 0, 0);
+            this.level().addParticle(ParticleTypes.HAPPY_VILLAGER, true, this.getX() + offsetX, this.getY(), this.getZ(), 0, 0, 0);
+            this.level().addParticle(ParticleTypes.HAPPY_VILLAGER, true, this.getX(), this.getY(), this.getZ() - offsetZ, 0, 0, 0);
+            this.level().addParticle(ParticleTypes.HAPPY_VILLAGER, true, this.getX(), this.getY(), this.getZ() + offsetZ, 0, 0, 0);
+            this.level().addParticle(ParticleTypes.HAPPY_VILLAGER, true, this.getX(), this.getY() - offsetY, this.getZ(), 0, 0, 0);
+            this.level().addParticle(ParticleTypes.HAPPY_VILLAGER, true, this.getX(), this.getY() + offsetY, this.getZ(), 0, 0, 0);
         }
     }
 
