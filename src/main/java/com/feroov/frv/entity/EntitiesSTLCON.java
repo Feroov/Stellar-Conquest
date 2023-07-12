@@ -34,6 +34,12 @@ public class EntitiesSTLCON
                             .sized(0.5f, 1.2f).canSpawnFarFromPlayer()
                             .build(new ResourceLocation(STLCON.MOD_ID, "celestroid").toString()));
 
+    public static final RegistryObject<EntityType<Celestobese>> CELESTOBESE =
+            ENTITY_TYPES.register("celestobese",
+                    () -> EntityType.Builder.of(Celestobese::new, MobCategory.CREATURE)
+                            .sized(0.8f, 2.0f).canSpawnFarFromPlayer().fireImmune()
+                            .build(new ResourceLocation(STLCON.MOD_ID, "celestobese").toString()));
+
     public static final RegistryObject<EntityType<Mothership>> MOTHERSHIP =
             ENTITY_TYPES.register("mothership",
                     () -> EntityType.Builder.of(Mothership::new, MobCategory.MONSTER)
@@ -109,6 +115,11 @@ public class EntitiesSTLCON
             () -> EntityType.Builder.<CelestroidBeamNP>of(CelestroidBeamNP::new, MobCategory.MISC).sized(0.7F, 0.7F)
                     .updateInterval(10)
                     .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "celestroid_beam_np").toString()));
+
+    public static final RegistryObject<EntityType<CelestobeseBeam>> CELESTOBESE_BEAM = ENTITY_TYPES.register("celestobese_beam",
+            () -> EntityType.Builder.<CelestobeseBeam>of(CelestobeseBeam::new, MobCategory.MISC).sized(1.1F, 1.1F)
+                    .updateInterval(10)
+                    .clientTrackingRange(9).build(new ResourceLocation(STLCON.MOD_ID, "celestobese_beam").toString()));
 
     public static final RegistryObject<EntityType<MothershipBeam>> MOTHERSHIP_BEAM = ENTITY_TYPES.register("mothership_beam",
             () -> EntityType.Builder.<MothershipBeam>of(MothershipBeam::new, MobCategory.MISC).sized(3.0F, 3.0F)
