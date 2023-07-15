@@ -114,9 +114,13 @@ public class TabsSTLCON
 
                 event.accept(BlocksSTLCON.XENOSTONE.get());
                 event.accept(BlocksSTLCON.XENOCOBBLESTONE.get());
-
                 event.accept(BlocksSTLCON.USKIUM_ORE.get());
                 event.accept(BlocksSTLCON.XENITE_ORE.get());
                 event.accept(BlocksSTLCON.ASTRALITE_ORE.get());
+                event.accept(BlocksSTLCON.CELOSTONE.get());
+                event.accept(BlocksSTLCON.CELOSTONE_STAIRS.get());
+                event.accept(BlocksSTLCON.CELOSTONE_SLAB.get());
+                event.accept(BlocksSTLCON.CELOSTONE_PRESSURE_PLATE.get());
+                event.accept(BlocksSTLCON.CELOSTONE_DOOR.get());
             }).build());
 }

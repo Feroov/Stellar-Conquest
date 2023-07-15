@@ -89,6 +89,26 @@ public class BlocksSTLCON
 
     public static final RegistryObject<Block> LUMIBLOOM_CROP = BLOCKS.register("lumibloom_crop",
             () -> new LumiBloomCropBlock(BlockBehaviour.Properties.copy(Blocks.WHEAT).lightLevel((light) -> 10)));
+
+    public static final RegistryObject<Block> CELOSTONE = registerBlock("celostone",
+            () -> new Block(BlockBehaviour.Properties.copy(DEEPSLATE).
+                    requiresCorrectToolForDrops().strength(7.5F, 7.0F)));
+
+    public static final RegistryObject<Block> CELOSTONE_STAIRS = registerBlock("celostone_stairs",
+            () -> new StairBlock(() -> CELOSTONE.get().defaultBlockState(),
+                    BlockBehaviour.Properties.copy(NETHER_BRICK_STAIRS).strength(4f).sound(SoundType.DEEPSLATE_BRICKS)));
+
+    public static final RegistryObject<Block> CELOSTONE_SLAB = registerBlock("celostone_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(NETHER_BRICK_SLAB).sound(SoundType.DEEPSLATE_BRICKS)
+                    .strength(4f).requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> CELOSTONE_PRESSURE_PLATE = registerBlock("celostone_pressure_plate",() ->
+            new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(OAK_PRESSURE_PLATE)
+                    .noCollission().strength(1.5F).sound(SoundType.DEEPSLATE), BlockSetType.OAK));
+
+    public static final RegistryObject<Block> CELOSTONE_DOOR = registerBlock("celostone_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(IRON_DOOR).requiresCorrectToolForDrops()
+                    .strength(4.0F).noOcclusion(), BlockSetType.IRON));
     // ---------------------------------------------------------------------------------------------------
 
 

@@ -6,6 +6,10 @@
     "frv:xenoflux",
     "frv:xenite_ore",
     "frv:astralite_ore",
-    "frv:uskium_ore"
+    "frv:uskium_ore",
+    "frv:celostone",
+    "frv:celostone_stairs",
+    "frv:celostone_slab",
+    "frv:celostone_door"
   ]
 }
