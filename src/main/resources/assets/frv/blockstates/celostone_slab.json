@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "frv:block/celostone_slab"
+    },
+    "type=double": {
+      "model": "frv:block/celostone"
+    },
+    "type=top": {
+      "model": "frv:block/celostone_slab_top"
+    }
+  }
+}
