@@ -109,5 +109,6 @@
   "item.frv.zephxen_spawn_egg": "Zephxen Spawn Egg", "entity.frv.zephxen": "Zephxen",
   "item.frv.xenaptor_spawn_egg": "Xenaptor Spawn Egg", "entity.frv.xenaptor": "Xenaptor",
   "item.frv.mirrorborn_slime_spawn_egg": "Mirrorborn Slime Spawn Egg", "entity.frv.mirrorborn_slime": "Mirrorborn Slime", "entity.frv.merged_mirrorborn": "Merged Mirrorborn Slime",
-  "item.frv.mothership_spawn_egg": "\u00A74\u00A7cCelestroid Mothership\u00A7c Spawn Egg", "entity.frv.mothership": "\u00A74\u00A7cCelestroid Mothership\u00A7c"
+  "item.frv.mothership_spawn_egg": "\u00A74\u00A7cCelestroid Mothership\u00A7c Spawn Egg", "entity.frv.mothership": "\u00A74\u00A7cCelestroid Mothership\u00A7c",
+  "item.frv.mekkron_spawn_egg": "\u00A74\u00A7cMekkron\u00A7c Spawn Egg", "entity.frv.mekkron": "\u00A74\u00A7cMekkron\u00A7c"
 }

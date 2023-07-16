@@ -155,6 +155,9 @@ public class ItemsSTLCON
     public static final RegistryObject<Item> MIRRORBORN_SLIME_SPAWN_EGG = ITEMS.register("mirrorborn_slime_spawn_egg",
             () -> new ForgeSpawnEggItem(EntitiesSTLCON.MIRRORBORN_SLIME, 0xC8AE11, 0XE1BF19, new Item.Properties()));
 
+    public static final RegistryObject<Item> MEKKRON_SPAWN_EGG = ITEMS.register("mekkron_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.MEKKRON, 0x145B6F, 0XAE9F0D, new Item.Properties()));
+
     public static final RegistryObject<Item> STARDUSK_LINK = ITEMS.register("stardusk_link", () -> new Item(new Item.Properties().stacksTo(1)) {@Override public InteractionResult useOn(UseOnContext context) {Level world = context.getLevel();BlockPos pos = context.getClickedPos();Player player = context.getPlayer();ItemStack stack = context.getItemInHand();if (world.isClientSide && player != null) {world.playSound(player, pos, SoundEvents.BEACON_POWER_SELECT, SoundSource.BLOCKS, 1.0f, 1.0f);}if (!world.isClientSide) {EntityType<?> entityType = EntitiesSTLCON.STARDUSK.get();Entity entity = entityType.create(world);if (entity != null) {entity.setPos(pos.getX() + 0.5, pos.getY() + 1.0, pos.getZ() + 0.5);world.addFreshEntity(entity);}} stack.shrink(1); return InteractionResult.SUCCESS;}});
     // ------------------------------------------------------------------------------------------------
 

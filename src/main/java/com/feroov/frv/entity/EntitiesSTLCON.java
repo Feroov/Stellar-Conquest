@@ -31,7 +31,7 @@ public class EntitiesSTLCON
     public static final RegistryObject<EntityType<Celestroid>> CELESTROID =
             ENTITY_TYPES.register("celestroid",
                     () -> EntityType.Builder.of(Celestroid::new, MobCategory.CREATURE)
-                            .sized(0.5f, 1.2f).canSpawnFarFromPlayer()
+                            .sized(0.5f, 1.2f).canSpawnFarFromPlayer().fireImmune()
                             .build(new ResourceLocation(STLCON.MOD_ID, "celestroid").toString()));
 
     public static final RegistryObject<EntityType<Celestobese>> CELESTOBESE =
@@ -51,6 +51,12 @@ public class EntitiesSTLCON
                     () -> EntityType.Builder.of(Xenaptor::new, MobCategory.MONSTER)
                             .sized(1.2f, 0.8f).canSpawnFarFromPlayer()
                             .build(new ResourceLocation(STLCON.MOD_ID, "xenaptor").toString()));
+
+    public static final RegistryObject<EntityType<Mekkron>> MEKKRON =
+            ENTITY_TYPES.register("mekkron",
+                    () -> EntityType.Builder.of(Mekkron::new, MobCategory.MONSTER)
+                            .sized(1.5f, 4.0f).canSpawnFarFromPlayer()
+                            .build(new ResourceLocation(STLCON.MOD_ID, "mekkron").toString()));
 
     public static final RegistryObject<EntityType<MirrorbornSlime>> MIRRORBORN_SLIME =
             ENTITY_TYPES.register("mirrorborn_slime",

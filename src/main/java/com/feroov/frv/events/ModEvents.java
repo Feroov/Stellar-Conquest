@@ -50,6 +50,7 @@ public class ModEvents
         event.put(EntitiesSTLCON.WISPXEN.get(), Wispxen.setAttributes());
         event.put(EntitiesSTLCON.ZEPHXEN.get(), Zephxen.setAttributes());
         event.put(EntitiesSTLCON.XENAPTOR.get(), Xenaptor.setAttributes());
+        event.put(EntitiesSTLCON.MEKKRON.get(), Mekkron.setAttributes());
         event.put(EntitiesSTLCON.MIRRORBORN_SLIME.get(), MirrorbornSlime.setAttributes());
         event.put(EntitiesSTLCON.MERGED_MIRRORBORN_SLIME.get(), MergedMirrorborn.setAttributes());
     }
@@ -67,6 +68,7 @@ public class ModEvents
         event.registerEntityRenderer(EntitiesSTLCON.WISPXEN.get(), WispxenRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.ZEPHXEN.get(), ZephxenRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.XENAPTOR.get(), XenaptorRenderer::new);
+        event.registerEntityRenderer(EntitiesSTLCON.MEKKRON.get(), MekkronRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.MIRRORBORN_SLIME.get(), MirrorbornSlimeRenderer::new);
         event.registerEntityRenderer(EntitiesSTLCON.MERGED_MIRRORBORN_SLIME.get(), MergedMirrorbornRenderer::new);
 
