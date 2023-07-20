@@ -3,6 +3,7 @@ package com.feroov.frv.entity.projectile;
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.entity.monster.Celestobese;
 import com.feroov.frv.entity.monster.Celestroid;
+import com.feroov.frv.entity.monster.Mekkron;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -14,14 +15,11 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -59,27 +57,30 @@ public class CelestobeseBeam extends AbstractArrow implements GeoEntity
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult)
     {
-        Entity targetEntity = entityHitResult.getEntity();
-        Entity shooterEntity = this.getOwner();
+        super.onHitEntity(entityHitResult);
 
-        if (shooterEntity instanceof LivingEntity && targetEntity instanceof LivingEntity)
+        Entity entity = entityHitResult.getEntity();
+        Entity entity1 = this.getOwner();
+
+        if (entity != null && entity instanceof Mekkron) { return; }
+        if (entity != null && entity instanceof Celestroid) { return; }
+        if (entity != null && entity instanceof Celestobese) { return; }
+
+        if (!this.level().isClientSide())
         {
-            LivingEntity shooter = (LivingEntity) shooterEntity;
-            LivingEntity target = (LivingEntity) targetEntity;
+            boolean flag;
 
-            DamageSource damageSource = this.damageSources().arrow(this, shooter);
-            float projectileDamage = 9.0F;
-
-            if (target.hurt(damageSource, projectileDamage))
+            if (entity1 instanceof LivingEntity)
             {
-                if (!this.level().isClientSide && shooter instanceof Player)
+                LivingEntity livingentity = (LivingEntity) entity1;
+                flag = entity.hurt(this.damageSources().thrown(this, livingentity), 9.0F);
+                if (flag)
                 {
-                    EnchantmentHelper.doPostHurtEffects(target, shooter);
-                    EnchantmentHelper.doPostDamageEffects(shooter, target);
-                    this.remove(RemovalReason.KILLED);
+                    if (entity.isAlive()) { this.doEnchantDamageEffects(livingentity, entity); }
                 }
             }
         }
+        if (!this.level().isClientSide()) this.remove(RemovalReason.DISCARDED);
     }
 
     @Override
