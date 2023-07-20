@@ -55,7 +55,7 @@ public class EntitiesSTLCON
     public static final RegistryObject<EntityType<Mekkron>> MEKKRON =
             ENTITY_TYPES.register("mekkron",
                     () -> EntityType.Builder.of(Mekkron::new, MobCategory.MONSTER)
-                            .sized(1.5f, 4.0f).canSpawnFarFromPlayer()
+                            .sized(1.5f, 4.0f).canSpawnFarFromPlayer().fireImmune()
                             .build(new ResourceLocation(STLCON.MOD_ID, "mekkron").toString()));
 
     public static final RegistryObject<EntityType<MirrorbornSlime>> MIRRORBORN_SLIME =

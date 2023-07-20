@@ -10,7 +10,11 @@
     "water_fog_color": 16777215,
     "grass_color": 24217,
     "foliage_color": 9097983,
-    "ambient_sound": "frv:xenosphere_ambience"
+    "ambient_sound": "frv:xenosphere_ambience",
+    "music": {
+      "replace_current_music": true,
+      "sound": "frv:silent"
+    }
   },
   "has_precipitation": false,
   "spawn_costs": {},

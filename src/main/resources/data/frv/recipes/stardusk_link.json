@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ENS",
+    "NWN",
+    "ENE"
+  ],
+  "key": {
+    "E": {
+      "item": "frv:raygun_energy"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "W": {
+      "item": "frv:energy_warper"
+    },
+    "S": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "item": "frv:stardusk_link",
+    "count": 1
+  }
+}

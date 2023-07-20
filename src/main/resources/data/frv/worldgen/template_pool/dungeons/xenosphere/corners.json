@@ -1,0 +1,60 @@
+{
+  "name": "frv:dungeons/xenosphere/corners",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "frv:dungeons/xenosphere/corners/corner2",
+        "processors": "minecraft:mossify_10_percent",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "frv:dungeons/xenosphere/corners/corner3",
+        "processors": "minecraft:mossify_10_percent",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "frv:dungeons/xenosphere/corners/corner4",
+        "processors": "minecraft:mossify_10_percent",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "frv:dungeons/xenosphere/corners/corner5",
+        "processors": "minecraft:mossify_10_percent",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "frv:dungeons/xenosphere/corners/corner6",
+        "processors": "minecraft:mossify_10_percent",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "frv:dungeons/xenosphere/corners/stair_level1",
+        "processors": "minecraft:mossify_10_percent",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

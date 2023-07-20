@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "frv:dungeon_xenosphere",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 107511411,
+    "spacing": 50,
+    "separation": 4
+  }
+}

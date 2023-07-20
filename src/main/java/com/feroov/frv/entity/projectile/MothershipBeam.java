@@ -2,6 +2,9 @@ package com.feroov.frv.entity.projectile;
 
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.entity.misc.Stardusk;
+import com.feroov.frv.entity.monster.Celestobese;
+import com.feroov.frv.entity.monster.Celestroid;
+import com.feroov.frv.entity.monster.Mekkron;
 import com.feroov.frv.entity.monster.Mothership;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -61,10 +64,12 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
         {
             Entity entity = entityHitResult.getEntity();
             Entity entity1 = this.getOwner();
-            if (entity instanceof Stardusk)
-            {
-                return;
-            }
+            if (entity instanceof Stardusk)  { return; }
+            if (entity instanceof Stardusk)  { return; }
+            if (entity != null && entity instanceof Mekkron) { return; }
+            if (entity != null && entity instanceof Celestroid) { return; }
+            if (entity != null && entity instanceof Celestobese) { return; }
+
             boolean flag;
 
             if (entity1 instanceof LivingEntity)

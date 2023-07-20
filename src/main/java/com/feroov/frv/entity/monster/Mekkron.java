@@ -1,14 +1,19 @@
 package com.feroov.frv.entity.monster;
 
+import com.feroov.frv.entity.EntitiesSTLCON;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -18,7 +23,10 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -29,7 +37,7 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
-
+import java.util.List;
 
 public class Mekkron extends Monster implements GeoEntity
 {
@@ -37,6 +45,9 @@ public class Mekkron extends Monster implements GeoEntity
             BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS));
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(Mekkron.class, EntityDataSerializers.BOOLEAN);
+    private int spawnedCelestroids = 0;
+    private int celestroidSpawnTimer = 0;
+    private int celestroidSpawnCooldown = 20 * 7;
 
     /**
      * Constructs a new Mekkron entity.
@@ -47,7 +58,7 @@ public class Mekkron extends Monster implements GeoEntity
     public Mekkron(EntityType<? extends Monster> entityType, Level level)
     {
         super(entityType, level);
-        this.xpReward = 120;
+        this.xpReward = 350;
     }
 
     /**
@@ -58,10 +69,10 @@ public class Mekkron extends Monster implements GeoEntity
     public static AttributeSupplier setAttributes()
     {
         return TamableAnimal.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 350.0D)
+                .add(Attributes.MAX_HEALTH, 400.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
-                .add(Attributes.FOLLOW_RANGE, 25.0D)
-                .add(Attributes.ATTACK_DAMAGE, 12.5D).build();
+                .add(Attributes.FOLLOW_RANGE, 20.0D)
+                .add(Attributes.ATTACK_DAMAGE, 25.5D).build();
     }
 
     /**
@@ -87,21 +98,21 @@ public class Mekkron extends Monster implements GeoEntity
     @Override
     protected SoundEvent getAmbientSound()
     {
-        this.playSound(SoundEvents.IRON_GOLEM_REPAIR, 1.0F, 0.4F);
+        this.playSound(SoundEvents.LAVA_EXTINGUISH, 2.0F, 0.6F);
         return null;
     }
 
     @Override
     protected SoundEvent getHurtSound(@Nonnull DamageSource damageSourceIn)
     {
-        this.playSound(SoundEvents.ENDER_DRAGON_HURT, 1.0F, 0.4F);
+        this.playSound(SoundEvents.IRON_GOLEM_REPAIR, 2.0F, 0.1F);
         return null;
     }
 
     @Override
     protected SoundEvent getDeathSound()
     {
-        this.playSound(SoundEvents.IRON_GOLEM_DEATH, 1.0F, 2.6F);
+        this.playSound(SoundEvents.IRON_GOLEM_DEATH, 2.0F, 2.6F);
         return null;
     }
 
@@ -165,6 +176,51 @@ public class Mekkron extends Monster implements GeoEntity
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
+
+    /**
+     * Updates the Mekkron entity.
+     */
+    @Override
+    public void tick()
+    {
+        super.tick();
+
+        if (!level().isClientSide && isAggressive())
+        {
+            Player targetPlayer = level().getNearestPlayer(getX(), getY(), getZ(), 25.0, false);
+            if (targetPlayer != null)
+            {
+                celestroidSpawnTimer++;
+                if (celestroidSpawnTimer >= celestroidSpawnCooldown) { spawnCelestroid(); celestroidSpawnTimer = 0; }
+            }
+        }
+    }
+
+    /**
+     * Spawns a Celestroid entity near the Mekkron.
+     */
+    private void spawnCelestroid()
+    {
+        if (spawnedCelestroids >= 15) { return; }
+
+        EntityType<Celestroid> celestroidType = EntitiesSTLCON.CELESTROID.get();
+        Celestroid celestroid = celestroidType.create(level());
+        if (celestroid != null)
+        {
+            celestroid.moveTo(getX() + random.nextDouble() * 2.0 - 1.0, getY(), getZ() + random.nextDouble() * 2.0 - 1.0,
+                    random.nextFloat() * 360.0f, 0.0f);
+            level().addFreshEntity(celestroid);
+            spawnedCelestroids++;
+        }
+    }
+
+    @Override
+    public void remove(RemovalReason reason)
+    {
+        spawnedCelestroids = 0;
+        super.remove(reason);
+    }
+
     /**
      * Defines the synched data for the Mekkron entity.
      */
@@ -192,7 +248,7 @@ public class Mekkron extends Monster implements GeoEntity
     /**
      * Represents the melee attack goal for the Mekkron entity.
      */
-    public static class MekkronMeleeAttack extends MeleeAttackGoal
+    public class MekkronMeleeAttack extends MeleeAttackGoal
     {
         private Mekkron entity;
         private int attackCooldown = 60;
@@ -229,6 +285,30 @@ public class Mekkron extends Monster implements GeoEntity
             {
                 if (entity != null) { entity.setAttacking(true); animCounter = 0; }
                 super.checkAndPerformAttack(livingEntity, d1);
+
+                if (livingEntity instanceof Player player && player.level() instanceof ServerLevel serverWorld)
+                {
+                    double posX = player.getX();
+                    double posY = player.getY();
+                    double posZ = player.getZ();
+                    RandomSource random = serverWorld.getRandom();
+
+                    for (int i = 0; i < 80; i++)
+                    {
+                        double spreadX = (random.nextDouble() - 0.5) * 5.0;
+                        double spreadY = random.nextDouble() * 0.5;
+                        double spreadZ = (random.nextDouble() - 0.5) * 5.0;
+
+                        serverWorld.sendParticles(ParticleTypes.POOF, posX + spreadX, posY + 0.5 + spreadY, posZ + spreadZ,
+                                1, 0, 0, 0, 0);
+                    }
+                    level().playSound(null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(),
+                            SoundEvents.IRON_GOLEM_HURT, SoundSource.PLAYERS, 1.0F, 0.1F);
+
+                    double knockbackX = -Math.sin(Math.toRadians(entity.yRot)) * 1.7;
+                    double knockbackZ = Math.cos(Math.toRadians(entity.yRot)) * 1.7;
+                    player.push(knockbackX, 0.4, knockbackZ);
+                }
                 attackTimer = attackCooldown;
             }
         }
