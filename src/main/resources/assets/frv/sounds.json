@@ -15,5 +15,7 @@
   "zephxen_death": {"sounds": [{"name": "frv:zephxen_death"}], "subtitle": "frv.zephxen_death"},
 
   "xenosphere_ambience": { "sounds": [{"name": "frv:xenosphere_ambience"}], "subtitle": "frv.xenosphere_ambience"},
-  "xenosphere_forest_ambience": { "sounds": [{"name": "frv:xenosphere_forest_ambience"}], "subtitle": "frv.xenosphere_forest_ambience"}
+  "xenosphere_forest_ambience": { "sounds": [{"name": "frv:xenosphere_forest_ambience"}], "subtitle": "frv.xenosphere_forest_ambience"},
+  "mekkron_theme": { "sounds": [{"name": "frv:mekkron_theme"}], "subtitle": "frv.mekkron_theme"},
+  "silent": { "sounds": [{"name": "frv:silent"}], "subtitle": "frv.silent"}
 }

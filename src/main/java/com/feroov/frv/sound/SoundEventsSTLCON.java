@@ -30,6 +30,8 @@ public class SoundEventsSTLCON
 
     public static final RegistryObject<SoundEvent> XENOSPHERE_AMBIENCE = SOUND_EVENTS.register("xenosphere_ambience", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "xenosphere_ambience")));
     public static final RegistryObject<SoundEvent> XENOSPHERE_FOREST_AMBIENCE = SOUND_EVENTS.register("xenosphere_forest_ambience", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "xenosphere_forest_ambience")));
+    public static final RegistryObject<SoundEvent> MEKKRON_THEME = SOUND_EVENTS.register("mekkron_theme", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "mekkron_theme")));
+    public static final RegistryObject<SoundEvent> SILENT = SOUND_EVENTS.register("silent", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(STLCON.MOD_ID, "silent")));
 
 
     public static void register(IEventBus eventBus) { SOUND_EVENTS.register(eventBus); }
