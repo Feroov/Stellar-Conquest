@@ -2,14 +2,15 @@ package com.feroov.frv.entity.projectile;
 
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.entity.misc.Stardusk;
+import com.feroov.frv.entity.monster.Celestobese;
 import com.feroov.frv.entity.monster.Celestroid;
 import com.feroov.frv.entity.monster.CelestroidShip;
+import com.feroov.frv.entity.monster.Mekkron;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -64,10 +65,10 @@ public class CelestroidBeam extends AbstractHurtingProjectile implements GeoEnti
         {
             Entity entity = entityHitResult.getEntity();
             Entity entity1 = this.getOwner();
-            if (entity instanceof Stardusk)
-            {
-                return;
-            }
+            if (entity instanceof Stardusk)  { return; }
+            if (entity != null && entity instanceof Mekkron) { return; }
+            if (entity != null && entity instanceof Celestroid) { return; }
+            if (entity != null && entity instanceof Celestobese) { return; }
 
             boolean flag;
             if (entity1 instanceof LivingEntity)
