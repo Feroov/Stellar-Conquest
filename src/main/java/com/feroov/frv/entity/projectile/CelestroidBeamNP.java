@@ -1,7 +1,9 @@
 package com.feroov.frv.entity.projectile;
 
 import com.feroov.frv.entity.EntitiesSTLCON;
+import com.feroov.frv.entity.monster.Celestobese;
 import com.feroov.frv.entity.monster.Celestroid;
+import com.feroov.frv.entity.monster.Mekkron;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.Entity;
@@ -52,28 +54,29 @@ public class CelestroidBeamNP extends AbstractHurtingProjectile implements GeoEn
     protected void onHitEntity(EntityHitResult entityHitResult)
     {
         super.onHitEntity(entityHitResult);
-        if (!this.level().isClientSide)
+
+        Entity entity = entityHitResult.getEntity();
+        Entity entity1 = this.getOwner();
+
+        if (entity != null && entity instanceof Mekkron) { return; }
+        if (entity != null && entity instanceof Celestroid) { return; }
+        if (entity != null && entity instanceof Celestobese) { return; }
+
+        if (!this.level().isClientSide())
         {
-            Entity entity = entityHitResult.getEntity();
-            Entity entity1 = this.getOwner();
             boolean flag;
 
             if (entity1 instanceof LivingEntity)
             {
-                LivingEntity livingentity = (LivingEntity)entity1;
+                LivingEntity livingentity = (LivingEntity) entity1;
                 flag = entity.hurt(this.damageSources().thrown(this, livingentity), 3.5F);
                 if (flag)
                 {
-                    if (entity.isAlive())
-                    {
-                        this.doEnchantDamageEffects(livingentity, entity);
-                    }
+                    if (entity.isAlive()) { this.doEnchantDamageEffects(livingentity, entity); }
                 }
             }
         }
-
-        if (!this.level().isClientSide())
-            this.remove(RemovalReason.DISCARDED);
+        if (!this.level().isClientSide()) this.remove(RemovalReason.DISCARDED);
     }
 
     @Override
