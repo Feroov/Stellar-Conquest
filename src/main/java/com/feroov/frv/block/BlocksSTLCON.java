@@ -52,6 +52,10 @@ public class BlocksSTLCON
     public static final RegistryObject<Block> MOTHERSHIP_SPAWNER = registerBlock("mothership_boss_spawner",
             () -> new BossSpawnerBlock(BlockBehaviour.Properties.copy(STONE).strength(-1.0F, 3600000.8F)
                     .noOcclusion().noLootTable(), BossVariant.MOTHERSHIP));
+
+    public static final RegistryObject<Block> MEKKRON_SPAWNER = registerBlock("mekkron_boss_spawner",
+            () -> new BossSpawnerBlock(BlockBehaviour.Properties.copy(STONE).strength(-1.0F, 3600000.8F)
+                    .noOcclusion().noLootTable(), BossVariant.MEKKRON));
     // ---------------------------------------------------------------------------------------------------
 
 

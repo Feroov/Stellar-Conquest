@@ -10,7 +10,8 @@ import java.util.function.Supplier;
 public enum BossVariant implements StringRepresentable, SkullBlock.Type
 {
 
-    MOTHERSHIP(BlockEntitiesSTLCON.MOTHERSHIP_SPAWNER::get);
+    MOTHERSHIP(BlockEntitiesSTLCON.MOTHERSHIP_SPAWNER::get),
+    MEKKRON(BlockEntitiesSTLCON.MEKKRON_SPAWNER::get);
 
     private final Supplier<BlockEntityType<? extends BossSpawnerBlockEntity<?>>> blockEntityType;
 

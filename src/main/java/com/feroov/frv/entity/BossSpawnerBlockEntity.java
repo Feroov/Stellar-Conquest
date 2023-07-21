@@ -17,7 +17,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 public abstract class BossSpawnerBlockEntity<T extends Mob> extends BlockEntity
 {
 
-    protected static final int SHORT_RANGE = 15, LONG_RANGE = 80;
+    protected static final int SHORT_RANGE = 18, LONG_RANGE = 80;
     protected final EntityType<T> entityType;
     protected boolean spawnedBoss = false;
 
