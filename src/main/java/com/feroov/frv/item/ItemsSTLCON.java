@@ -135,6 +135,9 @@ public class ItemsSTLCON
     public static final RegistryObject<Item> CELESTOBESE_SPAWN_EGG = ITEMS.register("celestobese_spawn_egg",
             () -> new ForgeSpawnEggItem(EntitiesSTLCON.CELESTOBESE,  0x0E4060, 0X39CE17, new Item.Properties()));
 
+    public static final RegistryObject<Item> SKELEROID_SPAWN_EGG = ITEMS.register("skeleroid_spawn_egg",
+            () -> new ForgeSpawnEggItem(EntitiesSTLCON.SKELEROID,  0x797676, 0xADABAD, new Item.Properties()));
+
     public static final RegistryObject<Item> MOTHERSHIP_SPAWN_EGG = ITEMS.register("mothership_spawn_egg",
             () -> new ForgeSpawnEggItem(EntitiesSTLCON.MOTHERSHIP, 0x454545, 0x004977, new Item.Properties()));
 

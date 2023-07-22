@@ -16,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.*;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,12 +31,12 @@ import software.bernie.geckolib.core.object.PlayState;
 import javax.annotation.Nonnull;
 
 
-public class Xenaptor extends Monster implements GeoEntity
+public class Xenaptor extends Spider implements GeoEntity
 {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(Xenaptor.class, EntityDataSerializers.BOOLEAN);
 
-    public Xenaptor(EntityType<? extends Monster> entityType, Level level)
+    public Xenaptor(EntityType<? extends Spider> entityType, Level level)
     {
         super(entityType, level);
         this.xpReward = 20;
