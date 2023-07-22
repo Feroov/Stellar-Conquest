@@ -41,8 +41,6 @@ import java.util.List;
 
 public class Mekkron extends Monster implements GeoEntity
 {
-    private final ServerBossEvent bossInfo = (new ServerBossEvent(this.getDisplayName(),
-            BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS));
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(Mekkron.class, EntityDataSerializers.BOOLEAN);
     private int spawnedCelestroids = 0;
@@ -344,52 +342,6 @@ public class Mekkron extends Monster implements GeoEntity
             if (entity != null) { entity.setAttacking(false); }
             super.stop();
         }
-    }
-
-    /**
-     * Starts tracking the Mekkron entity by the specified player.
-     *
-     * @param player The player to start tracking.
-     */
-    @Override
-    public void startSeenByPlayer(ServerPlayer player)
-    {
-        super.startSeenByPlayer(player);
-        this.bossInfo.addPlayer(player);
-    }
-
-    /**
-     * Stops tracking the Mekkron entity by the specified player.
-     *
-     * @param player The player to stop tracking.
-     */
-    @Override
-    public void stopSeenByPlayer(ServerPlayer player)
-    {
-        super.stopSeenByPlayer(player);
-        this.bossInfo.removePlayer(player);
-    }
-
-    /**
-     * Sets the custom name for the Mekkron entity.
-     *
-     * @param name The custom name.
-     */
-    @Override
-    public void setCustomName(Component name)
-    {
-        super.setCustomName(name);
-        this.bossInfo.setName(this.getDisplayName());
-    }
-
-    /**
-     * Executes custom server AI step logic for the Mekkron entity.
-     */
-    @Override
-    protected void customServerAiStep()
-    {
-        super.customServerAiStep();
-        this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
     @Override
