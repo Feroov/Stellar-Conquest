@@ -2,10 +2,17 @@ package com.feroov.frv.item.tiers;
 
 import com.feroov.frv.block.BlocksSTLCON;
 import com.feroov.frv.item.ItemsSTLCON;
+import com.feroov.frv.util.TagsSTLCON;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.ForgeTier;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.TierSortingRegistry;
+
+import java.util.List;
 
 public class TiersSTLCON
 {
@@ -13,8 +20,7 @@ public class TiersSTLCON
 
     public static final ForgeTier XENOSTONE = new ForgeTier(1,181,4.4f,1.5f,5, Tags.Blocks.NEEDS_GOLD_TOOL, () -> Ingredient.of(BlocksSTLCON.XENOCOBBLESTONE.get()));
     public static final ForgeTier XENITE = new ForgeTier(2,443,7.0f,2.0f,5, Tags.Blocks.NEEDS_GOLD_TOOL, () -> Ingredient.of(ItemsSTLCON.XENITE_INGOT.get()));
-    public static final ForgeTier ASTRALITE = new ForgeTier(3,1820,8.5f,3.0f,5, Tags.Blocks.NEEDS_GOLD_TOOL, () -> Ingredient.of(ItemsSTLCON.ASTRALITE_INGOT.get()));
-
+    public static final Tier ASTRALITE = TierSortingRegistry.registerTier(new ForgeTier(3,1820,8.5f,3.0f,5, TagsSTLCON.Blocks.NEEDS_ASTRALITE_TOOL, () -> Ingredient.of(ItemsSTLCON.ASTRALITE_INGOT.get())), new ResourceLocation("frv:needs_astralite_tool"), List.of(Tiers.DIAMOND), List.of());
 
     // Vanilla tiers
     /**

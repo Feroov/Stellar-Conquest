@@ -96,7 +96,7 @@ public class BlocksSTLCON
 
     public static final RegistryObject<Block> CELOSTONE = registerBlock("celostone",
             () -> new Block(BlockBehaviour.Properties.copy(DEEPSLATE).
-                    requiresCorrectToolForDrops().strength(7.5F, 7.0F)));
+                    requiresCorrectToolForDrops().strength(22.5F, 7.0F).requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> CELOSTONE_STAIRS = registerBlock("celostone_stairs",
             () -> new StairBlock(() -> CELOSTONE.get().defaultBlockState(),
@@ -112,7 +112,7 @@ public class BlocksSTLCON
 
     public static final RegistryObject<Block> CELOSTONE_DOOR = registerBlock("celostone_door",
             () -> new DoorBlock(BlockBehaviour.Properties.copy(IRON_DOOR).requiresCorrectToolForDrops()
-                    .strength(4.0F).noOcclusion(), BlockSetType.IRON));
+                    .strength(34.0F).noOcclusion(), BlockSetType.IRON));
     // ---------------------------------------------------------------------------------------------------
 
 

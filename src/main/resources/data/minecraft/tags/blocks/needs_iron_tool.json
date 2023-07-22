@@ -2,10 +2,6 @@
   "replace": false,
   "values": [
     "frv:xenoflux",
-    "frv:xenite_ore",
-    "frv:celostone",
-    "frv:celostone_stairs",
-    "frv:celostone_slab",
-    "frv:celostone_door"
+    "frv:xenite_ore"
   ]
 }

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "frv:celostone",
+    "frv:celostone_stairs",
+    "frv:celostone_slab",
+    "frv:celostone_door"
+  ]
+}
