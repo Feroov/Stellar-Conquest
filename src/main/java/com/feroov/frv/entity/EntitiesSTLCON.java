@@ -40,6 +40,12 @@ public class EntitiesSTLCON
                             .sized(0.8f, 2.0f).canSpawnFarFromPlayer().fireImmune()
                             .build(new ResourceLocation(STLCON.MOD_ID, "celestobese").toString()));
 
+    public static final RegistryObject<EntityType<Skeleroid>> SKELEROID =
+            ENTITY_TYPES.register("skeleroid",
+                    () -> EntityType.Builder.of(Skeleroid::new, MobCategory.CREATURE)
+                            .sized(0.5f, 1.2f).canSpawnFarFromPlayer().fireImmune()
+                            .build(new ResourceLocation(STLCON.MOD_ID, "skeleroid").toString()));
+
     public static final RegistryObject<EntityType<Mothership>> MOTHERSHIP =
             ENTITY_TYPES.register("mothership",
                     () -> EntityType.Builder.of(Mothership::new, MobCategory.MONSTER)

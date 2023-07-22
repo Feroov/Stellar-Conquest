@@ -102,6 +102,7 @@
 
   "entity.frv.stardusk": "Stardusk",
   "item.frv.celestroid_spawn_egg": "Celestroid Spawn Egg", "entity.frv.celestroid": "Celestroid",
+  "item.frv.skeleroid_spawn_egg": "Skeleroid Spawn Egg", "entity.frv.skeleroid": "Skeleroid",
   "item.frv.celestobese_spawn_egg": "Celestobese Spawn Egg", "entity.frv.celestobese": "Celestobese",
   "item.frv.celestroid_ship_spawn_egg": "Celestroid Ship Spawn Egg", "entity.frv.celestroid_ship": "Celestroid Ship",
   "item.frv.wispxen_spawn_egg": "Wispxen Spawn Egg", "entity.frv.wispxen": "Wispxen",
