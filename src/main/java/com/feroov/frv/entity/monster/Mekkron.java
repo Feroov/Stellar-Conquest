@@ -1,5 +1,6 @@
 package com.feroov.frv.entity.monster;
 
+import com.feroov.frv.entity.AnimationConstants;
 import com.feroov.frv.entity.EntitiesSTLCON;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -70,7 +71,8 @@ public class Mekkron extends Monster implements GeoEntity
                 .add(Attributes.MAX_HEALTH, 400.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.FOLLOW_RANGE, 20.0D)
-                .add(Attributes.ATTACK_DAMAGE, 25.5D).build();
+                .add(Attributes.ATTACK_DAMAGE, 25.5D)
+                .add(Attributes.KNOCKBACK_RESISTANCE, 100.0D).build();
     }
 
     /**
@@ -138,42 +140,17 @@ public class Mekkron extends Monster implements GeoEntity
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
-        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
-    }
-
-    /**
-     * Determines the animation state for the Mekkron entity.
-     *
-     * @param animationState The animation state.
-     * @param <T>            The type of the GeoAnimatable.
-     * @return The play state.
-     */
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> animationState)
-    {
-        if (isAttacking())
+        controllerRegistrar.add(new AnimationController<>(this, "livingController", 0, event ->
         {
-            animationState.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.PLAY_ONCE));
-            return PlayState.CONTINUE;
-        }
-
-        if (!(walkAnimation.speed() > -0.10F && walkAnimation.speed() < 0.10F) && !this.isAggressive())
-        {
-            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-
-        if(isAggressive())
-        {
-            animationState.getController().setAnimation(RawAnimation.begin().then("aggresive", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
+            if (isAttacking()) return event.setAndContinue(AnimationConstants.ATTACK);
+            if (isAggressive() && this.walkAnimation.speed() > 0.35F && this.onGround() && !this.swinging) return event.setAndContinue(AnimationConstants.AGGRESIVE);
+            if (event.isMoving() || this.swinging) return event.setAndContinue(AnimationConstants.WALK);
+            return event.setAndContinue(AnimationConstants.IDLE);
+        }));
     }
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
-
 
     /**
      * Updates the Mekkron entity.

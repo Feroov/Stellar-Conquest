@@ -1,6 +1,7 @@
 package com.feroov.frv.entity.passive;
 
 import com.feroov.frv.block.BlocksSTLCON;
+import com.feroov.frv.entity.AnimationConstants;
 import com.feroov.frv.entity.monster.Celestroid;
 import com.feroov.frv.entity.monster.Xenaptor;
 import com.feroov.frv.item.ItemsSTLCON;
@@ -176,20 +177,12 @@ public class Xeron extends Animal implements GeoEntity
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
-        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
-    }
-
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> animationState)
-    {
-        if (!(walkAnimation.speed() > -0.10F && walkAnimation.speed() < 0.10F) && !this.isAggressive())
+        controllerRegistrar.add(new AnimationController<>(this, "livingController", 0, event ->
         {
-            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
+            if (event.isMoving() || this.swinging) return event.setAndContinue(AnimationConstants.WALK);
+            return event.setAndContinue(AnimationConstants.IDLE);
+        }));
     }
-
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }

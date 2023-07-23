@@ -1,5 +1,6 @@
 package com.feroov.frv.entity.monster;
 
+import com.feroov.frv.entity.AnimationConstants;
 import com.feroov.frv.entity.neutral.XeronGuard;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -99,30 +100,13 @@ public class Xenaptor extends Spider implements GeoEntity
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
-        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
-    }
-
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> animationState)
-    {
-        if (isAttacking())
+        controllerRegistrar.add(new AnimationController<>(this, "livingController", 0, event ->
         {
-            animationState.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.PLAY_ONCE));
-            return PlayState.CONTINUE;
-        }
-
-        if (!(walkAnimation.speed() > -0.10F && walkAnimation.speed() < 0.10F) && !this.isAggressive())
-        {
-            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-
-        if(isAggressive())
-        {
-            animationState.getController().setAnimation(RawAnimation.begin().then("run", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
+            if (isAttacking()) return event.setAndContinue(AnimationConstants.ATTACK);
+            if (isAggressive() && this.walkAnimation.speed() > 0.35F && this.onGround() && !this.swinging) return event.setAndContinue(AnimationConstants.RUN);
+            if (event.isMoving() || this.swinging) return event.setAndContinue(AnimationConstants.WALK);
+            return event.setAndContinue(AnimationConstants.IDLE);
+        }));
     }
 
     @Override

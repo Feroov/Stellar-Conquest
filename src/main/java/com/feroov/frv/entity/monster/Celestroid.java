@@ -1,5 +1,6 @@
 package com.feroov.frv.entity.monster;
 
+import com.feroov.frv.entity.AnimationConstants;
 import com.feroov.frv.entity.neutral.XeronGuard;
 import com.feroov.frv.entity.passive.Xeron;
 import com.feroov.frv.entity.projectile.CelestroidBeamNP;
@@ -118,41 +119,12 @@ public class Celestroid extends Monster implements GeoEntity
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
-        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
-        controllerRegistrar.add(new AnimationController<>(this, "attackController", 0, this::attack));
-    }
-
-    /**
-     * Animation predicate that determines the animation to play based on the entity's movement state.
-     *
-     * @param animationState The animation state.
-     * @return The play state of the animation.
-     */
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> animationState)
-    {
-        if(animationState.isMoving())
+        controllerRegistrar.add(new AnimationController<>(this, "livingController", 0, event ->
         {
-            animationState.getController().setAnimation(RawAnimation.begin().then("walk", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
-    }
-
-    /**
-     * Animation predicate that determines the attack animation to play based on the entity's aggressive state.
-     *
-     * @param event The animation state.
-     * @return The play state of the attack animation.
-     */
-    private <E extends GeoEntity> PlayState attack(AnimationState<E> event)
-    {
-        if (isAggressive())
-        {
-            event.getController().setAnimation(RawAnimation.begin().then("attack", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-        return PlayState.STOP;
+            if (isAggressive() && this.onGround()) return event.setAndContinue(AnimationConstants.ATTACK_LOOP);
+            if (event.isMoving() || this.swinging) return event.setAndContinue(AnimationConstants.WALK);
+            return event.setAndContinue(AnimationConstants.IDLE);
+        }));
     }
 
     @Override

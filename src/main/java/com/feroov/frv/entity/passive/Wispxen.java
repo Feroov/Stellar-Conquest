@@ -1,5 +1,6 @@
 package com.feroov.frv.entity.passive;
 
+import com.feroov.frv.entity.AnimationConstants;
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.events.ModParticles;
 import com.feroov.frv.item.ItemsSTLCON;
@@ -69,15 +70,11 @@ public class Wispxen extends Animal implements GeoEntity
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
-        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
+        controllerRegistrar.add(new AnimationController<>(this, "livingController", 0, event ->
+        {
+            return event.setAndContinue(AnimationConstants.IDLE);
+        }));
     }
-
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> animationState)
-    {
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
-    }
-
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 0.2F; }

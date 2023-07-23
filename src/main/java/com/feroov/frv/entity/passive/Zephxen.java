@@ -1,5 +1,6 @@
 package com.feroov.frv.entity.passive;
 
+import com.feroov.frv.entity.AnimationConstants;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -167,13 +168,10 @@ public class Zephxen extends Animal implements GeoEntity
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
-        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
-    }
-
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> animationState)
-    {
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
+        controllerRegistrar.add(new AnimationController<>(this, "livingController", 0, event ->
+        {
+            return event.setAndContinue(AnimationConstants.IDLE);
+        }));
     }
 
     @Override
