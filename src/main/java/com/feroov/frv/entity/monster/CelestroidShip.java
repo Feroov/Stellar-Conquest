@@ -1,5 +1,6 @@
 package com.feroov.frv.entity.monster;
 
+import com.feroov.frv.entity.AnimationConstants;
 import com.feroov.frv.entity.ai.CelestroidShipAttackGoal;
 import com.feroov.frv.entity.projectile.CelestroidBeam;
 import com.feroov.frv.sound.SoundEventsSTLCON;
@@ -99,13 +100,10 @@ public class CelestroidShip extends Ghast implements Enemy, GeoEntity
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
-        controllerRegistrar.add(new AnimationController<>(this, "controller", 0, this::predicate));
-    }
-
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> animationState)
-    {
-        animationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
+        controllerRegistrar.add(new AnimationController<>(this, "livingController", 0, event ->
+        {
+            return event.setAndContinue(AnimationConstants.IDLE);
+        }));
     }
 
     @Override
