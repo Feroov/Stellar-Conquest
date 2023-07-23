@@ -3,28 +3,36 @@ package com.feroov.frv.item;
 import com.feroov.frv.STLCON;
 import com.feroov.frv.block.BlocksSTLCON;
 import com.feroov.frv.entity.EntitiesSTLCON;
+import com.feroov.frv.events.ModParticles;
 import com.feroov.frv.item.custom.Blastcaster;
 import com.feroov.frv.item.custom.CosmicRayGun;
 import com.feroov.frv.item.custom.BouncyBonk;
 import com.feroov.frv.item.custom.XenosEye;
 import com.feroov.frv.item.custom.misc.BushthornNectar;
 import com.feroov.frv.item.custom.misc.ToxicResilience;
+import com.feroov.frv.item.custom.tools.HammerItem;
 import com.feroov.frv.item.custom.tools.HoeItemSTLCON;
 import com.feroov.frv.item.tiers.ArmorMaterialSTLCON;
 import com.feroov.frv.item.tiers.TiersSTLCON;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -42,7 +50,54 @@ public class ItemsSTLCON
 
 
     // ------------------------------- Unique & Creative only -----------------------------------------
-    public static final RegistryObject<Item> ADMIN_SWORD = ITEMS.register("admin_sword", () -> new SwordItem(TiersSTLCON.ADMIN, 0, 9996f, new Item.Properties())  { @Override  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)  { super.appendHoverText(stack, worldIn, tooltip, flagIn); tooltip.add(Component.translatable("Banish everything off the screen").withStyle(ChatFormatting.RED)); tooltip.add(Component.translatable(" ")); tooltip.add(Component.translatable("Creative Mode Exclusive!").withStyle(ChatFormatting.UNDERLINE)); }});
+    public static final RegistryObject<Item> ADMIN_SWORD = ITEMS.register("admin_sword", () -> new SwordItem(TiersSTLCON.ADMIN, 0, 9996f, new Item.Properties())
+    {
+        @Override  public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn)
+        {
+            super.appendHoverText(stack, worldIn, tooltip, flagIn);
+            tooltip.add(Component.translatable("Banish everything off the screen")
+                    .withStyle(ChatFormatting.RED)); tooltip.add(Component.translatable(" "));
+                    tooltip.add(Component.translatable("Creative Mode Exclusive!").withStyle(ChatFormatting.UNDERLINE));
+        }
+
+        @Override
+        public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker)
+        {
+            if (attacker instanceof Player && target instanceof Mob)
+            {
+                if (attacker instanceof ServerPlayer)
+                {
+                    ServerPlayer player = (ServerPlayer) attacker;
+                    ServerLevel world = player.serverLevel();
+
+                    double x = target.getX();
+                    double y = target.getY() + target.getEyeHeight();
+                    double z = target.getZ();
+
+                    ParticleOptions particleOptions = ModParticles.BANNED_PARTICLES.get();
+                    int particleCount = 10;
+                    double particleSpread = 0.45;
+
+                    for (int i = 0; i < particleCount; i++)
+                    {
+                        double offsetX = attacker.getRandom().nextGaussian() * particleSpread;
+                        double offsetY = attacker.getRandom().nextGaussian() * particleSpread;
+                        double offsetZ = attacker.getRandom().nextGaussian() * particleSpread;
+
+                        double particleX = x + offsetX;
+                        double particleY = y + offsetY;
+                        double particleZ = z + offsetZ;
+
+                        world.sendParticles(particleOptions, particleX, particleY, particleZ, 0, 0, 0, 0, 1);
+                    }
+
+                }
+                return true;
+            }
+            return super.hurtEnemy(stack, target, attacker);
+        }
+
+    });
     // ------------------------------------------------------------------------------------------------
 
 
@@ -73,6 +128,7 @@ public class ItemsSTLCON
     public static final RegistryObject<Item> ASTRALITE_AXE = ITEMS.register("astralite_axe", () -> new AxeItem(TiersSTLCON.ASTRALITE, 6F, -3.2f, new Item.Properties()));
     public static final RegistryObject<Item> ASTRALITE_SHOVEL = ITEMS.register("astralite_shovel", () -> new ShovelItem(TiersSTLCON.ASTRALITE, 2.0F, -3.0f, new Item.Properties()));
     public static final RegistryObject<Item> ASTRALITE_HOE = ITEMS.register("astralite_hoe", () -> new HoeItemSTLCON(TiersSTLCON.ASTRALITE, -1.0F, -4.0F, new Item.Properties()));
+    public static final RegistryObject<Item> ASTRALITE_HAMMER = ITEMS.register("astralite_hammer", () -> new HammerItem(TiersSTLCON.ASTRALITE_HAMMER, 2, -3, new Item.Properties().durability(413)));
     // ------------------------------------------------------------------------------------------------
 
 
