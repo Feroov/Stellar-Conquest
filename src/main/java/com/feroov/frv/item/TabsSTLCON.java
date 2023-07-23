@@ -40,6 +40,7 @@ public class TabsSTLCON
                 event.accept(ItemsSTLCON.XENITE_LEGGINGS.get());
                 event.accept(ItemsSTLCON.XENITE_BOOTS.get());
 
+                event.accept(ItemsSTLCON.ASTRALITE_HAMMER.get());
                 event.accept(ItemsSTLCON.ASTRALITE_SWORD.get());
                 event.accept(ItemsSTLCON.ASTRALITE_PICKAXE.get());
                 event.accept(ItemsSTLCON.ASTRALITE_AXE.get());

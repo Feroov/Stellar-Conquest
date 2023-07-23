@@ -12,6 +12,7 @@ public class TagsSTLCON
     public static class Blocks
     {
         public static final TagKey<Block> NEEDS_ASTRALITE_TOOL = create("needs_astralite_tool");
+        public static final TagKey<Block> MINEABLE_WITH_PICK_AND_SHOVEL = create("mineable_pick_shovel");
 
 
         private static TagKey<Block> create(String location)

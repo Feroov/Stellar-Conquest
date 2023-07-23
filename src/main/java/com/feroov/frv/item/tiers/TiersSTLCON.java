@@ -22,6 +22,9 @@ public class TiersSTLCON
     public static final ForgeTier XENITE = new ForgeTier(2,443,7.0f,2.0f,5, Tags.Blocks.NEEDS_GOLD_TOOL, () -> Ingredient.of(ItemsSTLCON.XENITE_INGOT.get()));
     public static final Tier ASTRALITE = TierSortingRegistry.registerTier(new ForgeTier(3,1820,8.5f,3.0f,5, TagsSTLCON.Blocks.NEEDS_ASTRALITE_TOOL, () -> Ingredient.of(ItemsSTLCON.ASTRALITE_INGOT.get())), new ResourceLocation("frv:needs_astralite_tool"), List.of(Tiers.DIAMOND), List.of());
 
+    public static final ForgeTier ASTRALITE_HAMMER = new ForgeTier(4,443,1.5f,2.0f,5, Tags.Blocks.NEEDS_GOLD_TOOL, () -> Ingredient.of(ItemsSTLCON.ASTRALITE_INGOT.get()));
+
+
     // Vanilla tiers
     /**
      *    WOOD(0, 59, 2.0F, 0.0F, 15, () -> {
