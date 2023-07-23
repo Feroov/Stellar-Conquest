@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "frv:stardusk_link",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.frv.get_stardusk_link.title"
+    },
+    "description": {
+      "translate": "advancements.frv.get_stardusk_link.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "frv:kill_mekkron",
+  "criteria": {
+    "stone_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "frv:stardusk_link"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

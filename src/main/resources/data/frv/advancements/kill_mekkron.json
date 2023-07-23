@@ -1,0 +1,35 @@
+{
+  "display": {
+    "icon": {
+      "item": "frv:energy_warper",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.frv.kill_mekkron.title"
+    },
+    "description": {
+      "translate": "advancements.frv.kill_mekkron.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "frv:find_xenosphere_dungeon",
+  "criteria": {
+    "minecraft:blaze": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "frv:mekkron"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

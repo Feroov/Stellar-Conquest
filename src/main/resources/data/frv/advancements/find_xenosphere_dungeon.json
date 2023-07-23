@@ -1,0 +1,36 @@
+{
+  "display": {
+    "icon": {
+      "item": "frv:celostone"
+    },
+    "title": {
+      "translate": "advancements.frv.find_xenosphere_dungeon.title"
+    },
+    "description": {
+      "translate": "advancements.frv.find_xenosphere_dungeon.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "frv:enter_the_xenosphere",
+  "criteria": {
+    "in_stronghold": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "frv:dungeon_xenosphere"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
