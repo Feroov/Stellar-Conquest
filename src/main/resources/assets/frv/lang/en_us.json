@@ -35,6 +35,7 @@
   "item.frv.xenite_axe": "Xenite Axe",
   "item.frv.xenite_shovel": "Xenite Shovel",
   "item.frv.xenite_hoe": "Xenite Hoe",
+  "item.frv.astralite_hammer": "\u00A7eAstralite Hammer",
   "item.frv.astralite_sword": "\u00A7eAstralite Sword",
   "item.frv.astralite_pickaxe": "\u00A7eAstralite Pickaxe",
   "item.frv.astralite_axe": "\u00A7eAstralite Axe",
@@ -86,11 +87,15 @@
   "block.frv.lumibloom_crop": "Lumibloom Crop",
 
 
+  "advancements.frv.get_bouncy_bonk.title": "Mega SLAP!", "advancements.frv.get_bouncy_bonk.description": "Aquire \u00A7eBouncy BONK",
   "advancements.frv.kill_mothership.title": "Cosmic Conqueror", "advancements.frv.kill_mothership.description": "UFO? More like 'U-Didn't-Float'",
+  "advancements.frv.kill_mekkron.title": "Mekk-a-Mess!", "advancements.frv.kill_mekkron.description": "Meet Mekkron, the galaxy's goofball gear-grinder",
+  "advancements.frv.get_stardusk_link.title": "Galactic Joyride", "advancements.frv.get_stardusk_link.description": "Stardusk sets you soaring among stars.",
   "advancements.frv.enter_the_xenosphere.title": "Bioluminescence Planet?", "advancements.frv.enter_the_xenosphere.description": "Build, light and enter the Xenosphere Portal",
   "advancements.frv.get_xenos_log.title": "Just like old days", "advancements.frv.get_xenos_log.description": "Aquire the Xenos Log",
   "advancements.frv.get_xenostone_pickaxe.title": "A nicer upgrade to stone", "advancements.frv.get_xenostone_pickaxe.description": "Craft the Xenostone Pickaxe",
   "advancements.frv.find_xeron_village.title": "Friendly short people!", "advancements.frv.find_xeron_village.description": "Find a Xeron Village",
+  "advancements.frv.find_xenosphere_dungeon.title": "Don't expect a giant skull right now.", "advancements.frv.find_xenosphere_dungeon.description": "Find the Celestroids Dungeon",
   "advancements.frv.get_lumibloom_seeds.title": "Glowing Seeds!", "advancements.frv.get_lumibloom_seeds.description": "Aquire Lumibloom seeds",
   "advancements.frv.get_lumibloom.title": "Nutritious glowing flower", "advancements.frv.get_lumibloom.description": "Harvest Lumibloom",
   "advancements.frv.get_blushthorn.title": "Pricky but Healing", "advancements.frv.get_blushthorn.description": "Harvest \u00A75Blushthorn",

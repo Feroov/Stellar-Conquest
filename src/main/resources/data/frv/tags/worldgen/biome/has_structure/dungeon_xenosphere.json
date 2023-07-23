@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "frv:xenosphere_plains",
-    "frv:xenosphere_forest"
+    "frv:xenosphere_plains"
   ]
 }

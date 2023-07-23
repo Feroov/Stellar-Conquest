@@ -6,7 +6,7 @@
   "size": 1,
 
   "max_distance_from_center": 80,
-  "biomes": "minecraft:desert",
+  "biomes": "#frv:has_structure/mothership_spawn",
   "step": "surface_structures",
   "start_height": {
     "absolute": 20
