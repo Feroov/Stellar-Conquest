@@ -25,16 +25,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.PlayState;
-
 import javax.annotation.Nonnull;
 import java.util.EnumSet;
+import java.util.Objects;
 
 public class CelestroidShip extends Ghast implements Enemy, GeoEntity
 {
@@ -42,7 +40,6 @@ public class CelestroidShip extends Ghast implements Enemy, GeoEntity
     public static final EntityDataAccessor<Integer> DATA_ATTACK_CHARGE_ID = SynchedEntityData.defineId(CelestroidShip.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_IS_CHARGING = SynchedEntityData.defineId(Ghast.class, EntityDataSerializers.BOOLEAN);
 
-    private CelestroidShipAttackGoal attackAI;
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public CelestroidShip(EntityType<? extends CelestroidShip> type, Level level)
@@ -56,7 +53,7 @@ public class CelestroidShip extends Ghast implements Enemy, GeoEntity
     protected void registerGoals()
     {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
-        this.goalSelector.addGoal(2, attackAI = new CelestroidShipAttackGoal(this));
+        this.goalSelector.addGoal(2, new CelestroidShipAttackGoal(this));
         this.goalSelector.addGoal(6, new CelestroidShip.LookAroundGoal(this));
         this.goalSelector.addGoal(8, new CelestroidShip.RandomFlyGoal(this));
     }
@@ -95,7 +92,7 @@ public class CelestroidShip extends Ghast implements Enemy, GeoEntity
     public boolean isPersistenceRequired() { return super.isPersistenceRequired(); }
 
     @Override
-    protected boolean shouldDespawnInPeaceful() { return true; }
+    public boolean shouldDespawnInPeaceful() { return true; }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
@@ -122,7 +119,7 @@ public class CelestroidShip extends Ghast implements Enemy, GeoEntity
     public void shootRayBeam()
     {
         Vec3 vec3d = this.getViewVector(1.0F);
-        double d2 = this.getTarget().getX() - (this.getX() + vec3d.x() * 4.0D);
+        double d2 = Objects.requireNonNull(this.getTarget()).getX() - (this.getX() + vec3d.x() * 4.0D);
         double d3 = this.getTarget().getBoundingBox().minY + this.getTarget().getBbHeight() / 2.0F - (0.5D + this.getY() + this.getBbHeight() / 2.0F);
         double d4 = this.getTarget().getZ() - (this.getZ() + vec3d.z() * 4.0D);
 
@@ -136,7 +133,7 @@ public class CelestroidShip extends Ghast implements Enemy, GeoEntity
     public boolean shouldAttack(LivingEntity living) { return true; }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 1.65F; }
+    protected float getStandingEyeHeight(@NotNull Pose poseIn, @NotNull EntityDimensions sizeIn) { return 1.65F; }
 
 
     static class RandomFlyGoal extends Goal

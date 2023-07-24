@@ -5,12 +5,9 @@ import com.feroov.frv.entity.neutral.XeronGuard;
 import com.feroov.frv.entity.passive.Xeron;
 import com.feroov.frv.entity.projectile.CelestobeseBeam;
 import com.feroov.frv.sound.SoundEventsSTLCON;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -29,12 +26,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -118,10 +114,10 @@ public class Celestobese extends Monster implements GeoEntity
     public boolean isPersistenceRequired() { return super.isPersistenceRequired(); }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 1.7F; }
+    protected float getStandingEyeHeight(@NotNull Pose poseIn, @NotNull EntityDimensions sizeIn) { return 1.7F; }
 
     @Override
-    protected boolean shouldDespawnInPeaceful() { return true; }
+    public boolean shouldDespawnInPeaceful() { return true; }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
@@ -191,7 +187,7 @@ public class Celestobese extends Monster implements GeoEntity
      * @param projectileWeaponItem The projectile weapon item.
      * @return True if the Celestroid can fire the projectile weapon, false otherwise.
      */
-    public boolean canFireProjectileWeapon(ProjectileWeaponItem projectileWeaponItem) { return projectileWeaponItem == Items.BOW; }
+    public boolean canFireProjectileWeapon(@NotNull ProjectileWeaponItem projectileWeaponItem) { return projectileWeaponItem == Items.BOW; }
 
     /**
      * Defines the synchronized entity data for the Celestobese.
@@ -219,7 +215,8 @@ public class Celestobese extends Monster implements GeoEntity
         @Nullable
         private LivingEntity target;
         private int attackTime = -1;
-        private int seeTime, statecheck;
+        private int seeTime;
+        private final int statecheck;
 
         // Attack parameters
         private final double attackIntervalMin, attackIntervalMax, speedModifier;
@@ -295,6 +292,7 @@ public class Celestobese extends Monster implements GeoEntity
         public void tick()
         {
             LivingEntity livingentity = this.mob.getTarget();
+            assert this.target != null;
             double d0 = this.mob.distanceToSqr(this.target.getX(), this.target.getY(), this.target.getZ());
             boolean flag = this.mob.getSensing().hasLineOfSight(this.target);
             if (flag) { ++this.seeTime; } else { this.seeTime = 0; }
@@ -335,13 +333,9 @@ public class Celestobese extends Monster implements GeoEntity
                     if (!flag) { return; }
                     if (this.mob.isUsingItem())
                     {
-                        if (!flag && this.seeTime < -60) { this.mob.stopUsingItem(); }
-                        else if (flag)
-                        {
-                            int i = this.mob.getTicksUsingItem();
-                            if (i >= 19) { this.mob.setAttackingState(statecheck); }
-                            if (i >= 20) { this.mob.stopUsingItem(); }
-                        }
+                        int i = this.mob.getTicksUsingItem();
+                        if (i >= 19) { this.mob.setAttackingState(statecheck); }
+                        if (i >= 20) { this.mob.stopUsingItem(); }
                     }
                     float f = (float)Math.sqrt(d0) / this.attackRadius;
                     float f1 = Mth.clamp(f, 0.1F, 1.0F);
@@ -368,7 +362,9 @@ public class Celestobese extends Monster implements GeoEntity
 
         // Attack-related variables
         private final double speedModifier;
-        private int statecheck, ticksUntilNextPathRecalculation, ticksUntilNextAttack;
+        private final int statecheck;
+        private int ticksUntilNextPathRecalculation;
+        private int ticksUntilNextAttack;
         private double pathedTargetX, pathedTargetY, pathedTargetZ;
 
         /**
@@ -418,13 +414,13 @@ public class Celestobese extends Monster implements GeoEntity
                         this.ticksUntilNextPathRecalculation += 15;
                     }
                 }
-                this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack - 0, 0);
+                this.ticksUntilNextAttack = Math.max(this.ticksUntilNextAttack, 0);
                 this.checkAndPerformAttack(livingentity, d0);
             }
         }
 
         @Override
-        protected void checkAndPerformAttack(LivingEntity livingentity, double squaredDistance)
+        protected void checkAndPerformAttack(@NotNull LivingEntity livingentity, double squaredDistance)
         {
             double d0 = this.getAttackReachSqr(livingentity);
             if (squaredDistance <= d0 && this.getTicksUntilNextAttack() <= 0)
