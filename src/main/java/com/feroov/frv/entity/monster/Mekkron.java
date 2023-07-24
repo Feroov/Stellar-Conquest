@@ -22,6 +22,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -31,11 +32,10 @@ import javax.annotation.Nonnull;
 
 public class Mekkron extends Monster implements GeoEntity
 {
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(Mekkron.class, EntityDataSerializers.BOOLEAN);
     private int spawnedCelestroids = 0;
     private int celestroidSpawnTimer = 0;
-    private int celestroidSpawnCooldown = 20 * 7;
 
     /**
      * Constructs a new Mekkron entity.
@@ -106,7 +106,7 @@ public class Mekkron extends Monster implements GeoEntity
     }
 
     @Override
-    protected void playStepSound(BlockPos blockPos, BlockState blockState)
+    protected void playStepSound(@NotNull BlockPos blockPos, @NotNull BlockState blockState)
     {
         this.playSound(SoundEvents.IRON_GOLEM_STEP, 2.0F, 0.6F);
     }
@@ -119,7 +119,7 @@ public class Mekkron extends Monster implements GeoEntity
      * @return The standing eye height.
      */
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 3.8F; }
+    protected float getStandingEyeHeight(@NotNull Pose poseIn, @NotNull EntityDimensions sizeIn) { return 3.8F; }
 
     /**
      * Registers the animation controllers for the Mekkron entity.
@@ -155,6 +155,7 @@ public class Mekkron extends Monster implements GeoEntity
             if (targetPlayer != null)
             {
                 celestroidSpawnTimer++;
+                int celestroidSpawnCooldown = 20 * 7;
                 if (celestroidSpawnTimer >= celestroidSpawnCooldown) { spawnCelestroid(); celestroidSpawnTimer = 0; }
             }
         }
@@ -179,7 +180,7 @@ public class Mekkron extends Monster implements GeoEntity
     }
 
     @Override
-    public void remove(RemovalReason reason)
+    public void remove(@NotNull RemovalReason reason)
     {
         spawnedCelestroids = 0;
         super.remove(reason);
@@ -215,10 +216,8 @@ public class Mekkron extends Monster implements GeoEntity
     public class MekkronMeleeAttack extends MeleeAttackGoal
     {
         private Mekkron entity;
-        private int attackCooldown = 60;
         private int attackTimer = 0;
         private int animCounter = 0;
-        private int animTickLength = 25;
 
         /**
          * Constructs a new MekkronMeleeAttack goal.
@@ -243,7 +242,7 @@ public class Mekkron extends Monster implements GeoEntity
          * @param d1           The distance squared.
          */
         @Override
-        protected void checkAndPerformAttack(LivingEntity livingEntity, double d1)
+        protected void checkAndPerformAttack(@NotNull LivingEntity livingEntity, double d1)
         {
             if (attackTimer <= 0 && d1 <= this.getAttackReachSqr(livingEntity))
             {
@@ -273,7 +272,7 @@ public class Mekkron extends Monster implements GeoEntity
                     double knockbackZ = Math.cos(Math.toRadians(entity.yRot)) * 1.7;
                     player.push(knockbackX, 0.4, knockbackZ);
                 }
-                attackTimer = attackCooldown;
+                attackTimer = 60;
             }
         }
 
@@ -289,6 +288,7 @@ public class Mekkron extends Monster implements GeoEntity
             if (entity != null && entity.isAttacking())
             {
                 animCounter++;
+                int animTickLength = 25;
                 if (animCounter >= animTickLength)
                 {
                     animCounter = 0;
@@ -311,7 +311,7 @@ public class Mekkron extends Monster implements GeoEntity
     }
 
     @Override
-    protected boolean shouldDespawnInPeaceful() { return true; }
+    public boolean shouldDespawnInPeaceful() { return true; }
 
     @Override
     public boolean isPersistenceRequired() { return super.isPersistenceRequired(); }
