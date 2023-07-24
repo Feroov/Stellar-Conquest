@@ -49,7 +49,7 @@ public class Celestroid extends Monster implements GeoEntity
     public Celestroid(EntityType<? extends Celestroid> type, Level level)
     {
         super(type, level);
-        this.xpReward = 15;
+        this.xpReward = 9;
     }
 
     @Override
@@ -87,21 +87,21 @@ public class Celestroid extends Monster implements GeoEntity
     @Override
     protected SoundEvent getAmbientSound()
     {
-        this.playSound(SoundEventsSTLCON.XERON_AMBIENT.get(), 1.5F, 0.8F);
+        this.playSound(SoundEventsSTLCON.XERON_AMBIENT.get(), 0.5F, 0.8F);
         return null;
     }
 
     @Override
     protected SoundEvent getHurtSound(@Nonnull DamageSource damageSourceIn)
     {
-        this.playSound(SoundEventsSTLCON.XERON_HURT.get(), 1.5F, 0.8F);
+        this.playSound(SoundEventsSTLCON.XERON_HURT.get(), 0.5F, 0.8F);
         return null;
     }
 
     @Override
     protected SoundEvent getDeathSound()
     {
-        this.playSound(SoundEvents.SHULKER_DEATH, 4.0F, 5.2F);
+        this.playSound(SoundEvents.SHULKER_DEATH, 0.5F, 5.2F);
         return null;
     }
 

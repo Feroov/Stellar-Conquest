@@ -27,4 +27,7 @@ public class ConsumablesSTLCON
             .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, 400), 1.0f)
             .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 400, 1), 1.0f)
             .build();
+
+    public static final FoodProperties ZEPHXEN_MEAT = (new FoodProperties.Builder()).nutrition(8).saturationMod(0.7F).meat().build();
+    public static final FoodProperties COOKED_ZEPHXEN_MEAT = (new FoodProperties.Builder()).nutrition(13).saturationMod(1.4F).meat().build();
 }

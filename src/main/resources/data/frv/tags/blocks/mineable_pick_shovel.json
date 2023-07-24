@@ -376,6 +376,8 @@
     "frv:celostone_slab",
     "frv:celostone_door",
     "frv:xenosgrass_block",
-    "frv:xenosdirt"
+    "frv:xenosdirt",
+    "frv:xenite_block",
+    "frv:astralite_block"
   ]
 }

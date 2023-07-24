@@ -1,13 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "###",
+    "#R#",
     "#/#",
     " / "
   ],
   "key": {
     "#": {
       "item": "frv:astralite_ingot"
+    },
+    "R": {
+      "item": "frv:raygun_energy"
     },
     "/": {
       "item": "minecraft:stick"

@@ -38,7 +38,7 @@ public class Skeleroid extends PathfinderMob implements GeoEntity
     public Skeleroid(EntityType<? extends PathfinderMob> entityType, Level level)
     {
         super(entityType, level);
-        this.xpReward = 20;
+        this.xpReward = 5;
     }
 
     public static AttributeSupplier setAttributes()

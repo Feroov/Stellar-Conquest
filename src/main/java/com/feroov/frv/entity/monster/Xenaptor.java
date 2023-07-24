@@ -40,7 +40,7 @@ public class Xenaptor extends Spider implements GeoEntity
     public Xenaptor(EntityType<? extends Spider> entityType, Level level)
     {
         super(entityType, level);
-        this.xpReward = 20;
+        this.xpReward = 5;
     }
 
     public static AttributeSupplier setAttributes()

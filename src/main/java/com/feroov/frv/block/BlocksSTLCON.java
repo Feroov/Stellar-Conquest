@@ -24,7 +24,9 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -113,6 +115,15 @@ public class BlocksSTLCON
     public static final RegistryObject<Block> CELOSTONE_DOOR = registerBlock("celostone_door",
             () -> new DoorBlock(BlockBehaviour.Properties.copy(IRON_DOOR).requiresCorrectToolForDrops()
                     .strength(34.0F).noOcclusion(), BlockSetType.IRON));
+
+    public static final RegistryObject<Block> XENITE_BLOCK = registerBlock("xenite_block",
+            () -> new Block(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.IRON_XYLOPHONE)
+                    .requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
+
+    public static final RegistryObject<Block> ASTRALITE_BLOCK = registerBlock("astralite_block",
+            () -> new Block(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.IRON_XYLOPHONE)
+                    .requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL)));
+
     // ---------------------------------------------------------------------------------------------------
 
 

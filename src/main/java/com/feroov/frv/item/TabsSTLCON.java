@@ -65,6 +65,8 @@ public class TabsSTLCON
                 event.accept(ItemsSTLCON.BLUSHTHORN_NECTAR_BOTTLE.get());
                 event.accept(ItemsSTLCON.TOXIC_RESILIENCE.get());
                 event.accept(ItemsSTLCON.LUMIBLOOM_SEEDS.get());
+                event.accept(ItemsSTLCON.ZEPHXEN_MEAT.get());
+                event.accept(ItemsSTLCON.COOKED_ZEPHXEN_MEAT.get());
                 event.accept(ItemsSTLCON.LUMIBLOOM.get());
                 event.accept(ItemsSTLCON.WISPXENDUST.get());
                 event.accept(ItemsSTLCON.RAYGUN_FRAME.get());
@@ -115,6 +117,8 @@ public class TabsSTLCON
                 event.accept(BlocksSTLCON.XENOFLUX.get());
                 event.accept(BlocksSTLCON.XENOS_LEAVES.get());
                 event.accept(BlocksSTLCON.GLOWXEN.get());
+                event.accept(BlocksSTLCON.XENITE_BLOCK.get());
+                event.accept(BlocksSTLCON.ASTRALITE_BLOCK.get());
 
                 event.accept(BlocksSTLCON.XENOSTONE.get());
                 event.accept(BlocksSTLCON.XENOCOBBLESTONE.get());

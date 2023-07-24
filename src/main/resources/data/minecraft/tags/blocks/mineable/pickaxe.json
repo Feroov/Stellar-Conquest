@@ -10,6 +10,8 @@
     "frv:celostone",
     "frv:celostone_stairs",
     "frv:celostone_slab",
-    "frv:celostone_door"
+    "frv:celostone_door",
+    "frv:xenite_block",
+    "frv:astralite_block"
   ]
 }

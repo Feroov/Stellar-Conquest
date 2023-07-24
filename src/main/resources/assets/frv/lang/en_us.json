@@ -20,10 +20,12 @@
   "item.frv.wispxen_dust": "\u00A7eWispxen Dust",
   "item.frv.raygun_handle": "\u00A7eRaygun Handle",
   "item.frv.raygun_frame": "\u00A7eRaygun Frame",
-  "item.frv.raygun_energy": "\u00A7eRaygun Energy",
+  "item.frv.raygun_energy": "\u00A7eAstraflux",
   "item.frv.energy_warper": "\u00A7eEnergy Warper",
   "item.frv.bouncybonk": "\u00A7eBouncy BONK",
   "item.frv.stardusk_link": "\u00A7bStardusk Link",
+  "item.frv.zephxen_meat": "Zephxen Meat",
+  "item.frv.cooked_zephxen_meat": "Cooked Zephxen Meat",
 
   "item.frv.xenostone_sword": "Xenostone Sword",
   "item.frv.xenostone_pickaxe": "Xenostone Pickaxe",
@@ -85,6 +87,8 @@
   "block.frv.xenite_ore": "Xenite Ore",
   "block.frv.astralite_ore": "\u00A7eAstralite Ore",
   "block.frv.lumibloom_crop": "Lumibloom Crop",
+  "block.frv.xenite_block": "Block of Xenite",
+  "block.frv.astralite_block": "\u00A7eBlock of Astralite",
 
 
   "advancements.frv.get_bouncy_bonk.title": "Mega SLAP!", "advancements.frv.get_bouncy_bonk.description": "Aquire \u00A7eBouncy BONK",

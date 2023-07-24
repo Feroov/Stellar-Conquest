@@ -94,21 +94,21 @@ public class Celestobese extends Monster implements GeoEntity
     @Override
     protected SoundEvent getAmbientSound()
     {
-        this.playSound(SoundEventsSTLCON.XERON_AMBIENT.get(), 1.5F, 0.02F);
+        this.playSound(SoundEventsSTLCON.XERON_AMBIENT.get(), 0.5F, 0.02F);
         return null;
     }
 
     @Override
     protected SoundEvent getHurtSound(@Nonnull DamageSource damageSourceIn)
     {
-        this.playSound(SoundEvents.SHULKER_HURT, 1.5F, 0.6F);
+        this.playSound(SoundEvents.SHULKER_HURT, 0.5F, 0.6F);
         return null;
     }
 
     @Override
     protected SoundEvent getDeathSound()
     {
-        this.playSound(SoundEvents.SHULKER_DEATH, 4.0F, 0.6F);
+        this.playSound(SoundEvents.SHULKER_DEATH, 0.5F, 0.6F);
         return null;
     }
 
