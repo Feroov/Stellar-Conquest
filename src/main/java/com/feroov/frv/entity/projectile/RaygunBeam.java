@@ -5,11 +5,9 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -23,8 +21,8 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -61,10 +59,8 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
         Entity targetEntity = entityHitResult.getEntity();
         Entity shooterEntity = this.getOwner();
 
-        if (shooterEntity instanceof LivingEntity && targetEntity instanceof LivingEntity)
+        if (shooterEntity instanceof LivingEntity shooter && targetEntity instanceof LivingEntity target)
         {
-            LivingEntity shooter = (LivingEntity) shooterEntity;
-            LivingEntity target = (LivingEntity) targetEntity;
 
             DamageSource damageSource = this.damageSources().arrow(this, shooter);
             float projectileDamage = 30.0F;
@@ -85,7 +81,7 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult)
+    protected void onHitBlock(@NotNull BlockHitResult blockHitResult)
     {
         super.onHitBlock(blockHitResult);
         this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.0F, 1.0F);
@@ -137,7 +133,7 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
     protected void defineSynchedData() { super.defineSynchedData(); this.entityData.define(PARTICLE, 0); }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() { return NetworkHooks.getEntitySpawningPacket(this);}
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() { return NetworkHooks.getEntitySpawningPacket(this);}
 
     @Override
     protected void tickDespawn() { ++this.ticksInAir; if (this.tickCount >= 40) { this.remove(RemovalReason.KILLED); }}
@@ -150,28 +146,28 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound)
+    public void addAdditionalSaveData(@NotNull CompoundTag compound)
     {
         super.addAdditionalSaveData(compound);
         compound.putShort("life", (short) this.ticksInAir);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound)
+    public void readAdditionalSaveData(@NotNull CompoundTag compound)
     {
         super.readAdditionalSaveData(compound);
         this.ticksInAir = compound.getShort("life");
     }
 
     @Override
-    protected ItemStack getPickupItem() { return null; }
+    public @NotNull ItemStack getPickupItem() { return null; }
 
 
     @Override
-    public void setSoundEvent(SoundEvent soundIn) { this.hitSound = soundIn; }
+    public void setSoundEvent(@NotNull SoundEvent soundIn) { this.hitSound = soundIn; }
 
     @Override
-    protected SoundEvent getDefaultHitGroundSoundEvent()  { return SoundEvents.AMETHYST_BLOCK_CHIME; }
+    protected @NotNull SoundEvent getDefaultHitGroundSoundEvent()  { return SoundEvents.AMETHYST_BLOCK_CHIME; }
 
     @Override
     public boolean displayFireAnimation() { return false; }

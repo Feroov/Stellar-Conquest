@@ -192,7 +192,7 @@ public class Celestroid extends Monster implements GeoEntity
         private LivingEntity target;
         private int attackTime = -1;
         private int seeTime;
-        private final int statecheck;
+        private final int stateCheck;
 
         // Attack parameters
         private final double attackIntervalMin, attackIntervalMax, speedModifier;
@@ -221,12 +221,12 @@ public class Celestroid extends Monster implements GeoEntity
          *
          * @param celestroid        The Celestroid entity.
          * @param speedIn           The speed modifier.
-         * @param atckIntervalMin   The minimum attack interval.
-         * @param atckIntervalMax   The maximum attack interval.
-         * @param atckRadius        The attack radius.
+         * @param attackIntervalMin   The minimum attack interval.
+         * @param attackIntervalMax   The maximum attack interval.
+         * @param attackRadius        The attack radius.
          * @param state             The attack state.
          */
-        public CelestroidRangedAttackGoal(Celestroid celestroid, double speedIn, double atckIntervalMin, double atckIntervalMax, float atckRadius, int state)
+        public CelestroidRangedAttackGoal(Celestroid celestroid, double speedIn, double attackIntervalMin, double attackIntervalMax, float attackRadius, int state)
         {
             if (celestroid == null)
             {
@@ -237,11 +237,11 @@ public class Celestroid extends Monster implements GeoEntity
                 this.rangedAttackMob =  celestroid;
                 this.mob =  celestroid;
                 this.speedModifier = speedIn;
-                this.attackIntervalMin = atckIntervalMin;
-                this.attackIntervalMax = atckIntervalMax;
-                this.attackRadius = atckRadius;
-                this.attackRadiusSqr = atckRadius * atckRadius;
-                this.statecheck = state;
+                this.attackIntervalMin = attackIntervalMin;
+                this.attackIntervalMax = attackIntervalMax;
+                this.attackRadius = attackRadius;
+                this.attackRadiusSqr = attackRadius * attackRadius;
+                this.stateCheck = state;
 
                 this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
             }
@@ -310,7 +310,7 @@ public class Celestroid extends Monster implements GeoEntity
                     if (this.mob.isUsingItem())
                     {
                         int i = this.mob.getTicksUsingItem();
-                        if (i >= 19) { this.mob.setAttackingState(statecheck); }
+                        if (i >= 19) { this.mob.setAttackingState(stateCheck); }
                         if (i >= 20) { this.mob.stopUsingItem(); }
                     }
                     float f = (float)Math.sqrt(d0) / this.attackRadius;
@@ -338,10 +338,10 @@ public class Celestroid extends Monster implements GeoEntity
 
         // Attack-related variables
         private final double speedModifier;
-        private final int statecheck;
+        private final int stateCheck;
         private int ticksUntilNextPathRecalculation;
         private int ticksUntilNextAttack;
-        private double pathedTargetX, pathedTargetY, pathedTargetZ;
+        private double pathTargetX, pathTargetY, pathTargetZ;
 
         /**
          * Constructs a CelestroidAttackGoal for the Celestroid.
@@ -355,7 +355,7 @@ public class Celestroid extends Monster implements GeoEntity
         {
             super(celestroid, speedIn, longMemoryIn);
             this.entity = celestroid;
-            this.statecheck = state;
+            this.stateCheck = state;
             this.speedModifier = speedIn;
         }
 
@@ -374,14 +374,14 @@ public class Celestroid extends Monster implements GeoEntity
                 this.ticksUntilNextPathRecalculation = Math.max(this.ticksUntilNextPathRecalculation - 1, 0);
                 if ((this.mob.getSensing().hasLineOfSight(livingentity))
                         && this.ticksUntilNextPathRecalculation <= 0
-                        && (this.pathedTargetX == 0.0D && this.pathedTargetY == 0.0D && this.pathedTargetZ == 0.0D
-                        || livingentity.distanceToSqr(this.pathedTargetX, this.pathedTargetY,
-                        this.pathedTargetZ) >= 1.0D
+                        && (this.pathTargetX == 0.0D && this.pathTargetY == 0.0D && this.pathTargetZ == 0.0D
+                        || livingentity.distanceToSqr(this.pathTargetX, this.pathTargetY,
+                        this.pathTargetZ) >= 1.0D
                         || this.mob.getRandom().nextFloat() < 0.05F))
                 {
-                    this.pathedTargetX = livingentity.getX();
-                    this.pathedTargetY = livingentity.getY();
-                    this.pathedTargetZ = livingentity.getZ();
+                    this.pathTargetX = livingentity.getX();
+                    this.pathTargetY = livingentity.getY();
+                    this.pathTargetZ = livingentity.getZ();
                     this.ticksUntilNextPathRecalculation = 4 + this.mob.getRandom().nextInt(7);
                     if (d0 > 1024.0D) { this.ticksUntilNextPathRecalculation += 10; }
                     else if (d0 > 256.0D) { this.ticksUntilNextPathRecalculation += 5;}
@@ -402,7 +402,7 @@ public class Celestroid extends Monster implements GeoEntity
             if (squaredDistance <= d0 && this.getTicksUntilNextAttack() <= 0)
             {
                 this.resetAttackCooldown();
-                this.entity.setAttackingState(statecheck);
+                this.entity.setAttackingState(stateCheck);
                 this.mob.doHurtTarget(livingentity);
             }
         }

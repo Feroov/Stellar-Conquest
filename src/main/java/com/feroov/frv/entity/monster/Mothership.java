@@ -1,14 +1,11 @@
 package com.feroov.frv.entity.monster;
 
-
 import com.feroov.frv.entity.AnimationConstants;
 import com.feroov.frv.entity.EntitiesSTLCON;
-import com.feroov.frv.entity.ai.MothershipAttackGoal;
 import com.feroov.frv.entity.projectile.MothershipBeam;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -35,13 +32,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -54,14 +49,12 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
 
     public static final EntityDataAccessor<Integer> DATA_ATTACK_CHARGE_ID = SynchedEntityData.defineId(Mothership.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_IS_CHARGING = SynchedEntityData.defineId(Ghast.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Integer> ATTACK = SynchedEntityData.defineId(CelestroidShip.class, EntityDataSerializers.INT);
 
-    private MothershipAttackGoal attackAI;
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     protected int spellCastingTickCount;
     private static final EntityDataAccessor<Byte> DATA_SPELL_CASTING_ID = SynchedEntityData.defineId(SpellcasterIllager.class, EntityDataSerializers.BYTE);
-    private Mothership.SpellType currentSpell = Mothership.SpellType.NONE;
-
 
     public Mothership(EntityType<? extends Mothership> type, Level level)
     {
@@ -76,7 +69,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
 
         this.goalSelector.addGoal(0, new Mothership.AttackSpellGoal());
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
-        this.goalSelector.addGoal(2, attackAI = new MothershipAttackGoal(this));
+        this.goalSelector.addGoal(2, new CelestroidRangedAttackGoal(this, 0.3D, 63.0D, 120.0F, 0));
         this.goalSelector.addGoal(6, new Mothership.LookAroundGoal(this));
         this.goalSelector.addGoal(8, new Mothership.RandomFlyGoal(this));
     }
@@ -110,24 +103,17 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
         return null;
     }
 
-    public SoundEvent getWarnSound()
-    {
-        return SoundEvents.BEACON_ACTIVATE;
-    }
-
     @Override
     public boolean isPersistenceRequired() { return super.isPersistenceRequired(); }
 
     @Override
-    protected boolean shouldDespawnInPeaceful() { return true; }
+    public boolean shouldDespawnInPeaceful() { return true; }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
         controllerRegistrar.add(new AnimationController<>(this, "livingController", 0, event ->
-        {
-            return event.setAndContinue(AnimationConstants.IDLE);
-        }));
+                event.setAndContinue(AnimationConstants.IDLE)));
     }
 
     @Override
@@ -140,30 +126,10 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
         this.entityData.define(DATA_ATTACK_CHARGE_ID, 0);
     }
 
-
-
     public void setCharging(boolean pCharging) { this.entityData.set(DATA_IS_CHARGING, pCharging); }
 
-    public void shootRayBeam()
-    {
-        Vec3 vec3d = this.getViewVector(1.0F);
-        double d2 = this.getTarget().getX() - (this.getX() + vec3d.x() * 4.0D);
-        double d3 = this.getTarget().getBoundingBox().minY + this.getTarget().getBbHeight() / 2.0F - (0.5D + this.getY() + this.getBbHeight() / 2.0F);
-        double d4 = this.getTarget().getZ() - (this.getZ() + vec3d.z() * 4.0D);
-
-        MothershipBeam mothershipBeam = new MothershipBeam(this.level(), this, d2, d3, d4, 1);
-        mothershipBeam.setPos(this.getX() + vec3d.x() * 4.0D, this.getY() + this.getBbHeight() / 2.0F + 0.5D, this.getZ() + vec3d.z() * 4.0D);
-        this.level().addFreshEntity(mothershipBeam);
-
-        if (this.getRandom().nextInt(6) == 0) {
-            this.setTarget(null);
-        }
-    }
-
-    public boolean shouldAttack(LivingEntity living) { return true; }
-
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 1.65F; }
+    protected float getStandingEyeHeight(@NotNull Pose poseIn, @NotNull EntityDimensions sizeIn) { return 1.65F; }
 
 
     static class RandomFlyGoal extends Goal
@@ -290,28 +256,27 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
     }
 
     @Override
-    public boolean canBeCollidedWith() { return false; }
+    public boolean canBeCollidedWith() { return super.canBeCollidedWith(); }
 
     @Override
     public boolean isPushable() { return false; }
 
     @Override
-    public void startSeenByPlayer(ServerPlayer player)
+    public void startSeenByPlayer(@NotNull ServerPlayer player)
     {
         super.startSeenByPlayer(player);
         this.bossInfo.addPlayer(player);
     }
 
     @Override
-    public void stopSeenByPlayer(ServerPlayer player)
+    public void stopSeenByPlayer(@NotNull ServerPlayer player)
     {
         super.stopSeenByPlayer(player);
         this.bossInfo.removePlayer(player);
     }
 
     @Override
-    public int getMaxSpawnClusterSize() { return 1; }
-
+    public int getMaxSpawnClusterSize() { return super.getMaxSpawnClusterSize(); }
 
     @Override
     public void setCustomName(Component name)
@@ -327,27 +292,178 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
         this.bossInfo.setProgress(this.getHealth() / this.getMaxHealth());
     }
 
-
-    public enum SpellType
+    public static class CelestroidRangedAttackGoal extends Goal
     {
-        NONE(0, 0.0D, 0.0D, 0.0D),
-        SUMMON_CELESTROID(1, 0.7D, 0.7D, 0.8D);
+        // The CelestroidShip and the ranged attack mob
+        private final Mothership mob;
+        private final Mothership rangedAttackMob;
 
-        private final int id;
-        private final double[] spellColor;
+        // The target entity and attack-related variables
+        @Nullable
+        private LivingEntity target;
+        private int attackTime = -1;
+        private int seeTime;
+        private final int stateCheck;
 
-        private SpellType(int id, double d1, double d2, double d3)
+        // Attack parameters
+        private final double attackIntervalMin, attackIntervalMax, speedModifier;
+        private final float attackRadius, attackRadiusSqr;
+
+        // Strafing variables
+        private boolean strafingClockwise, strafingBackwards;
+        private int strafingTime = -1;
+
+        /**
+         * Constructs a CelestroidRangedAttackGoal for the CelestroidShip.
+         *
+         * @param celestroid        The Celestroid entity.
+         * @param speedIn           The speed modifier.
+         * @param dpsIn             The minimum attack interval.
+         * @param rangeIn           The attack range.
+         * @param state             The attack state.
+         */
+        public CelestroidRangedAttackGoal(Mothership celestroid, double speedIn, double dpsIn, float rangeIn, int state)
         {
-            this.id = id;
-            this.spellColor = new double[]{d1, d2, d3};
+            this(celestroid, speedIn, dpsIn, dpsIn, rangeIn, state);
         }
 
-        public static SpellType byId(int id)
+        /**
+         * Constructs a CelestroidRangedAttackGoal for the CelestroidShip with variable attack intervals.
+         *
+         * @param celestroid        The Celestroid entity.
+         * @param speedIn           The speed modifier.
+         * @param attackIntervalMin   The minimum attack interval.
+         * @param attackIntervalMax   The maximum attack interval.
+         * @param attackRadius        The attack radius.
+         * @param state             The attack state.
+         */
+        public CelestroidRangedAttackGoal(Mothership celestroid, double speedIn, double attackIntervalMin, double attackIntervalMax, float attackRadius, int state)
         {
-            for (SpellType spellType : values()) { if (id == spellType.id) { return spellType; } }
-            return NONE;
+            if (celestroid == null)
+            {
+                throw new IllegalArgumentException("ArrowAttackGoal requires Mob implements RangedAttackMob");
+            }
+            else
+            {
+                this.rangedAttackMob =  celestroid;
+                this.mob =  celestroid;
+                this.speedModifier = speedIn;
+                this.attackIntervalMin = attackIntervalMin;
+                this.attackIntervalMax = attackIntervalMax;
+                this.attackRadius = attackRadius;
+                this.attackRadiusSqr = attackRadius * attackRadius;
+                this.stateCheck = state;
+
+                this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+            }
+        }
+
+        public boolean canUse()
+        {
+            LivingEntity livingentity = this.mob.getTarget();
+            if (livingentity != null && livingentity.isAlive()) { this.target = livingentity; return true; }
+            else  { return false; }
+        }
+
+        public boolean canContinueToUse() { return this.canUse() || !this.mob.getNavigation().isDone(); }
+
+        public void stop()
+        {
+            this.target = null;
+            this.seeTime = 0;
+            this.attackTime = -1;
+        }
+
+        public boolean requiresUpdateEveryTick() { return true; }
+
+        public void tick()
+        {
+            LivingEntity livingentity = this.mob.getTarget();
+            assert this.target != null;
+            double d0 = this.mob.distanceToSqr(this.target.getX(), this.target.getY(), this.target.getZ());
+            boolean flag = this.mob.getSensing().hasLineOfSight(this.target);
+            if (flag) { ++this.seeTime; } else { this.seeTime = 0; }
+
+            if (!(d0 > (double)this.attackRadiusSqr) && this.seeTime >= 5) {
+                this.mob.getNavigation().stop();
+            } else { this.mob.getNavigation().moveTo(this.target, this.speedModifier); }
+
+            if (livingentity != null)
+            {
+                boolean flag1 = this.seeTime > 0;
+                if (flag != flag1) { this.seeTime = 0;}
+                if (flag) { ++this.seeTime;} else {--this.seeTime;}
+                if (!(d0 > (double)this.attackRadiusSqr) && this.seeTime >= 20)
+                {
+                    this.mob.getNavigation().stop();
+                    ++this.strafingTime;
+                } else { this.mob.getNavigation().moveTo(livingentity, this.speedModifier); this.strafingTime = -1; }
+
+                if (this.strafingTime >= 20)
+                {
+                    if ((double)this.mob.getRandom().nextFloat() < 0.3D) { this.strafingClockwise = !this.strafingClockwise; }
+                    if ((double)this.mob.getRandom().nextFloat() < 0.3D) { this.strafingBackwards = !this.strafingBackwards; }
+                    this.strafingTime = 0;
+                }
+
+                if (this.strafingTime > -1)
+                {
+                    if (d0 > (double)(this.attackRadiusSqr * 0.75F)) { this.strafingBackwards = false; }
+                    else if (d0 < (double)(this.attackRadiusSqr * 0.25F)) { this.strafingBackwards = true; }
+                    //speed shit
+                    this.mob.getMoveControl().strafe(this.strafingBackwards ? -0.0F : 0.0F, this.strafingClockwise ? 0.3F : -0.3F);
+                    this.mob.lookAt(livingentity, 30.0F, 30.0F);
+                }
+                this.mob.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
+                if (--this.attackTime == 0)
+                {
+                    if (!flag) { return; }
+                    if (this.mob.isUsingItem())
+                    {
+                        int i = this.mob.getTicksUsingItem();
+                        if (i >= 19) { this.mob.setAttackingState(stateCheck); }
+                        if (i >= 20) { this.mob.stopUsingItem(); }
+                    }
+                    float f = (float)Math.sqrt(d0) / this.attackRadius;
+                    float f1 = Mth.clamp(f, 0.1F, 1.0F);
+                    this.rangedAttackMob.performRangedAttack(this.target, f1);
+                    this.attackTime = Mth.floor(f * (float)(this.attackIntervalMax - this.attackIntervalMin) + (float)this.attackIntervalMin);
+                }
+                else if (this.attackTime < 0)
+                {
+                    this.attackTime = Mth.floor(Mth.lerp(Math.sqrt(d0)
+                            / (double)this.attackRadius, this.attackIntervalMin, this.attackIntervalMax));
+                }
+
+            }
         }
     }
+
+    public void performRangedAttack(LivingEntity targetEntity, float partialTicks)
+    {
+        Vec3 eyePos = getEyePosition(partialTicks);
+
+        double targetX = targetEntity.getX() + targetEntity.getBbWidth() / 2.0;
+        double targetY = targetEntity.getBoundingBox().minY + targetEntity.getBbHeight() / 2.0;
+        double targetZ = targetEntity.getZ() + targetEntity.getBbWidth() / 2.0;
+
+        double d2 = targetX - eyePos.x;
+        double d3 = targetY - eyePos.y;
+        double d4 = targetZ - eyePos.z;
+
+        double velocityFactor = 1.15;
+
+        MothershipBeam raygunBeam = new MothershipBeam(level(), this, d2, d3, d4);
+        raygunBeam.shoot(d2, d3, d4, (float) velocityFactor, 0.1F);
+        playSound(SoundEventsSTLCON.RAYGUN_SHOOT.get(), 7.0F, 1.0F);
+        raygunBeam.setPos(eyePos.x, eyePos.y, eyePos.z);
+        level().addFreshEntity(raygunBeam);
+
+        if (getRandom().nextInt(6) == 0) { setTarget(null); }
+    }
+
+    public void setAttackingState(int time) { this.entityData.set(ATTACK, time); }
+
 
     public abstract class UseSpellGoal extends Goal
     {
@@ -393,11 +509,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
 
         @Nullable
         protected abstract SoundEvent getSpellPrepareSound();
-
-        protected abstract SpellType getSpell();
     }
-
-    protected SoundEvent getCastingSoundEvent() { return null; }
 
     public boolean isCastingSpell()
     {
@@ -413,6 +525,7 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
         protected void performSpellCasting()
         {
             LivingEntity livingEntity = Mothership.this.getTarget();
+            assert livingEntity != null;
             double minY = Math.min(livingEntity.getY(), Mothership.this.getY());
             double maxY = Math.max(livingEntity.getY(), Mothership.this.getY()) + 1.0D;
             float angle = (float) Mth.atan2(livingEntity.getZ() - Mothership.this.getZ(), livingEntity.getX() - Mothership.this.getX());
@@ -422,13 +535,13 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
                 for (int i = 0; i < 5; ++i)
                 {
                     float f1 = angle + (float) i * (float) Math.PI * 0.4F;
-                    this.createSpellEntity(Mothership.this.getX() + (double) Mth.cos(f1) * 1.5D, Mothership.this.getZ() + (double) Mth.sin(f1) * 1.5D, minY, maxY, f1, 0);
+                    this.createSpellEntity(Mothership.this.getX() + (double) Mth.cos(f1) * 1.5D, Mothership.this.getZ() + (double) Mth.sin(f1) * 1.5D, minY, maxY);
                 }
 
                 for (int k = 0; k < 8; ++k)
                 {
                     float f2 = angle + (float) k * (float) Math.PI * 2.0F / 8.0F + 1.2566371F;
-                    this.createSpellEntity(Mothership.this.getX() + (double) Mth.cos(f2) * 2.5D, Mothership.this.getZ() + (double) Mth.sin(f2) * 2.5D, minY, maxY, f2, 3);
+                    this.createSpellEntity(Mothership.this.getX() + (double) Mth.cos(f2) * 2.5D, Mothership.this.getZ() + (double) Mth.sin(f2) * 2.5D, minY, maxY);
                 }
             }
             else
@@ -436,17 +549,14 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
                 for (int l = 0; l < 16; ++l)
                 {
                     double d2 = 1.25D * (double) (l + 1);
-                    int j = 1 * l;
-                    this.createSpellEntity(Mothership.this.getX() + (double) Mth.cos(angle) * d2, Mothership.this.getZ() + (double) Mth.sin(angle) * d2, minY, maxY, angle, j);
+                    this.createSpellEntity(Mothership.this.getX() + (double) Mth.cos(angle) * d2, Mothership.this.getZ() + (double) Mth.sin(angle) * d2, minY, maxY);
                 }
             }
         }
 
-        private void createSpellEntity(double x, double z, double minY, double maxY, float angle, int j)
+        private void createSpellEntity(double x, double z, double minY, double maxY)
         {
             BlockPos blockPos = new BlockPos((int) x, (int) maxY, (int) z);
-            boolean flag = false;
-            double d0 = 0.0D;
 
             do
             {
@@ -459,9 +569,8 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
                         BlockState blockState1 = Mothership.this.level().getBlockState(blockPos);
                         VoxelShape voxelShape = blockState1.getCollisionShape(Mothership.this.level(), blockPos);
 
-                        if (!voxelShape.isEmpty()) { d0 = voxelShape.max(Direction.Axis.Y); }
+                        if (!voxelShape.isEmpty()) { voxelShape.max(Direction.Axis.Y); }
                     }
-                    flag = true;
                     break;
                 }
 
@@ -473,14 +582,14 @@ public class Mothership extends Ghast implements Enemy, GeoEntity
             for (int i = 0; i < 1; ++i)
             {
                 BlockPos blockPos2 = Mothership.this.blockPosition().offset(-2 + Mothership.this.random.nextInt(1), 1, -2 + Mothership.this.random.nextInt(1));
-                CelestroidShip corruptMinion = EntitiesSTLCON.CELESTROID_SHIP.get().create(Mothership.this.level());
-                corruptMinion.moveTo(blockPos2, 0.0F, 0.0F);
+                CelestroidShip celestroidShip = EntitiesSTLCON.CELESTROID_SHIP.get().create(Mothership.this.level());
+                assert celestroidShip != null;
+                celestroidShip.moveTo(blockPos2, 0.0F, 0.0F);
 
-                corruptMinion.finalizeSpawn(serverWorld, Mothership.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, (SpawnGroupData) null, (CompoundTag) null);
-                serverWorld.addFreshEntityWithPassengers(corruptMinion);
+                celestroidShip.finalizeSpawn(serverWorld, Mothership.this.level().getCurrentDifficultyAt(blockPos), MobSpawnType.MOB_SUMMONED, null, null);
+                serverWorld.addFreshEntityWithPassengers(celestroidShip);
             }
         }
         protected SoundEvent getSpellPrepareSound() { return SoundEvents.BEACON_ACTIVATE; }
-        protected SpellType getSpell() { return SpellType.NONE; }
     }
 }

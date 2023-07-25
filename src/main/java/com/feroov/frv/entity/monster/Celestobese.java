@@ -65,7 +65,7 @@ public class Celestobese extends Monster implements GeoEntity
         this.goalSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
         this.goalSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Xeron.class, true));
         this.goalSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, XeronGuard.class, true));
-        this.goalSelector.addGoal(4, new CelestroidRangedAttackGoal(this, 0.3D, 63.0D, 23.0F, 0));
+        this.goalSelector.addGoal(4, new CelestroidRangedAttackGoal(this, 0.3D, 77.0D, 23.0F, 0));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.4D));
         this.goalSelector.addGoal(6, new MoveTowardsRestrictionGoal(this, 0.4D));
         this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
@@ -161,9 +161,8 @@ public class Celestobese extends Monster implements GeoEntity
 
                 for (int i = 0; i < beamCount; i++)
                 {
-                    CelestobeseBeam raygunBeam = new CelestobeseBeam(level(), Celestobese.this,
-                            updatedTargetX - updatedEyePos.x, updatedTargetY - updatedEyePos.y,
-                            updatedTargetZ - updatedEyePos.z);
+                    CelestobeseBeam raygunBeam = new CelestobeseBeam(level(), Celestobese.this
+                    );
                     float randomYaw = getRandom().nextFloat() * spread - spread / 2;
                     float randomPitch = getRandom().nextFloat() * spread - spread / 2;
 

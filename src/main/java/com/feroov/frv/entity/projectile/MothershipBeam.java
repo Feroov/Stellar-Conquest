@@ -2,10 +2,7 @@ package com.feroov.frv.entity.projectile;
 
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.entity.misc.Stardusk;
-import com.feroov.frv.entity.monster.Celestobese;
-import com.feroov.frv.entity.monster.Celestroid;
-import com.feroov.frv.entity.monster.Mekkron;
-import com.feroov.frv.entity.monster.Mothership;
+import com.feroov.frv.entity.monster.*;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.Entity;
@@ -16,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.event.ForgeEventFactory;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -35,9 +33,8 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
         super(entityType, level);
     }
 
-    public MothershipBeam(Level level, Mothership celestroid, double d2, double d3, double d4, int power)
-    {
-        super(EntitiesSTLCON.MOTHERSHIP_BEAM.get(), celestroid, d2, d3, d4, level);
+    public MothershipBeam(Level level, Mothership mothership, double d2, double d3, double d4) {
+        super(EntitiesSTLCON.MOTHERSHIP_BEAM.get(), mothership, d2, d3, d4, level);
     }
 
 
@@ -57,7 +54,7 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult)
+    protected void onHitEntity(@NotNull EntityHitResult entityHitResult)
     {
         super.onHitEntity(entityHitResult);
         if (!this.level().isClientSide)
@@ -65,16 +62,16 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
             Entity entity = entityHitResult.getEntity();
             Entity entity1 = this.getOwner();
             if (entity instanceof Stardusk)  { return; }
-            if (entity instanceof Stardusk)  { return; }
-            if (entity != null && entity instanceof Mekkron) { return; }
-            if (entity != null && entity instanceof Celestroid) { return; }
-            if (entity != null && entity instanceof Celestobese) { return; }
+            if (entity instanceof Mekkron) { return; }
+            if (entity instanceof Celestroid) { return; }
+            if (entity instanceof Celestobese) { return; }
+            if (entity instanceof CelestroidShip) { return; }
+            if (entity instanceof Mothership) { return; }
 
             boolean flag;
 
-            if (entity1 instanceof LivingEntity)
+            if (entity1 instanceof LivingEntity livingentity)
             {
-                LivingEntity livingentity = (LivingEntity)entity1;
                 flag = entity.hurt(this.damageSources().thrown(this, livingentity), 15.0F);
                 if (flag)  { if (entity.isAlive()) { this.doEnchantDamageEffects(livingentity, entity); } }
             }
@@ -89,7 +86,7 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult)
+    protected void onHitBlock(@NotNull BlockHitResult blockHitResult)
     {
         super.onHitBlock(blockHitResult);
 
@@ -113,5 +110,5 @@ public class MothershipBeam extends AbstractHurtingProjectile implements GeoEnti
     }
 
     @Override
-    protected ParticleOptions getTrailParticle()  { return ParticleTypes.SONIC_BOOM; }
+    protected @NotNull ParticleOptions getTrailParticle()  { return ParticleTypes.SONIC_BOOM; }
 }

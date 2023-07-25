@@ -19,20 +19,18 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
 
 
 public class Skeleroid extends PathfinderMob implements GeoEntity
 {
-    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(Skeleroid.class, EntityDataSerializers.BOOLEAN);
 
     public Skeleroid(EntityType<? extends PathfinderMob> entityType, Level level)
@@ -86,13 +84,13 @@ public class Skeleroid extends PathfinderMob implements GeoEntity
     }
 
     @Override
-    protected void playStepSound(BlockPos blockPos, BlockState blockState)
+    protected void playStepSound(@NotNull BlockPos blockPos, @NotNull BlockState blockState)
     {
         this.playSound(SoundEvents.SKELETON_STEP, 0.15F, 1.6F);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 1.0F; }
+    protected float getStandingEyeHeight(@NotNull Pose poseIn, @NotNull EntityDimensions sizeIn) { return 1.0F; }
 
 
     @Override
@@ -126,7 +124,6 @@ public class Skeleroid extends PathfinderMob implements GeoEntity
     {
         private Skeleroid entity;
         private int animCounter = 0;
-        private int animTickLength = 19;
 
         public SkeleroidMeleeAttack(PathfinderMob pathfinderMob, double speedModifier, boolean followingTargetEvenIfNotSeen)
         {
@@ -138,7 +135,7 @@ public class Skeleroid extends PathfinderMob implements GeoEntity
         }
 
         @Override
-        protected void checkAndPerformAttack(LivingEntity livingEntity, double d1)
+        protected void checkAndPerformAttack(@NotNull LivingEntity livingEntity, double d1)
         {
             if (d1 <= this.getAttackReachSqr(livingEntity) && this.getTicksUntilNextAttack() <= 0)
             {
@@ -160,6 +157,7 @@ public class Skeleroid extends PathfinderMob implements GeoEntity
             {
                 animCounter++;
 
+                int animTickLength = 19;
                 if(animCounter >= animTickLength)
                 {
                     animCounter = 0;
@@ -178,7 +176,7 @@ public class Skeleroid extends PathfinderMob implements GeoEntity
     }
 
     @Override
-    public boolean doHurtTarget(Entity entityIn)
+    public boolean doHurtTarget(@NotNull Entity entityIn)
     {
         if (!super.doHurtTarget(entityIn))  { return false; }
         else

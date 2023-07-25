@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -48,31 +49,31 @@ public class CelestobeseBeam extends AbstractArrow implements GeoEntity
         this.pickup = Pickup.DISALLOWED;
     }
 
-    public CelestobeseBeam(Level level, Celestobese celestobese, double d2, double d3, double d4)
+    public CelestobeseBeam(Level level, Celestobese celestobese)
     {
         super(EntitiesSTLCON.CELESTOBESE_BEAM.get(), celestobese, level);
     }
 
     /******************************************** Methods of Interest ************************************************************/
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult)
+    protected void onHitEntity(@NotNull EntityHitResult entityHitResult)
     {
         super.onHitEntity(entityHitResult);
 
         Entity entity = entityHitResult.getEntity();
         Entity entity1 = this.getOwner();
 
-        if (entity != null && entity instanceof Mekkron) { return; }
-        if (entity != null && entity instanceof Celestroid) { return; }
-        if (entity != null && entity instanceof Celestobese) { return; }
+        if (entity instanceof Mekkron) { return; }
+        if (entity instanceof Celestroid) { return; }
+        if (entity instanceof Celestobese) { return; }
+        if (entity instanceof CelestobeseBeam) { return; }
 
         if (!this.level().isClientSide())
         {
             boolean flag;
 
-            if (entity1 instanceof LivingEntity)
+            if (entity1 instanceof LivingEntity livingentity)
             {
-                LivingEntity livingentity = (LivingEntity) entity1;
                 flag = entity.hurt(this.damageSources().thrown(this, livingentity), 9.0F);
                 if (flag)
                 {
@@ -84,7 +85,7 @@ public class CelestobeseBeam extends AbstractArrow implements GeoEntity
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult)
+    protected void onHitBlock(@NotNull BlockHitResult blockHitResult)
     {
         super.onHitBlock(blockHitResult);
         this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
@@ -120,7 +121,8 @@ public class CelestobeseBeam extends AbstractArrow implements GeoEntity
     {
         super.tick();
         ++this.ticksInAir;
-        if (this.ticksInAir >= 80) { this.remove(RemovalReason.DISCARDED); }
+
+        if (this.ticksInAir >= 100) {if (!this.level().isClientSide()) {this.remove(RemovalReason.DISCARDED);}}
 
         if (this.level().isClientSide())
         {
@@ -157,7 +159,7 @@ public class CelestobeseBeam extends AbstractArrow implements GeoEntity
     protected void defineSynchedData() { super.defineSynchedData(); this.entityData.define(PARTICLE, 0); }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() { return NetworkHooks.getEntitySpawningPacket(this);}
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() { return NetworkHooks.getEntitySpawningPacket(this);}
 
     @Override
     protected void tickDespawn() { ++this.ticksInAir; if (this.tickCount >= 40) { this.remove(RemovalReason.KILLED); }}
@@ -170,28 +172,28 @@ public class CelestobeseBeam extends AbstractArrow implements GeoEntity
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound)
+    public void addAdditionalSaveData(@NotNull CompoundTag compound)
     {
         super.addAdditionalSaveData(compound);
         compound.putShort("life", (short) this.ticksInAir);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound)
+    public void readAdditionalSaveData(@NotNull CompoundTag compound)
     {
         super.readAdditionalSaveData(compound);
         this.ticksInAir = compound.getShort("life");
     }
 
     @Override
-    protected ItemStack getPickupItem() { return null; }
+    protected @NotNull ItemStack getPickupItem() { return null; }
 
 
     @Override
-    public void setSoundEvent(SoundEvent soundIn) { this.hitSound = soundIn; }
+    public void setSoundEvent(@NotNull SoundEvent soundIn) { this.hitSound = soundIn; }
 
     @Override
-    protected SoundEvent getDefaultHitGroundSoundEvent()  { return SoundEvents.AMETHYST_BLOCK_CHIME; }
+    protected @NotNull SoundEvent getDefaultHitGroundSoundEvent()  { return SoundEvents.AMETHYST_BLOCK_CHIME; }
 
     @Override
     public boolean displayFireAnimation() { return false; }

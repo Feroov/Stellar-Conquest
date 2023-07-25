@@ -25,6 +25,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -40,7 +41,6 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
     public SoundEvent hitSound = this.getDefaultHitGroundSoundEvent();
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public static final EntityDataAccessor<Integer> PARTICLE = SynchedEntityData.defineId(StarduskBeam.class, EntityDataSerializers.INT);
-    private double explosionPower = 0.5;
 
     public StarduskBeam(EntityType<? extends StarduskBeam> entityType, Level world)
     {
@@ -80,9 +80,8 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
             this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
             this.level().addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 
-            if (entity instanceof LivingEntity)
+            if (entity instanceof LivingEntity livingentity)
             {
-                LivingEntity livingentity = (LivingEntity) entity;
                 if (!this.level().isClientSide && entity1 instanceof LivingEntity)
                 {
                     EnchantmentHelper.doPostHurtEffects(livingentity, entity1);
@@ -90,7 +89,7 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
                     this.remove(RemovalReason.KILLED);
                 }
                 this.doPostHurtEffects(livingentity);
-                if (entity1 != null && livingentity != entity1 && livingentity instanceof Player
+                if (livingentity != entity1 && livingentity instanceof Player
                         && entity1 instanceof ServerPlayer && !this.isSilent())
                 {
                     ((ServerPlayer) entity1).connection
@@ -106,19 +105,20 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
 
 
     @Override
-    protected void onHit(HitResult hitResult)
+    protected void onHit(@NotNull HitResult hitResult)
     {
         super.onHit(hitResult);
         if (!this.level().isClientSide)
         {
             boolean flag = net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level(), this.getOwner());
-            this.level().explode(this, this.getX(), this.getY(), this.getZ(), (float)this.explosionPower, flag, Level.ExplosionInteraction.MOB);
+            double explosionPower = 0.5;
+            this.level().explode(this, this.getX(), this.getY(), this.getZ(), (float) explosionPower, flag, Level.ExplosionInteraction.MOB);
             this.discard();
         }
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult)
+    protected void onHitBlock(@NotNull BlockHitResult blockHitResult)
     {
         super.onHitBlock(blockHitResult);
         this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.0F, 1.0F);
@@ -170,7 +170,7 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
     protected void defineSynchedData() { super.defineSynchedData(); this.entityData.define(PARTICLE, 0); }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() { return NetworkHooks.getEntitySpawningPacket(this);}
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() { return NetworkHooks.getEntitySpawningPacket(this);}
 
     @Override
     protected void tickDespawn() { ++this.ticksInAir; if (this.tickCount >= 40) { this.remove(RemovalReason.KILLED); }}
@@ -183,28 +183,28 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound)
+    public void addAdditionalSaveData(@NotNull CompoundTag compound)
     {
         super.addAdditionalSaveData(compound);
         compound.putShort("life", (short) this.ticksInAir);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound)
+    public void readAdditionalSaveData(@NotNull CompoundTag compound)
     {
         super.readAdditionalSaveData(compound);
         this.ticksInAir = compound.getShort("life");
     }
 
     @Override
-    protected ItemStack getPickupItem() { return null; }
+    protected @NotNull ItemStack getPickupItem() { return null; }
 
 
     @Override
-    public void setSoundEvent(SoundEvent soundIn) { this.hitSound = soundIn; }
+    public void setSoundEvent(@NotNull SoundEvent soundIn) { this.hitSound = soundIn; }
 
     @Override
-    protected SoundEvent getDefaultHitGroundSoundEvent()  { return SoundEvents.AMETHYST_BLOCK_CHIME; }
+    protected @NotNull SoundEvent getDefaultHitGroundSoundEvent()  { return SoundEvents.AMETHYST_BLOCK_CHIME; }
 
     @Override
     public boolean displayFireAnimation() { return false; }

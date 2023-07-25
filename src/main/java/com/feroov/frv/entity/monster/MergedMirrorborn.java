@@ -17,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
@@ -28,8 +29,6 @@ public class MergedMirrorborn extends Animal
     public float oMirrorbornHeight = 3.5F;
     public float mirrorbornWidth = 3.5F;
     public float oMirrorbornWidth = 3.5F;
-    private int jumpTicks;
-    private int jumpDuration;
     private int jumpDelayTicks;
     private boolean wasOnGround;
 
@@ -89,7 +88,7 @@ public class MergedMirrorborn extends Animal
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob)  { return null; }
+    public AgeableMob getBreedOffspring(@NotNull ServerLevel serverLevel, @NotNull AgeableMob ageableMob)  { return null; }
 
     protected float getJumpPower()
     {
@@ -149,8 +148,6 @@ public class MergedMirrorborn extends Animal
     public void startJumping()
     {
         this.setJumping(true);
-        this.jumpDuration = 10;
-        this.jumpTicks = 0;
     }
 
     private void enableJumpControl()
@@ -185,8 +182,6 @@ public class MergedMirrorborn extends Animal
         if (b == 1)
         {
             this.spawnSprintParticle();
-            this.jumpDuration = 10;
-            this.jumpTicks = 0;
         }
         else { super.handleEntityEvent(b); }
     }
@@ -202,7 +197,7 @@ public class MergedMirrorborn extends Animal
             this.mirrorbornSlime = mirrorbornSlime;
         }
 
-        public boolean wantJump() { return this.jump; }
+        public boolean wantJump() { return !this.jump; }
 
         public boolean canJump() { return this.canJump; }
 
@@ -232,7 +227,7 @@ public class MergedMirrorborn extends Animal
         public void tick()
         {
             if (this.mirrorbornSlime.onGround() && !this.mirrorbornSlime.jumping
-                    && !((MirrorbornJumpControl)this.mirrorbornSlime.jumpControl).wantJump())
+                    && ((MirrorbornJumpControl) this.mirrorbornSlime.jumpControl).wantJump())
             {
                 this.mirrorbornSlime.setSpeedModifier(0.0D);
             }
@@ -264,7 +259,7 @@ public class MergedMirrorborn extends Animal
             }
 
             MirrorbornJumpControl jumpControl1 = (MirrorbornJumpControl)this.jumpControl;
-            if (!jumpControl1.wantJump())
+            if (jumpControl1.wantJump())
             {
                 if (this.moveControl.hasWanted() && this.jumpDelayTicks == 0)
                 {
@@ -288,7 +283,7 @@ public class MergedMirrorborn extends Animal
     }
 
     @Override
-    public boolean doHurtTarget(Entity entityIn)
+    public boolean doHurtTarget(@NotNull Entity entityIn)
     {
         this.playSound(SoundEvents.SLIME_ATTACK, 1.0F, 0.4F);
         return super.doHurtTarget(entityIn);

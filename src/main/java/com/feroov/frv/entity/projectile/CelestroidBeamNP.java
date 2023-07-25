@@ -13,6 +13,7 @@ import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -51,24 +52,23 @@ public class CelestroidBeamNP extends AbstractHurtingProjectile implements GeoEn
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult)
+    protected void onHitEntity(@NotNull EntityHitResult entityHitResult)
     {
         super.onHitEntity(entityHitResult);
 
         Entity entity = entityHitResult.getEntity();
         Entity entity1 = this.getOwner();
 
-        if (entity != null && entity instanceof Mekkron) { return; }
-        if (entity != null && entity instanceof Celestroid) { return; }
-        if (entity != null && entity instanceof Celestobese) { return; }
+        if (entity instanceof Mekkron) { return; }
+        if (entity instanceof Celestroid) { return; }
+        if (entity instanceof Celestobese) { return; }
 
         if (!this.level().isClientSide())
         {
             boolean flag;
 
-            if (entity1 instanceof LivingEntity)
+            if (entity1 instanceof LivingEntity livingentity)
             {
-                LivingEntity livingentity = (LivingEntity) entity1;
                 flag = entity.hurt(this.damageSources().thrown(this, livingentity), 3.5F);
                 if (flag)
                 {
@@ -106,7 +106,7 @@ public class CelestroidBeamNP extends AbstractHurtingProjectile implements GeoEn
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult)
+    protected void onHitBlock(@NotNull BlockHitResult blockHitResult)
     {
         super.onHitBlock(blockHitResult);
         this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
@@ -120,5 +120,5 @@ public class CelestroidBeamNP extends AbstractHurtingProjectile implements GeoEn
     public boolean isOnFire() { return false; }
 
     @Override
-    protected ParticleOptions getTrailParticle()  { return ParticleTypes.UNDERWATER; }
+    protected @NotNull ParticleOptions getTrailParticle()  { return ParticleTypes.UNDERWATER; }
 }

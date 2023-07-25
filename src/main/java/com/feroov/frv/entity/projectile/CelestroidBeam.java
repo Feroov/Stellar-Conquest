@@ -2,10 +2,7 @@ package com.feroov.frv.entity.projectile;
 
 import com.feroov.frv.entity.EntitiesSTLCON;
 import com.feroov.frv.entity.misc.Stardusk;
-import com.feroov.frv.entity.monster.Celestobese;
-import com.feroov.frv.entity.monster.Celestroid;
-import com.feroov.frv.entity.monster.CelestroidShip;
-import com.feroov.frv.entity.monster.Mekkron;
+import com.feroov.frv.entity.monster.*;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.Entity;
@@ -15,6 +12,7 @@ import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -37,11 +35,6 @@ public class CelestroidBeam extends AbstractHurtingProjectile implements GeoEnti
         super(EntitiesSTLCON.CELESTROID_BEAM.get(), celestroidShip, d2, d3, d4, level);
     }
 
-    public CelestroidBeam(Level level, Celestroid celestroid, double d2, double d3, double d4)
-    {
-        super(EntitiesSTLCON.CELESTROID_BEAM.get(), celestroid, d2, d3, d4, level);
-    }
-
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers)
     {
@@ -58,22 +51,24 @@ public class CelestroidBeam extends AbstractHurtingProjectile implements GeoEnti
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
     @Override
-    protected void onHitEntity(EntityHitResult entityHitResult)
+    protected void onHitEntity(@NotNull EntityHitResult entityHitResult)
     {
         super.onHitEntity(entityHitResult);
+
         if (!this.level().isClientSide)
         {
             Entity entity = entityHitResult.getEntity();
             Entity entity1 = this.getOwner();
             if (entity instanceof Stardusk)  { return; }
-            if (entity != null && entity instanceof Mekkron) { return; }
-            if (entity != null && entity instanceof Celestroid) { return; }
-            if (entity != null && entity instanceof Celestobese) { return; }
+            if (entity instanceof Mekkron) { return; }
+            if (entity instanceof Celestroid) { return; }
+            if (entity instanceof Celestobese) { return; }
+            if (entity instanceof CelestroidShip) { return; }
+            if (entity instanceof Mothership) { return; }
 
             boolean flag;
-            if (entity1 instanceof LivingEntity)
+            if (entity1 instanceof LivingEntity livingentity)
             {
-                LivingEntity livingentity = (LivingEntity)entity1;
                 flag = entity.hurt(this.damageSources().thrown(this, livingentity), 8.0F);
                 if (flag)
                 {
@@ -93,7 +88,7 @@ public class CelestroidBeam extends AbstractHurtingProjectile implements GeoEnti
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult blockHitResult)
+    protected void onHitBlock(@NotNull BlockHitResult blockHitResult)
     {
         super.onHitBlock(blockHitResult);
         this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
@@ -115,5 +110,5 @@ public class CelestroidBeam extends AbstractHurtingProjectile implements GeoEnti
     public boolean isOnFire() { return false; }
 
     @Override
-    protected ParticleOptions getTrailParticle()  { return ParticleTypes.SONIC_BOOM; }
+    protected @NotNull ParticleOptions getTrailParticle() { return ParticleTypes.UNDERWATER; }
 }

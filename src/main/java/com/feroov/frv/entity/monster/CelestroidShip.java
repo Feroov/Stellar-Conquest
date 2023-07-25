@@ -1,7 +1,6 @@
 package com.feroov.frv.entity.monster;
 
 import com.feroov.frv.entity.AnimationConstants;
-import com.feroov.frv.entity.ai.CelestroidShipAttackGoal;
 import com.feroov.frv.entity.projectile.CelestroidBeam;
 import com.feroov.frv.sound.SoundEventsSTLCON;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -31,14 +30,15 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.EnumSet;
-import java.util.Objects;
 
 public class CelestroidShip extends Ghast implements Enemy, GeoEntity
 {
 
     public static final EntityDataAccessor<Integer> DATA_ATTACK_CHARGE_ID = SynchedEntityData.defineId(CelestroidShip.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_IS_CHARGING = SynchedEntityData.defineId(Ghast.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Integer> ATTACK = SynchedEntityData.defineId(CelestroidShip.class, EntityDataSerializers.INT);
 
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
@@ -53,7 +53,7 @@ public class CelestroidShip extends Ghast implements Enemy, GeoEntity
     protected void registerGoals()
     {
         this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, false));
-        this.goalSelector.addGoal(2, new CelestroidShipAttackGoal(this));
+        this.goalSelector.addGoal(2, new CelestroidRangedAttackGoal(this, 0.3D, 63.0D, 120.0F, 0));
         this.goalSelector.addGoal(6, new CelestroidShip.LookAroundGoal(this));
         this.goalSelector.addGoal(8, new CelestroidShip.RandomFlyGoal(this));
     }
@@ -98,9 +98,7 @@ public class CelestroidShip extends Ghast implements Enemy, GeoEntity
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
         controllerRegistrar.add(new AnimationController<>(this, "livingController", 0, event ->
-        {
-            return event.setAndContinue(AnimationConstants.IDLE);
-        }));
+                event.setAndContinue(AnimationConstants.IDLE)));
     }
 
     @Override
@@ -116,21 +114,6 @@ public class CelestroidShip extends Ghast implements Enemy, GeoEntity
 
     public void setCharging(boolean pCharging) { this.entityData.set(DATA_IS_CHARGING, pCharging); }
 
-    public void shootRayBeam()
-    {
-        Vec3 vec3d = this.getViewVector(1.0F);
-        double d2 = Objects.requireNonNull(this.getTarget()).getX() - (this.getX() + vec3d.x() * 4.0D);
-        double d3 = this.getTarget().getBoundingBox().minY + this.getTarget().getBbHeight() / 2.0F - (0.5D + this.getY() + this.getBbHeight() / 2.0F);
-        double d4 = this.getTarget().getZ() - (this.getZ() + vec3d.z() * 4.0D);
-
-        CelestroidBeam raygunBeam = new CelestroidBeam(this.level(), this, d2, d3, d4);
-        raygunBeam.setPos(this.getX() + vec3d.x() * 4.0D, this.getY() + this.getBbHeight() / 2.0F + 0.5D, this.getZ() + vec3d.z() * 4.0D);
-        this.level().addFreshEntity(raygunBeam);
-
-        if (this.getRandom().nextInt(6) == 0) { this.setTarget(null); }
-    }
-
-    public boolean shouldAttack(LivingEntity living) { return true; }
 
     @Override
     protected float getStandingEyeHeight(@NotNull Pose poseIn, @NotNull EntityDimensions sizeIn) { return 1.65F; }
@@ -258,4 +241,177 @@ public class CelestroidShip extends Ghast implements Enemy, GeoEntity
             }
         }
     }
+
+    public static class CelestroidRangedAttackGoal extends Goal
+    {
+        // The CelestroidShip and the ranged attack mob
+        private final CelestroidShip mob;
+        private final CelestroidShip rangedAttackMob;
+
+        // The target entity and attack-related variables
+        @Nullable
+        private LivingEntity target;
+        private int attackTime = -1;
+        private int seeTime;
+        private final int stateCheck;
+
+        // Attack parameters
+        private final double attackIntervalMin, attackIntervalMax, speedModifier;
+        private final float attackRadius, attackRadiusSqr;
+
+        // Strafing variables
+        private boolean strafingClockwise, strafingBackwards;
+        private int strafingTime = -1;
+
+        /**
+         * Constructs a CelestroidRangedAttackGoal for the CelestroidShip.
+         *
+         * @param celestroid        The Celestroid entity.
+         * @param speedIn           The speed modifier.
+         * @param dpsIn             The minimum attack interval.
+         * @param rangeIn           The attack range.
+         * @param state             The attack state.
+         */
+        public CelestroidRangedAttackGoal(CelestroidShip celestroid, double speedIn, double dpsIn, float rangeIn, int state)
+        {
+            this(celestroid, speedIn, dpsIn, dpsIn, rangeIn, state);
+        }
+
+        /**
+         * Constructs a CelestroidRangedAttackGoal for the CelestroidShip with variable attack intervals.
+         *
+         * @param celestroid        The Celestroid entity.
+         * @param speedIn           The speed modifier.
+         * @param attackIntervalMin   The minimum attack interval.
+         * @param attackIntervalMax   The maximum attack interval.
+         * @param attackRadius        The attack radius.
+         * @param state             The attack state.
+         */
+        public CelestroidRangedAttackGoal(CelestroidShip celestroid, double speedIn, double attackIntervalMin, double attackIntervalMax, float attackRadius, int state)
+        {
+            if (celestroid == null)
+            {
+                throw new IllegalArgumentException("ArrowAttackGoal requires Mob implements RangedAttackMob");
+            }
+            else
+            {
+                this.rangedAttackMob =  celestroid;
+                this.mob =  celestroid;
+                this.speedModifier = speedIn;
+                this.attackIntervalMin = attackIntervalMin;
+                this.attackIntervalMax = attackIntervalMax;
+                this.attackRadius = attackRadius;
+                this.attackRadiusSqr = attackRadius * attackRadius;
+                this.stateCheck = state;
+
+                this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+            }
+        }
+
+        public boolean canUse()
+        {
+            LivingEntity livingentity = this.mob.getTarget();
+            if (livingentity != null && livingentity.isAlive()) { this.target = livingentity; return true; }
+            else  { return false; }
+        }
+
+        public boolean canContinueToUse() { return this.canUse() || !this.mob.getNavigation().isDone(); }
+
+        public void stop()
+        {
+            this.target = null;
+            this.seeTime = 0;
+            this.attackTime = -1;
+        }
+
+        public boolean requiresUpdateEveryTick() { return true; }
+
+        public void tick()
+        {
+            LivingEntity livingentity = this.mob.getTarget();
+            assert this.target != null;
+            double d0 = this.mob.distanceToSqr(this.target.getX(), this.target.getY(), this.target.getZ());
+            boolean flag = this.mob.getSensing().hasLineOfSight(this.target);
+            if (flag) { ++this.seeTime; } else { this.seeTime = 0; }
+
+            if (!(d0 > (double)this.attackRadiusSqr) && this.seeTime >= 5) {
+                this.mob.getNavigation().stop();
+            } else { this.mob.getNavigation().moveTo(this.target, this.speedModifier); }
+
+            if (livingentity != null)
+            {
+                boolean flag1 = this.seeTime > 0;
+                if (flag != flag1) { this.seeTime = 0;}
+                if (flag) { ++this.seeTime;} else {--this.seeTime;}
+                if (!(d0 > (double)this.attackRadiusSqr) && this.seeTime >= 20)
+                {
+                    this.mob.getNavigation().stop();
+                    ++this.strafingTime;
+                } else { this.mob.getNavigation().moveTo(livingentity, this.speedModifier); this.strafingTime = -1; }
+
+                if (this.strafingTime >= 20)
+                {
+                    if ((double)this.mob.getRandom().nextFloat() < 0.3D) { this.strafingClockwise = !this.strafingClockwise; }
+                    if ((double)this.mob.getRandom().nextFloat() < 0.3D) { this.strafingBackwards = !this.strafingBackwards; }
+                    this.strafingTime = 0;
+                }
+
+                if (this.strafingTime > -1)
+                {
+                    if (d0 > (double)(this.attackRadiusSqr * 0.75F)) { this.strafingBackwards = false; }
+                    else if (d0 < (double)(this.attackRadiusSqr * 0.25F)) { this.strafingBackwards = true; }
+                    //speed shit
+                    this.mob.getMoveControl().strafe(this.strafingBackwards ? -0.0F : 0.0F, this.strafingClockwise ? 0.3F : -0.3F);
+                    this.mob.lookAt(livingentity, 30.0F, 30.0F);
+                }
+                this.mob.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
+                if (--this.attackTime == 0)
+                {
+                    if (!flag) { return; }
+                    if (this.mob.isUsingItem())
+                    {
+                        int i = this.mob.getTicksUsingItem();
+                        if (i >= 19) { this.mob.setAttackingState(stateCheck); }
+                        if (i >= 20) { this.mob.stopUsingItem(); }
+                    }
+                    float f = (float)Math.sqrt(d0) / this.attackRadius;
+                    float f1 = Mth.clamp(f, 0.1F, 1.0F);
+                    this.rangedAttackMob.performRangedAttack(this.target, f1);
+                    this.attackTime = Mth.floor(f * (float)(this.attackIntervalMax - this.attackIntervalMin) + (float)this.attackIntervalMin);
+                }
+                else if (this.attackTime < 0)
+                {
+                    this.attackTime = Mth.floor(Mth.lerp(Math.sqrt(d0)
+                            / (double)this.attackRadius, this.attackIntervalMin, this.attackIntervalMax));
+                }
+
+            }
+        }
+    }
+
+    public void performRangedAttack(LivingEntity targetEntity, float partialTicks)
+    {
+        Vec3 eyePos = getEyePosition(partialTicks);
+
+        double targetX = targetEntity.getX() + targetEntity.getBbWidth() / 2.0;
+        double targetY = targetEntity.getBoundingBox().minY + targetEntity.getBbHeight() / 2.0;
+        double targetZ = targetEntity.getZ() + targetEntity.getBbWidth() / 2.0;
+
+        double d2 = targetX - eyePos.x;
+        double d3 = targetY - eyePos.y;
+        double d4 = targetZ - eyePos.z;
+
+        double velocityFactor = 2.0;
+
+        CelestroidBeam raygunBeam = new CelestroidBeam(level(), this, d2, d3, d4);
+        raygunBeam.shoot(d2, d3, d4, (float) velocityFactor, 0.1F);
+        playSound(SoundEventsSTLCON.RAYGUN_SHOOT.get(), 7.0F, 1.0F);
+        raygunBeam.setPos(eyePos.x, eyePos.y, eyePos.z);
+        level().addFreshEntity(raygunBeam);
+
+        if (getRandom().nextInt(6) == 0) { setTarget(null); }
+    }
+
+    public void setAttackingState(int time) { this.entityData.set(ATTACK, time); }
+
 }
