@@ -1,6 +1,5 @@
 package com.feroov.frv.block;
 
-
 import com.feroov.frv.block.custom.vegetation.LumiBloomCropBlock;
 import com.feroov.frv.block.custom.wood.XenosWoodType;
 import com.feroov.frv.block.custom.vegetation.Blushthorn;
@@ -26,7 +25,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -209,9 +207,49 @@ public class BlocksSTLCON
     // ---------------------------------------------------------------------------------------------------
 
 
+    /**
+     * Creates a new wooden ButtonBlock with the specified properties.
+     *
+     * @param blockSetType The wood type for the button.
+     * @return The newly created wooden ButtonBlock instance.
+     */
+    private static ButtonBlock woodenButton(BlockSetType blockSetType)
+    {
+        return new ButtonBlock(BlockBehaviour.Properties.copy(OAK_BUTTON).noCollission().strength(0.5F), blockSetType, 30, true);
+    }
 
-    private static ButtonBlock woodenButton(BlockSetType p_273357_) {return new ButtonBlock(BlockBehaviour.Properties.copy(OAK_BUTTON).noCollission().strength(0.5F), p_273357_, 30, true);}
-    private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) { RegistryObject<T> toReturn = BLOCKS.register(name, block); registerBlockItem(name, toReturn); return toReturn; }
-    private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block)  { return ItemsSTLCON.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties())); }
+    /**
+     * Registers a block with a given name and supplier function.
+     *
+     * @param name The name of the block.
+     * @param block The supplier function that creates the block.
+     * @param <T> The type of block.
+     * @return The RegistryObject instance for the registered block.
+     */
+    private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block)
+    {
+        RegistryObject<T> toReturn = BLOCKS.register(name, block);
+        registerBlockItem(name, toReturn);
+        return toReturn;
+    }
+
+    /**
+     * Registers a BlockItem for the given block with the specified name.
+     *
+     * @param name The name of the block item.
+     * @param block The RegistryObject instance of the block to associate with the item.
+     * @param <T> The type of block.
+     * @return The RegistryObject instance for the registered block item.
+     */
+    private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, RegistryObject<T> block)
+    {
+        return ItemsSTLCON.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
+    }
+
+    /**
+     * Registers all the blocks in the BLOCKS DeferredRegister to the provided event bus.
+     *
+     * @param eventBus The event bus to register the blocks to.
+     */
     public static void register(IEventBus eventBus) { BLOCKS.register(eventBus); }
 }
