@@ -1,6 +1,5 @@
 package com.feroov.frv.block;
 
-
 import com.feroov.frv.STLCON;
 import com.feroov.frv.events.ModParticles;
 import com.feroov.frv.world.dimension.DimensionsSTLCON;
@@ -34,6 +33,11 @@ public class STLCONPortalBlocks extends Block
     protected static final VoxelShape Z_AXIS_AABB = Block.box(6.0D, 0.0D, 0.0D, 10.0D, 16.0D, 16.0D);
     private static Block frame;
 
+    /**
+     * Constructs a new STLCONPortalBlocks with the specified frame block.
+     *
+     * @param frame The frame block used to create the portal.
+     */
     public STLCONPortalBlocks(Block frame)
     {
         super(BlockBehaviour.Properties.of()
@@ -63,6 +67,18 @@ public class STLCONPortalBlocks extends Block
         };
     }
 
+    /**
+     * Updates the state of the portal block when a neighbor block changes.
+     * If the structure of the portal becomes invalid after the update, it will be removed.
+     *
+     * @param stateIn The current block state.
+     * @param facing The direction in which the neighbor block changed.
+     * @param facingState The state of the neighbor block after the change.
+     * @param worldIn The LevelAccessor representing the world.
+     * @param currentPos The position of this block.
+     * @param facingPos The position of the neighbor block that changed.
+     * @return The updated block state, or Blocks.AIR.defaultBlockState() if the portal became invalid.
+     */
     @Override
     public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn, BlockPos currentPos, BlockPos facingPos)
     {
@@ -74,6 +90,15 @@ public class STLCONPortalBlocks extends Block
                         .validatePortal() ? Blocks.AIR.defaultBlockState() : stateIn;
     }
 
+    /**
+     * Called when an entity enters the portal block.
+     * If the entity is a LivingEntity and eligible for dimension change, it is teleported.
+     *
+     * @param state The current block state.
+     * @param world The Level representing the world.
+     * @param pos The position of this block.
+     * @param entity The entity that entered the portal.
+     */
     @Override
     public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity)
     {
@@ -101,6 +126,15 @@ public class STLCONPortalBlocks extends Block
         }
     }
 
+    /**
+     * Animates the portal block when ticked on the client-side.
+     * Plays portal ambient sounds and spawns particles.
+     *
+     * @param stateIn The current block state.
+     * @param worldIn The Level representing the world.
+     * @param pos The position of this block.
+     * @param rand A random number generator for randomization.
+     */
     @OnlyIn(Dist.CLIENT)
     @Override
     public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand)
@@ -160,6 +194,14 @@ public class STLCONPortalBlocks extends Block
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) { builder.add(AXIS); }
 
+    /**
+     * Checks if the portal can be created at the given position in the world.
+     * If the portal can be created, it is spawned in the world.
+     *
+     * @param worldIn The LevelAccessor representing the world.
+     * @param pos The position to check for portal creation.
+     * @return True if the portal is successfully created, false otherwise.
+     */
     public boolean createPortal(LevelAccessor worldIn, BlockPos pos)
     {
         STLCONPortalBlocks.Size portal = isPortal(worldIn, pos);
@@ -210,6 +252,10 @@ public class STLCONPortalBlocks extends Block
         return new STLCONPortalBlocks.Size(worldIn, pos, axis, this, worldIn.getBlockState(pos.below()).getBlock());
     }
 
+    /**
+     * Helper class representing the size of a portal in the world.
+     * This class handles the validation and creation of portal blocks.
+     */
     public static class Size
     {
         private final LevelAccessor world;
@@ -271,6 +317,11 @@ public class STLCONPortalBlocks extends Block
         public int getHeight() { return this.height; }
         public int getWidth() { return this.width; }
 
+        /**
+         * Calculates the height of the portal based on its structure.
+         *
+         * @return The calculated height of the portal.
+         */
         protected int calculatePortalHeight()
         {
             exitNestedLoops:
@@ -320,11 +371,19 @@ public class STLCONPortalBlocks extends Block
             return pos.isAir() || block == this.portal;
         }
 
+        /**
+         * Checks if the portal is valid based on its size and structure.
+         *
+         * @return True if the portal is valid, false otherwise.
+         */
         public boolean isValid()
         {
             return this.bottomLeft != null && this.width >= 2 && this.width <= 21 && this.height >= 3 && this.height <= 21;
         }
 
+        /**
+         * Creates the portal blocks in the world based on its size and structure.
+         */
         public void createPortalBlocks()
         {
             BlockState blockstate = this.portal.defaultBlockState().setValue(STLCONPortalBlocks.AXIS, this.axis);
@@ -334,8 +393,18 @@ public class STLCONPortalBlocks extends Block
             });
         }
 
+        /**
+         * Checks if the portal block count is valid for the portal size.
+         *
+         * @return True if the portal block count is valid, false otherwise.
+         */
         private boolean isPortalCountValidForSize() { return this.portalBlockCount >= this.width * this.height; }
 
+        /**
+         * Validates the portal based on its size and portal block count.
+         *
+         * @return True if the portal is valid and has enough portal blocks, false otherwise.
+         */
         public boolean validatePortal() { return this.isValid() && this.isPortalCountValidForSize(); }
     }
 }
