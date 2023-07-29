@@ -18,14 +18,29 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 
-import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class XenosgrassBlock extends Block implements BonemealableBlock
 {
+    /**
+     * Constructs a XenosgrassBlock with the specified properties.
+     *
+     * @param properties The properties for the XenosgrassBlock.
+     */
     public XenosgrassBlock(Properties properties) { super(properties); }
 
-
+    /**
+     * Checks if the block can sustain a specific type of plant on it.
+     * Xenosgrass can sustain plants on its top face (direction UP) if the plant type is PLAINS, CAVE,
+     * or if the plantable is an instance of LumiBloomCropBlock.
+     *
+     * @param state The current state of the block.
+     * @param getter The BlockGetter to use for retrieving neighboring blocks' information.
+     * @param pos The position of the block in the world.
+     * @param direction The direction in which the plant is being placed.
+     * @param plantable The IPlantable instance representing the plant being placed.
+     * @return True if the block can sustain the plant, false otherwise.
+     */
     @Override
     public boolean canSustainPlant(BlockState state, BlockGetter getter, BlockPos pos, Direction direction, IPlantable plantable)
     {
@@ -35,22 +50,48 @@ public class XenosgrassBlock extends Block implements BonemealableBlock
         return plantType == PlantType.PLAINS || plantType == PlantType.CAVE || plantable instanceof LumiBloomCropBlock;
     }
 
-
+    /**
+     * Checks if the Xenosgrass block is a valid target for bonemeal.
+     * The block is a valid bonemeal target if the block above it is air.
+     *
+     * @param levelReader The LevelReader representing the world.
+     * @param blockPos The position of the Xenosgrass block.
+     * @param blockState The current state of the Xenosgrass block.
+     * @param isClient The flag indicating if the check is performed on the client side.
+     * @return True if the block is a valid target for bonemeal, false otherwise.
+     */
     @Override
     public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos blockPos, BlockState blockState, boolean b)
     {
         return levelReader.getBlockState(blockPos.above()).isAir();
     }
 
-
-
+    /**
+     * Determines if bonemeal application is successful on the Xenosgrass block.
+     * Bonemeal success is always true for Xenosgrass.
+     *
+     * @param level The Level in which the bonemeal is being applied.
+     * @param rand The RandomSource to generate random numbers.
+     * @param pos The position of the Xenosgrass block.
+     * @param state The current state of the Xenosgrass block.
+     * @return True, indicating bonemeal application success.
+     */
     @Override
     public boolean isBonemealSuccess(Level level, RandomSource rand, BlockPos pos, BlockState state) { return true; }
 
+    /**
+     * Performs bonemeal effect on the Xenosgrass block.
+     * When bonemeal is applied, it has a chance to create new flowers or plants in the vicinity.
+     *
+     * @param serverLevel The ServerLevel where the bonemeal effect is being applied.
+     * @param randomSource The RandomSource to generate random numbers.
+     * @param pos The position of the Xenosgrass block.
+     * @param blockState The current state of the Xenosgrass block.
+     */
     @Override
-    public void performBonemeal(ServerLevel serverLevel, RandomSource randomSource, BlockPos p_221272_, BlockState blockState)
+    public void performBonemeal(ServerLevel serverLevel, RandomSource randomSource, BlockPos pos, BlockState blockState)
     {
-        BlockPos blockpos = p_221272_.above();
+        BlockPos blockpos = pos.above();
         BlockState blockstate = Blocks.GRASS.defaultBlockState();
         Optional<Holder.Reference<PlacedFeature>> optional = serverLevel.registryAccess().registryOrThrow(Registries.PLACED_FEATURE)
                 .getHolder(VegetationPlacements.GRASS_BONEMEAL);
