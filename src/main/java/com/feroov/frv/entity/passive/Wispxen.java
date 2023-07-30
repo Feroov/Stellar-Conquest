@@ -25,27 +25,38 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
 
 
 public class Wispxen extends Animal implements GeoEntity
 {
+    // Cache for the AnimatableInstance used by this entity.
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
+    // The temp items
     private static final Ingredient FOOD_ITEMS = Ingredient.of(ItemsSTLCON.LUMIBLOOM_SEEDS.get());
 
+    /**
+     * Constructs a new Wispxen entity with the specified entity type and level.
+     *
+     * @param entityType The entity type of the Wispxen.
+     * @param level      The level in which the Wispxen will exist.
+     */
     public Wispxen(EntityType<? extends Animal> entityType, Level level)
     {
         super(entityType, level);
         this.moveControl = new FlyingMoveControl(this, 20, true);
     }
 
+    /**
+     * Sets the attributes for the Wispxen entity.
+     *
+     * @return An AttributeSupplier containing the configured attributes for the Wispxen.
+     */
     public static AttributeSupplier setAttributes()
     {
         return Animal.createMobAttributes()
@@ -54,6 +65,9 @@ public class Wispxen extends Animal implements GeoEntity
                 .add(Attributes.FLYING_SPEED, 0.17D).build();
     }
 
+    /**
+     * Registers the goals for this entity, defining its behavior.
+     */
     @Override
     protected void registerGoals()
     {
@@ -67,6 +81,11 @@ public class Wispxen extends Animal implements GeoEntity
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
     }
 
+    /**
+     * Registers the animation controllers for the Wispxen entity.
+     *
+     * @param controllerRegistrar The registrar for the animation controllers.
+     */
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
@@ -77,15 +96,26 @@ public class Wispxen extends Animal implements GeoEntity
     }
 
     @Override
+    public boolean causeFallDamage(float v, float v2, DamageSource damageSource) { return false; }
+
+    @Override
     protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 0.2F; }
 
-
+    /**
+     * Checks if the given ItemStack is considered as food for the Wispxen.
+     *
+     * @param itemStack The ItemStack to check.
+     * @return True if the ItemStack is food for the Wispxen, false otherwise.
+     */
     @Override
     public boolean isFood(ItemStack itemStack) { return FOOD_ITEMS.test(itemStack); }
 
-    @Override
-    public boolean causeFallDamage(float v, float v2, DamageSource damageSource) { return false; }
-
+    /**
+     * Creates a path navigation for the Wispxen in the given level.
+     *
+     * @param level The level in which the Wispxen will navigate.
+     * @return The created path navigation.
+     */
     @Override
     protected PathNavigation createNavigation(Level level)
     {
@@ -96,26 +126,31 @@ public class Wispxen extends Animal implements GeoEntity
         return flyingpathnavigation;
     }
 
+    /**
+     * Handles the movement of the Wispxen based on the given Vec3.
+     *
+     * @param vec3 The Vec3 representing the movement.
+     */
     @Override
-    public void travel(Vec3 p_218382_)
+    public void travel(Vec3 vec3)
     {
         if (this.isControlledByLocalInstance())
         {
             if (this.isInWater())
             {
-                this.moveRelative(0.02F, p_218382_);
+                this.moveRelative(0.02F, vec3);
                 this.move(MoverType.SELF, this.getDeltaMovement());
                 this.setDeltaMovement(this.getDeltaMovement().scale((double)0.8F));
             }
             else if (this.isInLava())
             {
-                this.moveRelative(0.02F, p_218382_);
+                this.moveRelative(0.02F, vec3);
                 this.move(MoverType.SELF, this.getDeltaMovement());
                 this.setDeltaMovement(this.getDeltaMovement().scale(0.5D));
             }
             else
             {
-                this.moveRelative(this.getSpeed(), p_218382_);
+                this.moveRelative(this.getSpeed(), vec3);
                 this.move(MoverType.SELF, this.getDeltaMovement());
                 this.setDeltaMovement(this.getDeltaMovement().scale((double)0.91F));
             }
@@ -124,6 +159,12 @@ public class Wispxen extends Animal implements GeoEntity
         this.calculateEntityAnimation(false);
     }
 
+    /**
+     * Gets the AnimatableInstanceCache associated with the Wispxen entity.
+     * The AnimatableInstanceCache is responsible for caching Animatable instances for animations.
+     *
+     * @return The AnimatableInstanceCache used by the Wispxen.
+     */
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
@@ -159,6 +200,11 @@ public class Wispxen extends Animal implements GeoEntity
         return EntitiesSTLCON.WISPXEN.get().create(level);
     }
 
+    /**
+     * Called when the Wispxen reaches the age boundary.
+     * This method is typically called when the entity grows to its maximum age.
+     * It may perform additional actions when the age boundary is reached.
+     */
     @Override
     protected void ageBoundaryReached()
     {
@@ -169,6 +215,11 @@ public class Wispxen extends Animal implements GeoEntity
         }
     }
 
+    /**
+     * Handles the AI behavior for the Wispxen entity.
+     * This method is called during every tick to update the entity's AI.
+     * It may perform actions based on the AI state or the entity's environment.
+     */
     @Override
     public void aiStep()
     {
