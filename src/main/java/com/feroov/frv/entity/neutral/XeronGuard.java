@@ -34,12 +34,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -47,14 +44,31 @@ import java.util.UUID;
 
 public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
 {
+    // Cache for the AnimatableInstance used by this entity.
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
+    // DataAccessor for tracking the 'attacking' state of the entity.
     protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(XeronGuard.class, EntityDataSerializers.BOOLEAN);
+
+    // DataAccessor for tracking the remaining persistent anger time of the entity.
     private static final EntityDataAccessor<Integer> DATA_REMAINING_ANGER_TIME = SynchedEntityData.defineId(XeronGuard.class, EntityDataSerializers.INT);
+
+    // Range for the persistent anger time (used for resetting).
     private static final UniformInt PERSISTENT_ANGER_TIME = TimeUtil.rangeOfSeconds(20, 39);
+
+    // UUID of the persistent anger target entity.
     @Nullable
     private UUID persistentAngerTarget;
+
+    // Ingredient representing the item that interests this entity.
     private static final Ingredient ITEM_INTEREST = Ingredient.of(ItemsSTLCON.XENITE_INGOT.get());
 
+    /**
+     * Constructs a new XeronGuard entity.
+     *
+     * @param entityType The EntityType of the entity.
+     * @param level The Level in which the entity is spawned.
+     */
     public XeronGuard(EntityType<? extends TamableAnimal> entityType, Level level)
     {
         super(entityType, level);
@@ -63,6 +77,11 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
         this.setTame(false);
     }
 
+    /**
+     * Sets the attributes for this entity.
+     *
+     * @return An AttributeSupplier with the specified attributes.
+     */
     public static AttributeSupplier setAttributes()
     {
         return TamableAnimal.createMobAttributes()
@@ -72,6 +91,9 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
                 .add(Attributes.ATTACK_DAMAGE, 3.5D).build();
     }
 
+    /**
+     * Registers the goals for this entity, defining its behavior.
+     */
     @Override
     protected void registerGoals()
     {
@@ -95,6 +117,13 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
         this.targetSelector.addGoal(7, new ResetUniversalAngerTargetGoal<>(this, true));
     }
 
+    /**
+     * Handles the interaction between the XeronGuard entity and a player.
+     *
+     * @param player The player interacting with the entity.
+     * @param interactionHand The hand used for the interaction.
+     * @return The result of the interaction.
+     */
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand)
     {
@@ -133,7 +162,13 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
         }
     }
 
-
+    /**
+     * Determines if this XeronGuard entity wants to attack the specified entities.
+     *
+     * @param livingEntity The entity to attack.
+     * @param livingEntity2 The second entity (usually the owner or another entity).
+     * @return True if the XeronGuard wants to attack, otherwise false.
+     */
     @Override
     public boolean wantsToAttack(LivingEntity livingEntity, LivingEntity livingEntity2)
     {
@@ -149,6 +184,12 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
             else { return !(livingEntity instanceof TamableAnimal) || !((TamableAnimal)livingEntity).isTame();} } else { return false;}
     }
 
+    /**
+     * Handles hurting the specified entity.
+     *
+     * @param entity The entity to hurt.
+     * @return True if the entity was hurt successfully, otherwise false.
+     */
     @Override
     public boolean doHurtTarget(Entity entity)
     {
@@ -157,6 +198,11 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
         return success;
     }
 
+    /**
+     * Sets the tame state of the XeronGuard entity and adjusts its attributes accordingly.
+     *
+     * @param b The new tame state.
+     */
     @Override
     public void setTame(boolean b)
     {
@@ -195,7 +241,11 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 1.0F; }
 
-
+    /**
+     * Registers the animation controllers for the XeronGuard entity.
+     *
+     * @param controllerRegistrar The registrar for the animation controllers.
+     */
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
@@ -208,6 +258,11 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
         }));
     }
 
+    /**
+     * Gets the animatable instance cache for the XeronGuard entity.
+     *
+     * @return The animatable instance cache.
+     */
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
@@ -218,6 +273,9 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
         return null;
     }
 
+    /**
+     * Defines the synched data for the XeronGuard entity.
+     */
     @Override
     protected void defineSynchedData()
     {
@@ -230,6 +288,11 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
 
     public boolean isAttacking() { return this.entityData.get(ATTACKING); }
 
+    /**
+     * Saves additional entity data to NBT.
+     *
+     * @param compoundTag The NBT tag to save the data to.
+     */
     @Override
     public void addAdditionalSaveData(CompoundTag compoundTag)
     {
@@ -237,6 +300,11 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
         this.addPersistentAngerSaveData(compoundTag);
     }
 
+    /**
+     * Reads additional entity data from NBT.
+     *
+     * @param compoundTag The NBT tag to read the data from.
+     */
     @Override
     public void readAdditionalSaveData(CompoundTag compoundTag)
     {
@@ -244,6 +312,9 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
         this.readPersistentAngerSaveData(this.level(), compoundTag);
     }
 
+    /**
+     * Handles the AI behavior of the XeronGuard entity.
+     */
     public void aiStep()
     {
         super.aiStep();
@@ -251,37 +322,69 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
         {
             this.updatePersistentAnger((ServerLevel)this.level(), true);
         }
-
     }
 
+    /**
+     * Gets the remaining persistent anger time of the XeronGuard entity.
+     *
+     * @return The remaining persistent anger time.
+     */
     @Override
     public int getRemainingPersistentAngerTime()
     {
         return this.entityData.get(DATA_REMAINING_ANGER_TIME);
     }
 
+    /**
+     * Sets the remaining persistent anger time of the XeronGuard entity.
+     *
+     * @param remainingPersistentAngerTime The remaining persistent anger time.
+     */
     @Override
     public void setRemainingPersistentAngerTime(int remainingPersistentAngerTime)
     {
         this.entityData.set(DATA_REMAINING_ANGER_TIME, remainingPersistentAngerTime);
     }
 
+    /**
+     * Gets the UUID of the persistent anger target of the XeronGuard entity.
+     *
+     * @return The UUID of the persistent anger target.
+     */
     @Nullable
     @Override
     public UUID getPersistentAngerTarget() { return this.persistentAngerTarget; }
 
+    /**
+     * Sets the UUID of the persistent anger target of the XeronGuard entity.
+     *
+     * @param uuid The UUID of the persistent anger target.
+     */
     @Override
     public void setPersistentAngerTarget(@Nullable UUID uuid) { this.persistentAngerTarget = uuid; }
 
+    /**
+     * Starts the persistent anger timer for the XeronGuard entity.
+     */
     @Override
     public void startPersistentAngerTimer() { this.setRemainingPersistentAngerTime(PERSISTENT_ANGER_TIME.sample(this.random)); }
 
+    /**
+     * Custom melee attack goal for the XeronGuard entity.
+     */
     public static class XeronMeleeAttack extends MeleeAttackGoal
     {
         private XeronGuard entity;
         private int animCounter = 0;
         private int animTickLength = 19;
 
+        /**
+         * Custom melee attack goal for the XeronGuard entity.
+         *
+         * @param pathfinderMob               The entity that will be performing the melee attack.
+         * @param speedModifier               The speed modifier for the attack movement.
+         * @param followingTargetEvenIfNotSeen Whether to continue following the target even if it's not seen.
+         */
         public XeronMeleeAttack(PathfinderMob pathfinderMob, double speedModifier, boolean followingTargetEvenIfNotSeen)
         {
             super(pathfinderMob, speedModifier, followingTargetEvenIfNotSeen);
@@ -291,6 +394,12 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
             }
         }
 
+        /**
+         * Checks and performs the attack on the living entity.
+         *
+         * @param livingEntity The living entity to attack.
+         * @param d1 The distance squared to the target.
+         */
         @Override
         protected void checkAndPerformAttack(LivingEntity livingEntity, double d1)
         {
@@ -306,6 +415,9 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
             super.checkAndPerformAttack(livingEntity, d1);
         }
 
+        /**
+         * Ticks the attack animation.
+         */
         @Override
         public void tick()
         {
@@ -322,6 +434,9 @@ public class XeronGuard extends TamableAnimal implements GeoEntity, NeutralMob
             }
         }
 
+        /**
+         * Stops the attack animation.
+         */
         @Override
         public void stop()
         {
