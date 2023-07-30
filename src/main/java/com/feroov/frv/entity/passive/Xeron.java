@@ -26,12 +26,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nonnull;
 import java.util.Random;
@@ -39,17 +36,31 @@ import java.util.Random;
 
 public class Xeron extends Animal implements GeoEntity
 {
+    // Cache for the AnimatableInstance used by this entity.
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+
+    // The temp items
     private static final Ingredient ITEM_INTEREST = Ingredient.of(ItemsSTLCON.LUMIBLOOM.get(), ItemsSTLCON.LUMIBLOOM_SEEDS.get());
     private static final int INTERACT_COOLDOWN = 20;
     private int interactCooldown = 0;
 
+    /**
+     * Constructs a new Xeron entity with the specified entity type and level.
+     *
+     * @param entityType The entity type of the Xeron.
+     * @param level      The level in which the Xeron will exist.
+     */
     public Xeron(EntityType<? extends Animal> entityType, Level level)
     {
         super(entityType, level);
         ((GroundPathNavigation)this.getNavigation()).setCanOpenDoors(true);
     }
 
+    /**
+     * Sets the attributes for the Xeron entity.
+     *
+     * @return An AttributeSupplier containing the configured attributes for the Xeron.
+     */
     public static AttributeSupplier setAttributes()
     {
         return Animal.createMobAttributes()
@@ -57,6 +68,9 @@ public class Xeron extends Animal implements GeoEntity
                 .add(Attributes.MOVEMENT_SPEED, 0.32D).build();
     }
 
+    /**
+     * Registers the goals for this entity, defining its behavior.
+     */
     @Override
     protected void registerGoals()
     {
@@ -73,9 +87,20 @@ public class Xeron extends Animal implements GeoEntity
         this.goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Celestroid.class, 6.0F, 1.0D, 1.2D));
     }
 
+    /**
+     * Called during each game tick to update the Xeron entity.
+     * It updates the Xeron's state and behaviors.
+     */
     @Override
     public void tick() { super.tick(); if (interactCooldown > 0) { interactCooldown--; }}
 
+    /**
+     * Handles player interaction with the Xeron entity.
+     *
+     * @param player           The player interacting with the Xeron.
+     * @param interactionHand  The hand used for the interaction.
+     * @return The result of the interaction.
+     */
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand interactionHand)
     {
@@ -113,6 +138,11 @@ public class Xeron extends Animal implements GeoEntity
         }
     }
 
+    /**
+     * Get a random item to drop when Xeron is interacted with.
+     *
+     * @return The ItemStack representing the item to drop, or null if no item should be dropped.
+     */
     private ItemStack getRandomDrop()
     {
         Random random = new Random();
@@ -134,6 +164,15 @@ public class Xeron extends Animal implements GeoEntity
         }
     }
 
+    /**
+     * Spawns an ItemEntity at the specified location with the given ItemStack.
+     *
+     * @param stack The ItemStack to spawn as an ItemEntity.
+     * @param x     The x-coordinate of the spawn location.
+     * @param y     The y-coordinate of the spawn location.
+     * @param z     The z-coordinate of the spawn location.
+     * @return The spawned ItemEntity instance, or null if no entity was spawned.
+     */
     @Nullable
     public ItemEntity spawnAtLocation(ItemStack stack, double x, double y, double z)
     {
@@ -173,7 +212,11 @@ public class Xeron extends Animal implements GeoEntity
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) { return 1.0F; }
 
-
+    /**
+     * Registers the animation controllers for the Xeron entity.
+     *
+     * @param controllerRegistrar The registrar for the animation controllers.
+     */
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
@@ -184,6 +227,12 @@ public class Xeron extends Animal implements GeoEntity
         }));
     }
 
+    /**
+     * Gets the AnimatableInstanceCache associated with the Xeron entity.
+     * The AnimatableInstanceCache is responsible for caching Animatable instances for animations.
+     *
+     * @return The AnimatableInstanceCache used by the Xeron.
+     */
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
