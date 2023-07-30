@@ -31,15 +31,29 @@ import javax.annotation.Nonnull;
 
 public class Xenaptor extends Spider implements GeoEntity
 {
+    // AnimatableInstanceCache for managing animations.
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
-    protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(Xenaptor.class, EntityDataSerializers.BOOLEAN);
 
+    // EntityDataAccessor for the attacking state.
+    protected static final EntityDataAccessor<Boolean> ATTACKING = SynchedEntityData.defineId(Skeleroid.class, EntityDataSerializers.BOOLEAN);
+    /**
+     * Constructs a new Xenaptor entity with the specified entity type and level.
+     *
+     * @param entityType The entity type of the Xenaptor.
+     * @param level The level in which the Xenaptor will exist.
+     */
     public Xenaptor(EntityType<? extends Spider> entityType, Level level)
     {
         super(entityType, level);
         this.xpReward = 5;
     }
 
+    /**
+     * Sets the attributes for the Xenaptor mob.
+     * Configures various attributes such as max health, movement speed, follow range, and attack damage.
+     *
+     * @return The AttributeSupplier containing the configured attributes for the Xenaptor.
+     */
     public static AttributeSupplier setAttributes()
     {
         return TamableAnimal.createMobAttributes()
@@ -49,7 +63,10 @@ public class Xenaptor extends Spider implements GeoEntity
                 .add(Attributes.ATTACK_DAMAGE, 1.5D).build();
     }
 
-
+    /**
+     * Registers the AI goals (behaviors) for the Xenaptor entity.
+     * Adds various AI tasks such as floating in water, attacking, targeting players, and random wandering.
+     */
     @Override
     protected void registerGoals()
     {
@@ -93,7 +110,12 @@ public class Xenaptor extends Spider implements GeoEntity
     @Override
     protected float getStandingEyeHeight(@NotNull Pose poseIn, @NotNull EntityDimensions sizeIn) { return 0.5F; }
 
-
+    /**
+     * Registers animation controllers for this Xenaptor entity.
+     * Overrides the default registerControllers method to add a custom AnimationController.
+     *
+     * @param controllerRegistrar The controller registrar to add the AnimationController.
+     */
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar)
     {
@@ -106,13 +128,26 @@ public class Xenaptor extends Spider implements GeoEntity
         }));
     }
 
+    /**
+     * Gets the AnimatableInstanceCache for this Xenaptor entity.
+     *
+     * @return The AnimatableInstanceCache instance associated with this entity.
+     */
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
+    /**
+     * Defines the synchronized entity data for this Xenaptor entity.
+     * Overrides the default defineSynchedData method to add a custom data entry.
+     */
     @Override
     protected void defineSynchedData()
     {
+        // Call the superclass implementation of defineSynchedData first to define common synchronized data.
         super.defineSynchedData();
+
+        // Define a new synchronized data entry for the "ATTACKING" boolean attribute.
+        // This data will be used to track whether the Xenaptor is currently in an attacking state.
         this.entityData.define(ATTACKING, false);
     }
 
@@ -120,12 +155,22 @@ public class Xenaptor extends Spider implements GeoEntity
 
     public boolean isAttacking() { return this.entityData.get(ATTACKING); }
 
-
+    /**
+     * Represents a custom melee attack goal for the Xenaptor entity.
+     * This goal is responsible for performing melee attacks on the target entity.
+     */
     public static class XenaptorMeleeAttack extends MeleeAttackGoal
     {
         private Xenaptor entity;
         private int animCounter = 0;
 
+        /**
+         * Constructs a new XenaptorMeleeAttack goal for the given entity.
+         *
+         * @param pathfinderMob The Xenaptor entity that will be performing the melee attacks.
+         * @param speedModifier The speed modifier for the melee attack.
+         * @param followingTargetEvenIfNotSeen Whether to follow the target even if it's not visible.
+         */
         public XenaptorMeleeAttack(PathfinderMob pathfinderMob, double speedModifier, boolean followingTargetEvenIfNotSeen)
         {
             super(pathfinderMob, speedModifier, followingTargetEvenIfNotSeen);
@@ -135,6 +180,13 @@ public class Xenaptor extends Spider implements GeoEntity
             }
         }
 
+        /**
+         * Checks and performs the melee attack on the target entity.
+         * If the target is within attack range and the attack cooldown is ready, the Xenaptor sets its 'attacking' state.
+         *
+         * @param livingEntity The target entity that the Xenaptor is attacking.
+         * @param d1 The squared distance to the target entity.
+         */
         @Override
         protected void checkAndPerformAttack(@NotNull LivingEntity livingEntity, double d1)
         {
@@ -146,10 +198,12 @@ public class Xenaptor extends Spider implements GeoEntity
                     animCounter = 0;
                 }
             }
-
             super.checkAndPerformAttack(livingEntity, d1);
         }
 
+        /**
+         * Updates the Xenaptor's attack animation counter and stops the attack animation when it's complete.
+         */
         @Override
         public void tick()
         {
@@ -167,6 +221,9 @@ public class Xenaptor extends Spider implements GeoEntity
             }
         }
 
+        /**
+         * Stops the Xenaptor's attack animation and resets the animation counter.
+         */
         @Override
         public void stop()
         {
@@ -176,6 +233,13 @@ public class Xenaptor extends Spider implements GeoEntity
         }
     }
 
+    /**
+     * Applies a custom effect when the Xenaptor successfully hurts a target entity.
+     * In this case, the target entity receives the MobEffectInstance of poison for a duration of 100 ticks.
+     *
+     * @param entityIn The entity that the Xenaptor has successfully hurt.
+     * @return True if the entity was hurt successfully and false otherwise.
+     */
     @Override
     public boolean doHurtTarget(@NotNull Entity entityIn)
     {
@@ -190,6 +254,12 @@ public class Xenaptor extends Spider implements GeoEntity
         }
     }
 
+    /**
+     * Determines whether the Xenaptor should despawn in peaceful difficulty.
+     * This method returns true, meaning the Xenaptor will despawn in peaceful difficulty.
+     *
+     * @return True if the Xenaptor should despawn in peaceful difficulty, false otherwise.
+     */
     @Override
     public boolean shouldDespawnInPeaceful() { return true; }
 }
