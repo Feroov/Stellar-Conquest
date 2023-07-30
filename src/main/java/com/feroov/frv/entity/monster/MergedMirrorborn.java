@@ -32,6 +32,12 @@ public class MergedMirrorborn extends Animal
     private int jumpDelayTicks;
     private boolean wasOnGround;
 
+    /**
+     * Constructs a new MergedMirrorborn entity with the specified entity type and level.
+     *
+     * @param entityType The entity type of the MergedMirrorborn.
+     * @param level The level where the MergedMirrorborn exists.
+     */
     public MergedMirrorborn(EntityType<? extends Animal> entityType, Level level)
     {
         super(entityType, level);
@@ -41,6 +47,11 @@ public class MergedMirrorborn extends Animal
         this.xpReward = 40;
     }
 
+    /**
+     * Sets the attributes for the MergedMirrorborn entity, such as health, movement speed, and attack damage.
+     *
+     * @return The attribute supplier containing the entity's attributes.
+     */
     public static AttributeSupplier setAttributes()
     {
         return TamableAnimal.createMobAttributes()
@@ -50,6 +61,9 @@ public class MergedMirrorborn extends Animal
                 .add(Attributes.ATTACK_DAMAGE, 5.5).build();
     }
 
+    /**
+     * Registers the AI goals for the MergedMirrorborn entity.
+     */
     @Override
     protected void registerGoals()
     {
@@ -83,6 +97,11 @@ public class MergedMirrorborn extends Animal
         return null;
     }
 
+    /**
+     * Determines whether the MergedMirrorborn should despawn in peaceful mode.
+     *
+     * @return True if the MergedMirrorborn should despawn in peaceful mode, false otherwise.
+     */
     @Override
     protected boolean shouldDespawnInPeaceful() { return true; }
 
@@ -186,6 +205,10 @@ public class MergedMirrorborn extends Animal
         else { super.handleEntityEvent(b); }
     }
 
+    /**
+     * The nested class representing the jump control for the MergedMirrorborn entity.
+     * Manages jump behavior for the entity.
+     */
     public static class MirrorbornJumpControl extends JumpControl
     {
         private final MergedMirrorborn mirrorbornSlime;
@@ -197,12 +220,30 @@ public class MergedMirrorborn extends Animal
             this.mirrorbornSlime = mirrorbornSlime;
         }
 
+        /**
+         * Checks if the entity wants to jump.
+         *
+         * @return True if the entity wants to jump, false otherwise.
+         */
         public boolean wantJump() { return !this.jump; }
 
+        /**
+         * Checks if the entity is allowed to jump.
+         *
+         * @return True if the entity is allowed to jump, false otherwise.
+         */
         public boolean canJump() { return this.canJump; }
 
+        /**
+         * Sets whether the entity is allowed to jump.
+         *
+         * @param canJump True to allow jumping, false to disallow.
+         */
         public void setCanJump(boolean canJump) { this.canJump = canJump; }
 
+        /**
+         * Updates the jump control, starting the jump action if necessary.
+         */
         public void tick()
         {
             if (this.jump)
@@ -213,6 +254,10 @@ public class MergedMirrorborn extends Animal
         }
     }
 
+    /**
+     * The nested class representing the move control for the MergedMirrorborn entity.
+     * Manages movement behavior for the entity.
+     */
     static class MirrorbornMoveControl extends MoveControl
     {
         private final MergedMirrorborn mirrorbornSlime;
@@ -224,6 +269,9 @@ public class MergedMirrorborn extends Animal
             this.mirrorbornSlime = mirrorbornSlime;
         }
 
+        /**
+         * Updates the move control, adjusting the entity's speed if necessary.
+         */
         public void tick()
         {
             if (this.mirrorbornSlime.onGround() && !this.mirrorbornSlime.jumping
@@ -236,6 +284,14 @@ public class MergedMirrorborn extends Animal
             super.tick();
         }
 
+        /**
+         * Sets the desired position and speed for the move control.
+         *
+         * @param x The desired x-coordinate.
+         * @param y The desired y-coordinate.
+         * @param z The desired z-coordinate.
+         * @param d The desired speed modifier.
+         */
         public void setWantedPosition(double x, double y, double z, double d)
         {
             if (this.mirrorbornSlime.isInWater()) { d = 1.5D; }
@@ -246,6 +302,10 @@ public class MergedMirrorborn extends Animal
         }
     }
 
+    /**
+     * Custom method to handle server-side AI updates for the MergedMirrorborn entity.
+     * Handles jumping behavior and AI control based on the entity's state.
+     */
     public void customServerAiStep()
     {
         if (this.jumpDelayTicks > 0) { --this.jumpDelayTicks; }
@@ -277,11 +337,23 @@ public class MergedMirrorborn extends Animal
         this.wasOnGround = this.onGround();
     }
 
+    /**
+     * Faces the given point (x, z) by setting the entity's yaw rotation accordingly.
+     *
+     * @param x The x-coordinate of the point.
+     * @param z The z-coordinate of the point.
+     */
     private void facePoint(double x, double z)
     {
         this.setYRot((float)(Mth.atan2(z - this.getZ(), x - this.getX()) * (double)(180F / (float)Math.PI)) - 90.0F);
     }
 
+    /**
+     * Performs a hurt action on the given entity, playing a custom attack sound.
+     *
+     * @param entityIn The entity being attacked.
+     * @return True if the entity was successfully hurt, false otherwise.
+     */
     @Override
     public boolean doHurtTarget(@NotNull Entity entityIn)
     {
