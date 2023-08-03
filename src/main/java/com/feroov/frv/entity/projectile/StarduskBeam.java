@@ -1,5 +1,6 @@
 package com.feroov.frv.entity.projectile;
 
+import com.feroov.frv.entity.AnimationConstants;
 import com.feroov.frv.entity.EntitiesSTLCON;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -27,11 +28,9 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
 
 
 public class StarduskBeam extends AbstractArrow implements GeoEntity
@@ -42,19 +41,34 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public static final EntityDataAccessor<Integer> PARTICLE = SynchedEntityData.defineId(StarduskBeam.class, EntityDataSerializers.INT);
 
+    /**
+     * Constructs a StarduskBeam projectile with the specified entity type and world.
+     *
+     * @param entityType The entity type of the projectile.
+     * @param world      The world where the projectile exists.
+     */
     public StarduskBeam(EntityType<? extends StarduskBeam> entityType, Level world)
     {
         super(entityType, world);
         this.pickup = Pickup.DISALLOWED;
     }
 
+    /**
+     * Constructs a StarduskBeam projectile with the specified world and owner.
+     *
+     * @param world The world where the projectile exists.
+     * @param owner The LivingEntity owner of the projectile.
+     */
     public StarduskBeam(Level world, LivingEntity owner)
     {
         super(EntitiesSTLCON.STARDUSK_BEAM.get(), owner, world);
     }
 
-
-    /******************************************** Methods of Interest ************************************************************/
+    /**
+     * Handles the behavior when the StarduskBeam hits an entity.
+     *
+     * @param entityHitResult The EntityHitResult representing the entity that was hit.
+     */
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult)
     {
@@ -72,7 +86,6 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
             damagesource = this.damageSources().arrow(this, entity1);
             if (entity1 instanceof LivingEntity) { ((LivingEntity)entity1).setLastHurtMob(entity); }
         }
-
 
         float projectiledamage = 10.0F;
         if (entity.hurt(damagesource, projectiledamage))
@@ -103,7 +116,12 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
         } else { if (!this.level().isClientSide) { this.remove(RemovalReason.KILLED); } }
     }
 
-
+    /**
+     * Called when the projectile hits something.
+     * If the hit is on the server side, it triggers an explosion and discards the projectile.
+     *
+     * @param hitResult The result of the hit, containing information about the hit location.
+     */
     @Override
     protected void onHit(@NotNull HitResult hitResult)
     {
@@ -117,6 +135,11 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
         }
     }
 
+    /**
+     * Handles the behavior when the Stardusk hits a block.
+     *
+     * @param blockHitResult The BlockHitResult representing the block that was hit.
+     */
     @Override
     protected void onHitBlock(@NotNull BlockHitResult blockHitResult)
     {
@@ -129,49 +152,55 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
             this.remove(RemovalReason.DISCARDED);
     }
 
+    /**
+     * Called every tick to update the entity's behavior.
+     * This method handles the removal of the entity after a certain number of ticks.
+     */
     @Override
     public void tick()
     {
         super.tick();
         ++this.ticksInAir;
-        if (this.ticksInAir >= 80) { this.remove(RemovalReason.DISCARDED); }
 
+        // Remove the projectile after a certain number of ticks.
+        if (this.ticksInAir >= 80) { this.remove(RemovalReason.DISCARDED); }
 
         if (this.level().isClientSide())
         {
+            // Add particles on the client side to represent the projectile's motion.
             this.level().addParticle(ParticleTypes.SONIC_BOOM, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
             this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-
         }
     }
 
-    /***************************************************************************************************************************/
-
-
+    // Disable gravity for the projectile when it is not in water.
     @Override
     public boolean isNoGravity()  { return !this.isInWater(); }
 
+    /**
+     * Registers the animation controllers for this StarduskBeam entity.
+     *
+     * @param controllers The AnimatableManager.ControllerRegistrar used for registering the animation controllers.
+     */
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers)
     {
-        controllers.add(new AnimationController<>(this, "controller", 0, this::predicate));
+        controllers.add(new AnimationController<>(this, "livingController", 0, event -> event.setAndContinue(AnimationConstants.IDLE)));
     }
 
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState)
-    {
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
-    }
-
+    // Return the cached AnimatableInstanceCache for this projectile.
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
+    // Define the synched data for the projectile.
     @Override
     protected void defineSynchedData() { super.defineSynchedData(); this.entityData.define(PARTICLE, 0); }
 
+    // Return the packet for adding the projectile entity to the client.
     @Override
     public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() { return NetworkHooks.getEntitySpawningPacket(this);}
 
+    // Increment ticksInAir and remove the projectile if it exceeds a certain value.
     @Override
     protected void tickDespawn() { ++this.ticksInAir; if (this.tickCount >= 40) { this.remove(RemovalReason.KILLED); }}
 
@@ -182,6 +211,7 @@ public class StarduskBeam extends AbstractArrow implements GeoEntity
         this.ticksInAir = 0;
     }
 
+    // Set the projectile's motion and reset ticksInAir when it is shot.
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag compound)
     {
