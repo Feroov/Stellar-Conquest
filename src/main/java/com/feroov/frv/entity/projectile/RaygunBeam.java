@@ -1,5 +1,6 @@
 package com.feroov.frv.entity.projectile;
 
+import com.feroov.frv.entity.AnimationConstants;
 import com.feroov.frv.entity.EntitiesSTLCON;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -24,11 +25,9 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
-import software.bernie.geckolib.core.object.PlayState;
 
 
 public class RaygunBeam extends AbstractArrow implements GeoEntity
@@ -39,20 +38,34 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
     private final AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
     public static final EntityDataAccessor<Integer> PARTICLE = SynchedEntityData.defineId(RaygunBeam.class, EntityDataSerializers.INT);
 
-
+    /**
+     * Constructs a RaygunBeam projectile with the specified entity type and world.
+     *
+     * @param entityType The entity type of the projectile.
+     * @param world      The world where the projectile exists.
+     */
     public RaygunBeam(EntityType<? extends RaygunBeam> entityType, Level world)
     {
         super(entityType, world);
         this.pickup = Pickup.DISALLOWED;
     }
 
+    /**
+     * Constructs a RaygunBeam projectile with the specified world and owner.
+     *
+     * @param world The world where the projectile exists.
+     * @param owner The LivingEntity owner of the projectile.
+     */
     public RaygunBeam(Level world, LivingEntity owner)
     {
         super(EntitiesSTLCON.RAYGUN_BEAM.get(), owner, world);
     }
 
-
-    /******************************************** Methods of Interest ************************************************************/
+    /**
+     * Handles the behavior when the RaygunBeam hits an entity.
+     *
+     * @param entityHitResult The EntityHitResult representing the entity that was hit.
+     */
     @Override
     protected void onHitEntity(EntityHitResult entityHitResult)
     {
@@ -67,11 +80,13 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
 
             if (target.hurt(damageSource, projectileDamage))
             {
+                // Add particles when the projectile hits an entity and deals damage.
                 this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
                 this.level().addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 
                 if (!this.level().isClientSide && shooter instanceof Player)
                 {
+                    // Apply enchantment effects and remove the projectile after dealing damage.
                     EnchantmentHelper.doPostHurtEffects(target, shooter);
                     EnchantmentHelper.doPostDamageEffects(shooter, target);
                     this.remove(RemovalReason.KILLED);
@@ -80,64 +95,79 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
         }
     }
 
+    /**
+     * Handles the behavior when the RaygunBeam hits a block.
+     *
+     * @param blockHitResult The BlockHitResult representing the block that was hit.
+     */
     @Override
     protected void onHitBlock(@NotNull BlockHitResult blockHitResult)
     {
         super.onHitBlock(blockHitResult);
+
+        // Play a sound and add particles when the projectile hits a block.
         this.playSound(SoundEvents.FIRE_EXTINGUISH, 1.0F, 1.0F);
         this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
         this.level().addParticle(ParticleTypes.SQUID_INK, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
 
+        // Remove the projectile after hitting a block.
         if (!this.level().isClientSide())
             this.remove(RemovalReason.DISCARDED);
     }
 
+    /**
+     * Called every tick to update the entity's behavior.
+     * This method handles the removal of the entity after a certain number of ticks.
+     */
     @Override
     public void tick()
     {
         super.tick();
         ++this.ticksInAir;
-        if (this.ticksInAir >= 80) { this.remove(RemovalReason.DISCARDED); }
 
+        // Remove the projectile after a certain number of ticks.
+        if (this.ticksInAir >= 80) { this.remove(RemovalReason.DISCARDED); }
 
         if (this.level().isClientSide())
         {
+            // Add particles on the client side to represent the projectile's motion.
             this.level().addParticle(ParticleTypes.SONIC_BOOM, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
             this.level().addParticle(ParticleTypes.FLASH, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
-
         }
     }
 
-    /***************************************************************************************************************************/
-
-
+    // Disable gravity for the projectile when it is not in water.
     @Override
     public boolean isNoGravity()  { return !this.isInWater(); }
 
+    /**
+     * Registers the animation controllers for this RaygunBeam entity.
+     *
+     * @param controllers The AnimatableManager.ControllerRegistrar used for registering the animation controllers.
+     */
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers)
     {
-        controllers.add(new AnimationController<>(this, "controller", 0, this::predicate));
+        controllers.add(new AnimationController<>(this, "livingController", 0, event -> event.setAndContinue(AnimationConstants.IDLE)));
     }
 
-    private <T extends GeoAnimatable> PlayState predicate(AnimationState<T> tAnimationState)
-    {
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
-    }
-
+    // Return the cached AnimatableInstanceCache for this projectile.
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() { return cache; }
 
+    // Define the synched data for the projectile.
     @Override
     protected void defineSynchedData() { super.defineSynchedData(); this.entityData.define(PARTICLE, 0); }
 
+    // Return the packet for adding the projectile entity to the client.
     @Override
     public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() { return NetworkHooks.getEntitySpawningPacket(this);}
 
+    // Increment ticksInAir and remove the projectile if it exceeds a certain value.
     @Override
     protected void tickDespawn() { ++this.ticksInAir; if (this.tickCount >= 40) { this.remove(RemovalReason.KILLED); }}
 
+    // Set the projectile's motion and reset ticksInAir when it is shot.
     @Override
     public void shoot(double x, double y, double z, float velocity, float inaccuracy)
     {
@@ -161,7 +191,6 @@ public class RaygunBeam extends AbstractArrow implements GeoEntity
 
     @Override
     public @NotNull ItemStack getPickupItem() { return null; }
-
 
     @Override
     public void setSoundEvent(@NotNull SoundEvent soundIn) { this.hitSound = soundIn; }
