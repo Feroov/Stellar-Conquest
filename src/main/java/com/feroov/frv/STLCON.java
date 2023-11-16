@@ -14,7 +14,6 @@ import com.feroov.frv.world.dimension.POIRegistry;
 import com.feroov.frv.world.feature.FeatureModifiers;
 import com.feroov.frv.world.placement.PlacementRegistrySTLCON;
 import com.feroov.frv.world.structure.StructuresSTLCON;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,8 +23,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import java.util.Locale;
-
 @Mod(STLCON.MOD_ID)
 public class STLCON
 {
@@ -33,8 +30,10 @@ public class STLCON
 
     public STLCON()
     {
+        // Get the mod event bus
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        // Register mod components
         SoundEventsSTLCON.register(eventBus);
         BlocksSTLCON.register(eventBus);
         EntitiesSTLCON.register(eventBus);
@@ -47,22 +46,29 @@ public class STLCON
         BlockEntitiesSTLCON.BLOCK_ENTITIES.register(eventBus);
         FeatureModifiers.FOLIAGE_PLACERS.register(eventBus);
 
+        // Register setup methods
         eventBus.addListener(this::setup);
         eventBus.addListener(this::doClientStuff);
         MinecraftForge.EVENT_BUS.register(this);
     }
 
+    // Common setup method
     private void setup(final FMLCommonSetupEvent event)
     {
+        // Initialize placement registry
         PlacementRegistrySTLCON.init();
 
+        // Enqueue works
         event.enqueueWork(() ->
         {
             ((FlowerPotBlock) Blocks.FLOWER_POT).addPlant(BlocksSTLCON.XENOS_SAPLING.getId(), BlocksSTLCON.POTTED_XENOS_SAPLING);
         });
     }
 
-    private void doClientStuff(final FMLClientSetupEvent event) { RangedItems.addRanged(); Stardusk.clientSetup(event); }
-
-    public static ResourceLocation prefix(String name) { return new ResourceLocation(MOD_ID, name.toLowerCase(Locale.ROOT)); }
+    // Client setup method
+    private void doClientStuff(final FMLClientSetupEvent event)
+    {
+        RangedItems.addRanged();
+        Stardusk.clientSetup(event);
+    }
 }
