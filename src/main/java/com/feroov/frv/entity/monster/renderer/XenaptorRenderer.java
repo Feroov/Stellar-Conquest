@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
-import software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer;
 
 public class XenaptorRenderer extends GeoEntityRenderer<Xenaptor>
 {
@@ -15,7 +14,6 @@ public class XenaptorRenderer extends GeoEntityRenderer<Xenaptor>
     {
         super(renderManager, new XenaptorModel());
         this.shadowRadius = 0.78F;
-        this.addRenderLayer(new AutoGlowingGeoLayer<>(this));
     }
 
     @Override
